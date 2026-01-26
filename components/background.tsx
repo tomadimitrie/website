@@ -7,7 +7,7 @@ export function BackgroundComponent() {
   const mouse = useRef({ x: -10000, y: -10000 });
 
   useEffect(() => {
-    const isMobile = window.matchMedia("(pointer: coarse)");
+    const isMobile = window.matchMedia("(pointer: coarse)").matches;
 
     const backgroundCanvas = new OffscreenCanvas(0, 0);
     const backgroundCtx = backgroundCanvas.getContext("2d")!;
