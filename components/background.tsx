@@ -7,6 +7,8 @@ export function BackgroundComponent() {
   const mouse = useRef({ x: -10000, y: -10000 });
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(pointer: coarse)");
+
     const backgroundCanvas = new OffscreenCanvas(0, 0);
     const backgroundCtx = backgroundCanvas.getContext("2d")!;
 
@@ -153,10 +155,15 @@ export function BackgroundComponent() {
     resize();
 
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMove);
+    if (!isMobile) {
+      window.addEventListener("mousemove", onMove);
+    }
+
     return () => {
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMove);
+      if (!isMobile) {
+        window.removeEventListener("mousemove", onMove);
+      }
     };
   }, []);
 
