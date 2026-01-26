@@ -55,7 +55,7 @@ export function BackgroundComponent() {
         backgroundCanvas.height,
       );
 
-      const fontSize = 14;
+      const fontSize = Math.max(8, Math.min(16, parent.clientWidth / 55));
       const letterSpacing = 4;
       const lineSpacing = 4;
 
