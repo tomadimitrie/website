@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { randomBetween, randomFrom } from "@/lib/utils";
+import { clamp, randomBetween, randomFrom } from "@/lib/utils";
 
 export function BackgroundComponent() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -62,7 +62,14 @@ export function BackgroundComponent() {
         backgroundCanvas.height,
       );
 
-      const fontSize = Math.max(8, Math.min(25, 30000 / mainCanvas.width));
+      const minWidth = 400;
+      const maxWidth = 3000;
+      const minFont = 15;
+      const maxFont = 35;
+      const t = (window.innerWidth - minWidth) / (maxWidth - minWidth);
+      const clampedT = clamp(t, 0, 1);
+      const fontSize = maxFont - clampedT * (maxFont - minFont);
+      console.log(fontSize);
       const letterSpacing = 4;
       const lineSpacing = 4;
 
