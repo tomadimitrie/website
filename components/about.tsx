@@ -4,7 +4,7 @@ import { ShellText } from "./shell-text";
 export function AboutComponent() {
   return (
     <div className="min-h-screen flex flex-col justify-center gap-6">
-      <div className="backdrop-blur-2xl flex flex-col gap-6 p-10 rounded-4xl">
+      <div className="flex flex-col gap-6 p-10 rounded-4xl">
         <ShellText />
         <div className="text-4xl md:text-6xl lg:text-7xl font-bold">
           {CONFIG.name}

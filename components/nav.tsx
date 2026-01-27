@@ -27,7 +27,7 @@ export function NavComponent() {
       <div
         className={cn(
           "fixed top-0 left-0 z-30 w-full flex flex-col md:flex-row items-center justify-center pt-5",
-          wasScrolled && "backdrop-blur-md",
+          wasScrolled || (isMobile && showMenu && "backdrop-blur-md"),
           isMobile && "pb-2",
           isMobile ? "md:hidden" : "hidden md:flex",
         )}
