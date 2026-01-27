@@ -62,7 +62,7 @@ export function BackgroundComponent() {
         backgroundCanvas.height,
       );
 
-      const fontSize = isMobile ? 30 : 14;
+      const fontSize = Math.max(8, Math.min(25, 30000 / mainCanvas.width));
       const letterSpacing = 4;
       const lineSpacing = 4;
 
