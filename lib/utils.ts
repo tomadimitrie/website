@@ -1,5 +1,6 @@
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import colors from "tailwindcss/colors";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -21,4 +22,29 @@ export function randomFrom<T>(arr: T[]): T {
 
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
+}
+
+export function tailwindColor(
+  name: string,
+  value: number,
+  opacity?: number,
+): string {
+  const base = (colors as any)[name][value];
+  if (opacity === undefined) {
+    return base;
+  }
+  return base.replace(")", ` / ${opacity}%)`);
+}
+
+export function parseOklch(color: string): { l: number; c: number; h: number } {
+  const matches = color.match(/-?\d*\.?\d+/g)!;
+  return {
+    l: parseFloat(matches[0]),
+    c: parseFloat(matches[1]),
+    h: parseFloat(matches[2]),
+  };
+}
+
+export function makeOklch(values: { l: number; c: number; h: number }): string {
+  return `oklch(${values.l}% ${values.c} ${values.h})`;
 }

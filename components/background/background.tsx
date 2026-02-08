@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { clamp, randomBetween, randomFrom } from "@/lib/utils";
+import { clamp, randomBetween, randomFrom, tailwindColor } from "@/lib/utils";
+import { CONFIG } from "@/lib/config";
+import { resizeCanvas } from "@/lib/canvas-utils";
 
 export function BackgroundComponent() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  let interval: NodeJS.Timeout | null = null;
 
   useEffect(() => {
     let mouse = { x: -10000, y: -10000 };
@@ -19,39 +22,29 @@ export function BackgroundComponent() {
 
     const mainCanvas = canvasRef.current!;
     const mainCtx = mainCanvas.getContext("2d")!;
-    const dpr = window.devicePixelRatio || 1;
+
+    const {
+      minWidth,
+      maxWidth,
+      minFont,
+      maxFont,
+      radius,
+      maxMove,
+      maxTicks,
+      moveDelay,
+      backgroundAlpha,
+      amountToFreeze,
+      color,
+    } = CONFIG.backgrounds.main;
 
     function resize() {
-      return new Promise<void>((resolve) => {
-        window.requestIdleCallback(
-          () => {
-            const cssWidth = window.innerWidth;
-            const cssHeight = window.innerHeight;
+      [mainCanvas, backgroundCanvas, spotlightCanvas].forEach((canvas) =>
+        resizeCanvas(canvas, window.innerWidth, window.innerHeight),
+      );
 
-            mainCanvas.width = cssWidth * dpr;
-            mainCanvas.height = cssHeight * dpr;
-            mainCanvas.style.width = `${cssWidth}px`;
-            mainCanvas.style.height = `${cssHeight}px`;
+      drawText();
 
-            backgroundCanvas.width = mainCanvas.width;
-            backgroundCanvas.height = mainCanvas.height;
-
-            spotlightCanvas.width = mainCanvas.width;
-            spotlightCanvas.height = mainCanvas.height;
-
-            // mainCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            // backgroundCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            // spotlightCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-            drawText();
-
-            drawBackground();
-
-            resolve();
-          },
-          { timeout: 2000 },
-        );
-      });
+      drawBackground();
     }
 
     function drawText() {
@@ -62,21 +55,14 @@ export function BackgroundComponent() {
         backgroundCanvas.height,
       );
 
-      const minWidth = 400;
-      const maxWidth = 3000;
-      const minFont = 15;
-      const maxFont = 35;
       const t = (window.innerWidth - minWidth) / (maxWidth - minWidth);
       const clampedT = clamp(t, 0, 1);
       const fontSize = maxFont - clampedT * (maxFont - minFont);
-      console.log(fontSize);
       const letterSpacing = 4;
       const lineSpacing = 4;
 
       backgroundCtx.font = `${fontSize}px monospace`;
-      backgroundCtx.fillStyle = window
-        .getComputedStyle(document.body)
-        .getPropertyValue("--color-emerald-700");
+      backgroundCtx.fillStyle = tailwindColor(...color);
 
       const metrics = backgroundCtx.measureText("0");
       const charWidth = metrics.width + letterSpacing;
@@ -108,7 +94,6 @@ export function BackgroundComponent() {
         spotlightCanvas.height,
       );
 
-      const radius = 200;
       const gradient = spotlightCtx.createRadialGradient(
         mouse.x,
         mouse.y,
@@ -135,19 +120,10 @@ export function BackgroundComponent() {
     }
 
     function updateSpotlight(x: number, y: number) {
-      return new Promise<void>((resolve) => {
-        window.requestIdleCallback(
-          () => {
-            mouse.x = x;
-            mouse.y = y;
+      mouse.x = x;
+      mouse.y = y;
 
-            drawBackground();
-
-            resolve();
-          },
-          { timeout: 2000 },
-        );
-      });
+      drawBackground();
     }
 
     function onMove(event: MouseEvent) {
@@ -159,7 +135,7 @@ export function BackgroundComponent() {
     function drawBackground() {
       mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
 
-      mainCtx.globalAlpha = 0.3;
+      mainCtx.globalAlpha = backgroundAlpha;
       mainCtx.drawImage(
         backgroundCanvas,
         0,
@@ -185,14 +161,13 @@ export function BackgroundComponent() {
       [0, -1],
     ];
     const directions = [...diagonalDirections, ...lineDirections];
-    const MAX_TICKS = 100;
     let directionInfo = {
       direction: directions[0],
-      ticks: MAX_TICKS,
+      ticks: maxTicks,
     };
 
     function randomSpotlight() {
-      const didExceedTicks = directionInfo.ticks >= MAX_TICKS;
+      const didExceedTicks = directionInfo.ticks >= maxTicks;
       const didExceedBounds =
         mouse.x <= 0 ||
         mouse.y <= 0 ||
@@ -209,8 +184,8 @@ export function BackgroundComponent() {
         };
       }
       updateSpotlight(
-        mouse.x + randomBetween(0, 10) * directionInfo.direction[0],
-        mouse.y + randomBetween(0, 10) * directionInfo.direction[1],
+        mouse.x + randomBetween(0, maxMove) * directionInfo.direction[0],
+        mouse.y + randomBetween(0, maxMove) * directionInfo.direction[1],
       );
       directionInfo.ticks += 1;
     }
@@ -219,7 +194,7 @@ export function BackgroundComponent() {
       if (interval !== null) {
         return;
       }
-      interval = setInterval(randomSpotlight, 25);
+      interval = setInterval(randomSpotlight, moveDelay);
     }
 
     function removeRandomInterval() {
@@ -234,22 +209,20 @@ export function BackgroundComponent() {
       removeRandomInterval();
       setTimeout(() => {
         createRandomInterval();
-      }, 2000);
+      }, amountToFreeze);
     }
 
-    resize().then(async () => {
-      await updateSpotlight(
-        randomBetween(mainCanvas.width / 4, (mainCanvas.width * 3) / 4),
-        randomBetween(mainCanvas.height / 4, (mainCanvas.height * 3) / 4),
-      );
-      createRandomInterval();
-    });
+    resize();
+    updateSpotlight(
+      randomBetween(mainCanvas.width / 4, (mainCanvas.width * 3) / 4),
+      randomBetween(mainCanvas.height / 4, (mainCanvas.height * 3) / 4),
+    );
+    createRandomInterval();
 
     window.addEventListener("resize", resize);
     if (!isMobile) {
       window.addEventListener("mousemove", onMove);
     }
-    let interval: NodeJS.Timeout | null = null;
 
     return () => {
       removeRandomInterval();
@@ -260,5 +233,5 @@ export function BackgroundComponent() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 z-10" />;
+  return <canvas ref={canvasRef} className="fixed top-0 left-0 -z-99" />;
 }

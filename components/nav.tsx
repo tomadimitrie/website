@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "@/components/shadcn/button";
 import { CONFIG } from "@/lib/config";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -26,9 +26,8 @@ export function NavComponent() {
     return (
       <div
         className={cn(
-          "fixed top-0 left-0 z-30 w-full flex flex-col md:flex-row items-center justify-center pt-5",
-          wasScrolled || (isMobile && showMenu && "backdrop-blur-md"),
-          isMobile && "pb-2",
+          "fixed top-0 left-0 z-30 w-full flex flex-col md:flex-row items-center justify-center pt-5 pb-3",
+          (wasScrolled || (isMobile && showMenu)) && "backdrop-blur-md",
           isMobile ? "md:hidden" : "hidden md:flex",
         )}
       >
@@ -58,7 +57,7 @@ export function NavComponent() {
               variant="nav"
               key={item.title}
             >
-              <Link href={item.href}>{item.title}</Link>
+              <Link href={`#${item.title.toLowerCase()}`}>{item.title}</Link>
             </Button>
           ))}
         </div>

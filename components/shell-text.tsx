@@ -47,8 +47,9 @@ export function ShellText() {
   }, []);
 
   return (
-    <div className="text-primary min-h-[1lh] font-mono text-lg md:text-xl lg:text-2xl">
-      {text} <span className="w-2 h-5 inline-block bg-primary animate-blink" />
+    <div className="text-primary-foreground min-h-lh font-mono text-lg md:text-xl lg:text-2xl">
+      {text}{" "}
+      <span className="w-2 h-5 inline-block bg-primary-foreground animate-blink" />
     </div>
   );
 }
