@@ -19,7 +19,7 @@ export const LinesBackground = forwardRef<
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const points = useRef<{ x: number; y: number }[]>([]);
   const mouse = useRef({ x: 0, y: 0 });
-  const animationFrame = useRef(0);
+  const animationFrame = useRef<number | null>(null);
 
   function resize() {
     const canvas = canvasRef.current!;
@@ -58,7 +58,9 @@ export const LinesBackground = forwardRef<
     animate();
 
     return () => {
-      cancelAnimationFrame(animationFrame.current);
+      if (animationFrame.current !== null) {
+        cancelAnimationFrame(animationFrame.current);
+      }
 
       window.removeEventListener("resize", resize);
     };

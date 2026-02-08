@@ -39,7 +39,7 @@ function CertificationItem({
       onMouseMove={onMouseMove}
     >
       <CubesBackground
-        className="absolute w-full h-full top-0 left-0 -z-10 hidden group-hover:grid"
+        className="absolute w-full h-full top-0 left-0 -z-10 opacity-0 group-hover:opacity-100"
         ref={backgroundRef}
       />
 

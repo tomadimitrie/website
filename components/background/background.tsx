@@ -7,11 +7,11 @@ import { resizeCanvas } from "@/lib/canvas-utils";
 
 export function BackgroundComponent() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  let interval: NodeJS.Timeout | null = null;
+  const mouse = useRef({ x: 0, y: 0 });
+  const animationFrame = useRef<number | null>(null);
+  const interval = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    let mouse = { x: -10000, y: -10000 };
-
     const isMobile = window.matchMedia("(pointer: coarse)").matches;
 
     const backgroundCanvas = new OffscreenCanvas(0, 0);
@@ -95,11 +95,11 @@ export function BackgroundComponent() {
       );
 
       const gradient = spotlightCtx.createRadialGradient(
-        mouse.x,
-        mouse.y,
+        mouse.current.x,
+        mouse.current.y,
         0,
-        mouse.x,
-        mouse.y,
+        mouse.current.x,
+        mouse.current.y,
         radius,
       );
       gradient.addColorStop(0, "rgba(0, 0, 0, 1)");
@@ -119,17 +119,16 @@ export function BackgroundComponent() {
       spotlightCtx.globalCompositeOperation = "source-over";
     }
 
-    function updateSpotlight(x: number, y: number) {
-      mouse.x = x;
-      mouse.y = y;
-
+    function updateSpotlight() {
       drawBackground();
+      animationFrame.current = requestAnimationFrame(updateSpotlight);
     }
 
     function onMove(event: MouseEvent) {
-      resetRandomInterval();
       const rect = mainCanvas.getBoundingClientRect();
-      updateSpotlight(event.clientX - rect.left, event.clientY - rect.top);
+      mouse.current.x = event.clientX - rect.left;
+      mouse.current.y = event.clientY - rect.top;
+      resetRandomInterval();
     }
 
     function drawBackground() {
@@ -169,10 +168,10 @@ export function BackgroundComponent() {
     function randomSpotlight() {
       const didExceedTicks = directionInfo.ticks >= maxTicks;
       const didExceedBounds =
-        mouse.x <= 0 ||
-        mouse.y <= 0 ||
-        mouse.x >= mainCanvas.width ||
-        mouse.y >= mainCanvas.height;
+        mouse.current.x <= 0 ||
+        mouse.current.y <= 0 ||
+        mouse.current.x >= mainCanvas.width ||
+        mouse.current.y >= mainCanvas.height;
 
       if (didExceedTicks || didExceedBounds) {
         const direction = randomFrom(
@@ -183,26 +182,24 @@ export function BackgroundComponent() {
           ticks: 0,
         };
       }
-      updateSpotlight(
-        mouse.x + randomBetween(0, maxMove) * directionInfo.direction[0],
-        mouse.y + randomBetween(0, maxMove) * directionInfo.direction[1],
-      );
+      mouse.current.x += randomBetween(0, maxMove) * directionInfo.direction[0];
+      mouse.current.y += randomBetween(0, maxMove) * directionInfo.direction[1];
       directionInfo.ticks += 1;
     }
 
     function createRandomInterval() {
-      if (interval !== null) {
+      if (interval.current !== null) {
         return;
       }
-      interval = setInterval(randomSpotlight, moveDelay);
+      interval.current = setInterval(randomSpotlight, moveDelay);
     }
 
     function removeRandomInterval() {
-      if (interval === null) {
+      if (interval.current === null) {
         return;
       }
-      clearInterval(interval);
-      interval = null;
+      clearInterval(interval.current);
+      interval.current = null;
     }
 
     function resetRandomInterval() {
@@ -213,19 +210,23 @@ export function BackgroundComponent() {
     }
 
     resize();
-    updateSpotlight(
-      randomBetween(mainCanvas.width / 4, (mainCanvas.width * 3) / 4),
-      randomBetween(mainCanvas.height / 4, (mainCanvas.height * 3) / 4),
-    );
-    createRandomInterval();
+    mouse.current = {
+      x: randomBetween(mainCanvas.width / 4, (mainCanvas.width * 3) / 4),
+      y: randomBetween(mainCanvas.height / 4, (mainCanvas.height * 3) / 4),
+    };
 
     window.addEventListener("resize", resize);
     if (!isMobile) {
       window.addEventListener("mousemove", onMove);
     }
+    animationFrame.current = requestAnimationFrame(updateSpotlight);
+    createRandomInterval();
 
     return () => {
       removeRandomInterval();
+      if (animationFrame.current !== null) {
+        cancelAnimationFrame(animationFrame.current);
+      }
       if (!isMobile) {
         window.removeEventListener("mousemove", onMove);
       }

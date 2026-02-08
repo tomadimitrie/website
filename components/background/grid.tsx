@@ -26,7 +26,7 @@ export const GridBackground = forwardRef<
 >(({ className, color }, ref) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mouse = useRef({ x: 0, y: 0 });
-  const animationFrame = useRef(0);
+  const animationFrame = useRef<number | null>(null);
   const grid = useRef<Point[][]>([]);
   const cols = useRef(0);
   const rows = useRef(0);
@@ -180,7 +180,9 @@ export const GridBackground = forwardRef<
 
     window.addEventListener("resize", resize);
     return () => {
-      cancelAnimationFrame(animationFrame.current);
+      if (animationFrame.current != null) {
+        cancelAnimationFrame(animationFrame.current);
+      }
       window.removeEventListener("resize", resize);
     };
   }, []);
