@@ -22,16 +22,16 @@ export const CubesBackground = forwardRef<
   const [layout, setLayout] = useState({ rows: 0, cols: 0 });
 
   useEffect(() => {
-    const { cols } = CONFIG.backgrounds.cubes;
+    const { cols, gap } = CONFIG.backgrounds.cubes;
 
     const area = innerRef.current!;
     const areaWidth = area.offsetWidth;
     const areaHeight = area.offsetHeight;
-    const squareSize = areaWidth / cols;
+    const squareSize = (areaWidth - gap * (cols - 1)) / cols;
 
     setLayout({
       cols,
-      rows: Math.floor(areaHeight / squareSize),
+      rows: Math.floor(areaHeight / (squareSize + gap)),
     });
   }, []);
 
@@ -66,7 +66,7 @@ export const CubesBackground = forwardRef<
       className={cn("grid gap-4", className)}
       style={{
         gridTemplateColumns: `repeat(${layout.cols}, minmax(0, 1fr))`,
-        gridTemplateRows: `repeat(${layout.rows}, minmax(0, 1fr))`,
+        gridTemplateRows: `repeat(${layout.rows}, auto)`,
       }}
       ref={innerRef}
     >
@@ -77,8 +77,9 @@ export const CubesBackground = forwardRef<
             key={index}
             style={{
               backgroundColor: tailwindColor(...CONFIG.backgrounds.cubes.color),
+              gap: `${CONFIG.backgrounds.cubes.gap}px`,
             }}
-            className="will-change-transform rounded-md"
+            className="will-change-transform rounded-md aspect-square"
           />
         ))}
     </div>

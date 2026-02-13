@@ -52,7 +52,7 @@ function ExperienceItem({
           <li key={feature}>{feature}</li>
         ))}
       </ul>
-      <div className="flex gap-3">
+      <div className="flex gap-3 flex-wrap">
         {item.tags.map((tag) => (
           <div
             key={tag}

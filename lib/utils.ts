@@ -48,3 +48,14 @@ export function parseOklch(color: string): { l: number; c: number; h: number } {
 export function makeOklch(values: { l: number; c: number; h: number }): string {
   return `oklch(${values.l}% ${values.c} ${values.h})`;
 }
+
+export function pointDistance(
+  fromX: number,
+  fromY: number,
+  toX: number,
+  toY: number,
+): number {
+  const dx = fromX - toX;
+  const dy = fromY - toY;
+  return Math.sqrt(dx * dx + dy * dy);
+}

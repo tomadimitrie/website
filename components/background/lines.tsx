@@ -31,10 +31,25 @@ export const LinesBackground = forwardRef<
   }
 
   useEffect(() => {
-    const canvas = canvasRef.current!;
-
     resize();
 
+    init();
+
+    window.addEventListener("resize", resize);
+
+    animate();
+
+    return () => {
+      if (animationFrame.current !== null) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  function init() {
+    const canvas = canvasRef.current!;
     const { spacing } = CONFIG.backgrounds.lines;
 
     for (let x = 0; x < canvas.width; x += spacing) {
@@ -52,19 +67,7 @@ export const LinesBackground = forwardRef<
       points.current.push({ x: 0, y });
       points.current.push({ x: canvas.width, y });
     }
-
-    window.addEventListener("resize", resize);
-
-    animate();
-
-    return () => {
-      if (animationFrame.current !== null) {
-        cancelAnimationFrame(animationFrame.current);
-      }
-
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
+  }
 
   function drawLines() {
     const canvas = canvasRef.current!;

@@ -1,9 +1,16 @@
 "use client";
-import { cn, makeOklch, parseOklch, tailwindColor } from "@/lib/utils";
+import {
+  cn,
+  makeOklch,
+  parseOklch,
+  pointDistance,
+  tailwindColor,
+} from "@/lib/utils";
 import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
 } from "react";
 import { resizeCanvas } from "@/lib/canvas-utils";
@@ -30,6 +37,12 @@ export const GridBackground = forwardRef<
   const grid = useRef<Point[][]>([]);
   const cols = useRef(0);
   const rows = useRef(0);
+
+  const accent = useMemo(() => parseOklch(tailwindColor(color, 300)), [color]);
+  const background = useMemo(
+    () => parseOklch(tailwindColor(color, 950)),
+    [color],
+  );
 
   const { gridSize, mouseRadius, diffusion, decay } = CONFIG.backgrounds.grid;
 
@@ -64,9 +77,7 @@ export const GridBackground = forwardRef<
     const y = Math.round(mouse.current.y / gridSize);
 
     const pt = grid.current[x][y];
-    const dx = mouse.current.x - pt.x;
-    const dy = mouse.current.y - pt.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
+    const dist = pointDistance(mouse.current.x, mouse.current.y, pt.x, pt.y);
 
     if (dist < mouseRadius) {
       grid.current[x][y].val = 1.0;
@@ -111,9 +122,6 @@ export const GridBackground = forwardRef<
   function draw() {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
-
-    const accent = parseOklch(tailwindColor(color, 400));
-    const background = parseOklch(tailwindColor(color, 950));
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 

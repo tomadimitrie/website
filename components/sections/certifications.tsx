@@ -7,7 +7,9 @@ import {
   CubesBackground,
   CubesBackgroundHandle,
 } from "@/components/background/cubes";
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
+import { tailwindColor } from "@/lib/utils";
+import Link from "next/link";
 
 export function CertificationsSection() {
   return (
@@ -33,6 +35,16 @@ function CertificationItem({
     backgroundRef.current!.onMouseMove(event);
   };
 
+  const authorityColor = useMemo(
+    () => tailwindColor(...(item.authority.color as [string, number])),
+    [item.authority.color],
+  );
+
+  const authorityBackgroundColor = useMemo(
+    () => tailwindColor(item.authority.color[0], item.authority.color[1], 20),
+    [item.authority.color],
+  );
+
   return (
     <div
       className="relative group overflow-hidden backdrop-blur-md rounded-md"
@@ -44,17 +56,29 @@ function CertificationItem({
       />
 
       <div className="flex flex-col gap-3 p-7">
-        <div className="flex justify-between font-mono">
+        <div className="flex flex-col md:flex-row md:items-center gap-3 justify-between font-mono">
           <div className="text-primary-foreground font-bold text-xl hover:underline">
-            <a href={item.url}>
+            <Link href={item.url} target="_blank">
               {item.fullTitle} ({item.title})
               <span className="inline-block align-[-4px] ml-2">
                 <ExternalLink />
               </span>
-            </a>
+            </Link>
           </div>
-          <div>
-            {item.authority} | {item.year}
+          <div className="flex items-center gap-3">
+            <Link
+              className="border-2 px-3 py-0.5 font-bold rounded-md hover:underline"
+              style={{
+                borderColor: authorityColor,
+                color: authorityColor,
+                backgroundColor: authorityBackgroundColor,
+              }}
+              target="_blank"
+              href={item.authority.website}
+            >
+              {item.authority.name}
+            </Link>
+            <div>{item.year}</div>
           </div>
         </div>
         <ul className="list-disc list-inside text-muted-foreground flex flex-col gap-2">

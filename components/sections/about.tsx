@@ -20,7 +20,7 @@ export function AboutSection() {
           </div>
           <div className="flex items-center gap-3">
             {CONFIG.socials.map(({ url, Icon }) => (
-              <Link key={url} href={url}>
+              <Link key={url} target="_blank" href={url}>
                 <Icon
                   className="text-muted-foreground hover:text-primary-foreground"
                   size={30}

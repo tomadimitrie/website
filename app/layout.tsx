@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Google_Sans } from "next/font/google";
 import "./globals.css";
 import { NavComponent } from "@/components/nav";
 import { BackgroundComponent } from "@/components/background/background";
 import { CONFIG } from "@/lib/config";
-
-const googleSans = Google_Sans({
-  variable: "--font-google-sans",
-  subsets: ["latin"],
-});
+import { Anta } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Portfolio",
 };
+
+const font = Anta({
+  display: "swap",
+  weight: "400",
+});
 
 export default function RootLayout({
   children,
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${googleSans.className} dark antialiased min-h-screen max-w-screen flex`}
+        className={`${font.className} dark antialiased min-h-screen max-w-screen flex`}
       >
         <BackgroundComponent />
         <main className="flex-1 flex items-center justify-center max-w-full">
