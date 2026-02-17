@@ -583,6 +583,17 @@ export const CONFIG = {
           link: "https://ctf.r0devnull.team/",
         },
         {
+          title: "IoT Hunt 2025",
+          subtitle: (
+            <>
+              Collaborated on organizing IoT Hunt, a CTF-style treasure hunt
+              focused on IoT devices, where participants solved challenges
+              involving routers, smart cameras, lightbulbs and locks.
+            </>
+          ),
+          link: "https://def.camp/competitions/iot-hunt/",
+        },
+        {
           title:
             "Former captain of the CTF team of Technical University of Cluj-Napoca",
           subtitle:
