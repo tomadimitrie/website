@@ -29,10 +29,9 @@ export const LinesBackground = forwardRef<
     let logicalWidth = 0;
     let logicalHeight = 0;
 
-    function resize() {
-      const parent = canvas.parentElement!;
-      logicalWidth = parent.offsetWidth;
-      logicalHeight = parent.offsetHeight;
+    function resize(width: number, height: number) {
+      logicalWidth = width;
+      logicalHeight = height;
 
       resizeCanvas(canvas, logicalWidth, logicalHeight, ctx);
       init();
@@ -84,11 +83,14 @@ export const LinesBackground = forwardRef<
       animationFrame.current = requestAnimationFrame(animate);
     }
 
-    resize();
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { inlineSize: width, blockSize: height } = entry.borderBoxSize[0];
+        resize(width, height);
+      }
+    });
 
-    init();
-
-    window.addEventListener("resize", resize);
+    observer.observe(canvas.parentElement!);
 
     animate();
 
@@ -97,7 +99,7 @@ export const LinesBackground = forwardRef<
         cancelAnimationFrame(animationFrame.current);
       }
 
-      window.removeEventListener("resize", resize);
+      observer.disconnect();
     };
   }, []);
 

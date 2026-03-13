@@ -18,10 +18,9 @@ export function MatrixRain({ className }: { className?: string }) {
     let logicalHeight = 0;
     let drops: number[] = [];
 
-    function resize() {
-      const parent = canvas.parentElement!;
-      logicalWidth = parent.offsetWidth;
-      logicalHeight = parent.offsetHeight;
+    function resize(width: number, height: number) {
+      logicalWidth = width;
+      logicalHeight = height;
 
       resizeCanvas(canvas, logicalWidth, logicalHeight, ctx);
 
@@ -63,13 +62,19 @@ export function MatrixRain({ className }: { className?: string }) {
       }, 33);
     }
 
-    resize();
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { inlineSize: width, blockSize: height } = entry.borderBoxSize[0];
+        resize(width, height);
+      }
+    });
 
-    window.addEventListener("resize", resize);
+    observer.observe(canvas.parentElement!);
+
     animate();
 
     return () => {
-      window.removeEventListener("resize", resize);
+      observer.disconnect();
       if (animationFrame.current !== null) {
         cancelAnimationFrame(animationFrame.current);
       }

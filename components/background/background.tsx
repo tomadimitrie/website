@@ -47,9 +47,9 @@ export function BackgroundComponent() {
     let isRoaming = true;
     let roamAngle = Math.random() * Math.PI * 2;
 
-    function resize() {
-      logicalWidth = window.innerWidth;
-      logicalHeight = window.innerHeight;
+    function resize(width: number, height: number) {
+      logicalWidth = width;
+      logicalHeight = height;
 
       resizeCanvas(mainCanvas, logicalWidth, logicalHeight, mainCtx);
       resizeCanvas(
@@ -184,6 +184,10 @@ export function BackgroundComponent() {
     }
 
     function drawBackground() {
+      if (logicalWidth <= 0 || logicalHeight <= 0) {
+        return;
+      }
+
       mainCtx.clearRect(0, 0, logicalWidth, logicalHeight);
 
       mainCtx.globalAlpha = backgroundAlpha;
@@ -205,13 +209,19 @@ export function BackgroundComponent() {
       }, amountToFreeze);
     }
 
-    resize();
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { inlineSize: width, blockSize: height } = entry.borderBoxSize[0];
+        resize(width, height);
+      }
+    });
+    observer.observe(document.body);
+
     const startX = randomBetween(logicalWidth / 4, (logicalWidth * 3) / 4);
     const startY = randomBetween(logicalHeight / 4, (logicalHeight * 3) / 4);
     mouse.current = { x: startX, y: startY };
     targetMouse.current = { x: startX, y: startY };
 
-    window.addEventListener("resize", resize);
     if (!isMobile) {
       window.addEventListener("mousemove", onMove);
     }
@@ -227,7 +237,7 @@ export function BackgroundComponent() {
       if (!isMobile) {
         window.removeEventListener("mousemove", onMove);
       }
-      window.removeEventListener("resize", resize);
+      observer.disconnect();
     };
   }, []);
 

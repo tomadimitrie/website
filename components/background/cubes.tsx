@@ -24,35 +24,27 @@ export const CubesBackground = forwardRef<
   const centersRef = useRef<{ x: number; y: number }[]>([]);
 
   useEffect(() => {
-    function init() {
-      const { cols, gap, minSquareSize } = CONFIG.backgrounds.cubes;
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        const { cols, gap, minSquareSize } = CONFIG.backgrounds.cubes;
 
-      const area = innerRef.current!;
-      const areaWidth = area.offsetWidth;
-      const areaHeight = area.offsetHeight;
+        const maxPossibleCols = Math.floor(width / (minSquareSize + gap));
+        const actualCols = Math.min(cols, maxPossibleCols) || 1;
+        const actualSquareSize = (width - gap * (actualCols - 1)) / actualCols;
+        const actualRows = Math.floor(height / (actualSquareSize + gap));
 
-      const maxPossibleCols = Math.floor(areaWidth / (minSquareSize + gap));
-      const actualCols = Math.min(cols, maxPossibleCols) || 1;
-      const actualSquareSize =
-        (areaWidth - gap * (actualCols - 1)) / actualCols;
-      const actualRows = Math.floor(areaHeight / (actualSquareSize + gap));
+        setLayout({
+          cols: actualCols,
+          rows: actualRows,
+        });
+      }
+    });
 
-      setLayout({
-        cols: actualCols,
-        rows: actualRows,
-      });
-    }
-
-    function resize() {
-      init();
-    }
-
-    resize();
-
-    window.addEventListener("resize", resize);
+    observer.observe(innerRef.current!);
 
     return () => {
-      window.removeEventListener("resize", resize);
+      observer.disconnect();
     };
   }, []);
 

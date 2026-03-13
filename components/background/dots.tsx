@@ -95,10 +95,9 @@ export const DotsBackground = forwardRef<
     let logicalWidth = 0;
     let logicalHeight = 0;
 
-    function resize() {
-      const parent = canvas.parentElement!;
-      logicalWidth = parent.offsetWidth;
-      logicalHeight = parent.offsetHeight;
+    function resize(width: number, height: number) {
+      logicalWidth = width;
+      logicalHeight = height;
 
       resizeCanvas(canvas, logicalWidth, logicalHeight, ctx);
 
@@ -125,8 +124,15 @@ export const DotsBackground = forwardRef<
       animationFrame.current = requestAnimationFrame(animate);
     }
 
-    resize();
-    window.addEventListener("resize", resize);
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { inlineSize: width, blockSize: height } = entry.borderBoxSize[0];
+        resize(width, height);
+      }
+    });
+
+    observer.observe(canvas.parentElement!);
+
     animate();
 
     return () => {
@@ -134,7 +140,7 @@ export const DotsBackground = forwardRef<
         cancelAnimationFrame(animationFrame.current);
       }
 
-      window.removeEventListener("resize", resize);
+      observer.disconnect();
     };
   }, []);
 
