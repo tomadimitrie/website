@@ -2,7 +2,7 @@ import { SectionWrapper } from "@/components/sections/section";
 import { CONFIG } from "@/lib/config";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MatrixRainBackground } from "@/components/background/matrix-rain-background";
+import { MatrixRain } from "@/components/background/matrix-rain";
 
 export function CvesSection() {
   function cvssInfo(cvss: number): [string, string] {
@@ -25,7 +25,7 @@ export function CvesSection() {
           key={item.title}
           className="relative group overflow-hidden backdrop-blur-md rounded-md"
         >
-          <MatrixRainBackground className="absolute -z-90 w-full h-full top-0 left-0 hidden group-hover:block" />
+          <MatrixRain className="absolute -z-90 w-full h-full top-0 left-0 hidden group-hover:block" />
           <div className="flex flex-col gap-3 p-7">
             <div className="flex justify-between font-mono">
               <div className="text-primary-foreground font-bold text-xl hover:underline">

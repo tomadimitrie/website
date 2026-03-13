@@ -84,16 +84,16 @@ export const CONFIG = {
       maxFont: 35,
       radius: 150,
       backgroundAlpha: 0.3,
-      maxTicks: 100,
-      maxMove: 10,
-      moveDelay: 25,
       amountToFreeze: 2000,
       color: ["emerald", 700] as const,
+      easing: 0.1,
+      roamSpeed: 3,
     },
     cubes: {
       cols: 20,
       color: ["green", 800, 30] as const,
       gap: 16,
+      minSquareSize: 40,
     },
     matrixRain: {
       fontSize: 16,
@@ -131,12 +131,12 @@ export const CONFIG = {
           company: "Bitdefender",
           features: [
             "Contributing on the development of the anti-exploit module, " +
-            "focusing on the integration between the kernel-mode driver and user-mode filter and " +
-            "creating new detections to intercept advanced attack vectors",
+              "focusing on the integration between the kernel-mode driver and user-mode filter and " +
+              "creating new detections to intercept advanced attack vectors",
             "Analyzing and authoring 0-day PoCs to validate detection efficacy and improve the EDR " +
-            "against emerging exploits",
+              "against emerging exploits",
             "Refined antivirus detection capabilities using live threat telemetry, playing a key role " +
-            "in achieving the maximum score at AV-Comparatives ATP 2025",
+              "in achieving the maximum score at AV-Comparatives ATP 2025",
           ],
           tags: [
             "C/C++",
@@ -154,9 +154,9 @@ export const CONFIG = {
           company: "Babes-Bolyai University of Cluj-Napoca",
           features: [
             "Instructed undergraduate students on x86 Assembly fundamentals and CPU internals, guiding " +
-            "students through low-level memory management, register manipulation and instruction set architecture",
+              "students through low-level memory management, register manipulation and instruction set architecture",
             "Designed and graded technical assignments focused on manual memory management, efficient register " +
-            "usage and implementing algorithms at instruction level",
+              "usage and implementing algorithms at instruction level",
           ],
           tags: ["x86 Assembly", "CPU Internals", "Teaching"],
         },
@@ -168,9 +168,9 @@ export const CONFIG = {
             "Institute of Advanced Research in Artificial Intelligence (IARAI)",
           features: [
             "Served in dual capacity as a Security Researcher and Full-Stack Developer, engineering production-grade " +
-            "software and internal tooling",
+              "software and internal tooling",
             "Conducted deep-dive white-box assessments, ensuring security considerations were integrated in the " +
-            "development lifecycle",
+              "development lifecycle",
           ],
           tags: ["White-box penetration testing", "PHP", "React"],
         },
@@ -182,7 +182,7 @@ export const CONFIG = {
           features: [
             "Co-founded and led a startup, balancing mobile/web engineering with rigorous penetration testing",
             "Engineered production-level application and website, and implemented robust defensive strategies " +
-            "based on findings from self-conducted vulnerability research",
+              "based on findings from self-conducted vulnerability research",
           ],
           tags: [
             "White-box penetration testing",

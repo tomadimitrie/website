@@ -15,22 +15,75 @@ export type LinesBackgroundHandle = {
 export const LinesBackground = forwardRef<
   LinesBackgroundHandle,
   { className?: string }
->(({ className }, ref) => {
+>(function LinesBackground({ className }, ref) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const points = useRef<{ x: number; y: number }[]>([]);
   const mouse = useRef({ x: 0, y: 0 });
+  const needsRedraw = useRef(true);
   const animationFrame = useRef<number | null>(null);
 
-  function resize() {
-    const canvas = canvasRef.current!;
-    resizeCanvas(
-      canvas,
-      canvas.parentElement!.offsetWidth,
-      canvas.parentElement!.offsetHeight,
-    );
-  }
-
   useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext("2d")!;
+
+    let logicalWidth = 0;
+    let logicalHeight = 0;
+
+    function resize() {
+      const parent = canvas.parentElement!;
+      logicalWidth = parent.offsetWidth;
+      logicalHeight = parent.offsetHeight;
+
+      resizeCanvas(canvas, logicalWidth, logicalHeight, ctx);
+      init();
+
+      needsRedraw.current = true;
+    }
+
+    function init() {
+      const { spacing } = CONFIG.backgrounds.lines;
+
+      points.current = [];
+
+      for (let x = 0; x < logicalWidth; x += spacing) {
+        points.current.push({
+          x,
+          y: 0,
+        });
+        points.current.push({
+          x,
+          y: logicalHeight,
+        });
+      }
+
+      for (let y = 0; y < logicalHeight; y += spacing) {
+        points.current.push({ x: 0, y });
+        points.current.push({ x: logicalWidth, y });
+      }
+    }
+
+    function drawLines() {
+      const { color, width } = CONFIG.backgrounds.lines;
+
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+      ctx.beginPath();
+      ctx.strokeStyle = tailwindColor(...color);
+      ctx.lineWidth = width;
+      for (const point of points.current) {
+        ctx.moveTo(point.x, point.y);
+        ctx.lineTo(mouse.current.x, mouse.current.y);
+      }
+      ctx.stroke();
+    }
+
+    function animate() {
+      if (needsRedraw.current) {
+        drawLines();
+        needsRedraw.current = false;
+      }
+      animationFrame.current = requestAnimationFrame(animate);
+    }
+
     resize();
 
     init();
@@ -48,49 +101,6 @@ export const LinesBackground = forwardRef<
     };
   }, []);
 
-  function init() {
-    const canvas = canvasRef.current!;
-    const { spacing } = CONFIG.backgrounds.lines;
-
-    for (let x = 0; x < canvas.width; x += spacing) {
-      points.current.push({
-        x,
-        y: 0,
-      });
-      points.current.push({
-        x,
-        y: canvas.height,
-      });
-    }
-
-    for (let y = 0; y < canvas.height; y += spacing) {
-      points.current.push({ x: 0, y });
-      points.current.push({ x: canvas.width, y });
-    }
-  }
-
-  function drawLines() {
-    const canvas = canvasRef.current!;
-    const ctx = canvas.getContext("2d")!;
-
-    const { color, width } = CONFIG.backgrounds.lines;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.strokeStyle = tailwindColor(...color);
-    ctx.lineWidth = width;
-    for (const point of points.current) {
-      ctx.moveTo(point.x, point.y);
-      ctx.lineTo(mouse.current.x, mouse.current.y);
-    }
-    ctx.stroke();
-  }
-
-  function animate() {
-    drawLines();
-    animationFrame.current = requestAnimationFrame(animate);
-  }
-
   useImperativeHandle(ref, () => ({
     onMouseMove: function (event) {
       const rect = canvasRef.current!.parentElement!.getBoundingClientRect();
@@ -98,6 +108,7 @@ export const LinesBackground = forwardRef<
       const y = event.clientY - rect.top;
 
       mouse.current = { x, y };
+      needsRedraw.current = true;
     },
   }));
 

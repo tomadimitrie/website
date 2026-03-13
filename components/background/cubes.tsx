@@ -17,46 +17,76 @@ export type CubesBackgroundHandle = {
 export const CubesBackground = forwardRef<
   CubesBackgroundHandle,
   { className?: string }
->(({ className }, ref) => {
+>(function CubesBackground({ className }, ref) {
   const innerRef = useRef<HTMLDivElement | null>(null);
   const [layout, setLayout] = useState({ rows: 0, cols: 0 });
+  const squaresRef = useRef<HTMLDivElement[]>([]);
+  const centersRef = useRef<{ x: number; y: number }[]>([]);
 
   useEffect(() => {
-    const { cols, gap } = CONFIG.backgrounds.cubes;
+    function init() {
+      const { cols, gap, minSquareSize } = CONFIG.backgrounds.cubes;
 
-    const area = innerRef.current!;
-    const areaWidth = area.offsetWidth;
-    const areaHeight = area.offsetHeight;
-    const squareSize = (areaWidth - gap * (cols - 1)) / cols;
+      const area = innerRef.current!;
+      const areaWidth = area.offsetWidth;
+      const areaHeight = area.offsetHeight;
 
-    setLayout({
-      cols,
-      rows: Math.floor(areaHeight / (squareSize + gap)),
-    });
+      const maxPossibleCols = Math.floor(areaWidth / (minSquareSize + gap));
+      const actualCols = Math.min(cols, maxPossibleCols) || 1;
+      const actualSquareSize =
+        (areaWidth - gap * (actualCols - 1)) / actualCols;
+      const actualRows = Math.floor(areaHeight / (actualSquareSize + gap));
+
+      setLayout({
+        cols: actualCols,
+        rows: actualRows,
+      });
+    }
+
+    function resize() {
+      init();
+    }
+
+    resize();
+
+    window.addEventListener("resize", resize);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
   }, []);
+
+  useEffect(() => {
+    if (layout.rows === 0) {
+      return;
+    }
+
+    const wrapper = innerRef.current!;
+    const squares = Array.from(wrapper.children) as HTMLDivElement[];
+    squaresRef.current = squares;
+
+    centersRef.current = squares.map((square) => {
+      const rect = square.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      };
+    });
+  }, [layout]);
 
   useImperativeHandle(ref, () => ({
     onMouseMove: function (event) {
-      const wrapper = innerRef.current!;
-      const squares = [...wrapper.children] as HTMLDivElement[];
-      const wrapperRect = wrapper.getBoundingClientRect();
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
 
-      const mouseX = event.clientX - wrapperRect.left;
-      const mouseY = event.clientY - wrapperRect.top;
-
-      for (const square of squares) {
-        const rect = square.getBoundingClientRect();
-
-        const squareX = rect.left - wrapperRect.left + rect.width / 2;
-        const squareY = rect.top - wrapperRect.top + rect.height / 2;
-
-        const diffX = mouseX - squareX;
-        const diffY = mouseY - squareY;
+      for (let i = 0; i < squaresRef.current.length; i += 1) {
+        const diffX = mouseX - centersRef.current[i].x;
+        const diffY = mouseY - centersRef.current[i].y;
 
         const radians = Math.atan2(diffY, diffX);
         const angle = (radians * 180) / Math.PI;
 
-        square.style.transform = `rotate(${angle}deg)`;
+        squaresRef.current[i].style.transform = `rotate(${angle}deg)`;
       }
     },
   }));

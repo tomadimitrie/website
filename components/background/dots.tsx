@@ -1,6 +1,7 @@
 import { cn, pointDistance, tailwindColor } from "@/lib/utils";
 import React, {
   forwardRef,
+  RefObject,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -12,99 +13,120 @@ export type DotsBackgroundHandle = {
   onMouseMove: (event: React.MouseEvent) => void;
 };
 
+class Dot {
+  originX: number;
+  originY: number;
+  velocityX: number;
+  velocityY: number;
+
+  constructor(
+    private x: number,
+    private y: number,
+    private mouse: RefObject<{ x: number; y: number }>,
+    private ctx: CanvasRenderingContext2D,
+  ) {
+    this.originX = x;
+    this.originY = y;
+    this.velocityX = 0;
+    this.velocityY = 0;
+  }
+
+  update() {
+    const dx = this.mouse.current.x - this.x;
+    const dy = this.mouse.current.y - this.y;
+    const dist = pointDistance(
+      this.mouse.current.x,
+      this.mouse.current.y,
+      this.x,
+      this.y,
+    );
+    const { mouseRadius, forceFactor, returnSpeed, friction } =
+      CONFIG.backgrounds.dots;
+
+    if (dist < mouseRadius) {
+      const angle = Math.atan2(dy, dx);
+      const force = (mouseRadius - dist) / mouseRadius;
+      const push = force * forceFactor;
+
+      this.velocityX -= Math.cos(angle) * push;
+      this.velocityY -= Math.sin(angle) * push;
+    }
+
+    const dxOrigin = this.originX - this.x;
+    const dyOrigin = this.originY - this.y;
+
+    this.velocityX += dxOrigin * returnSpeed;
+    this.velocityY += dyOrigin * returnSpeed;
+
+    this.velocityX *= friction;
+    this.velocityY *= friction;
+
+    this.x += this.velocityX;
+    this.y += this.velocityY;
+  }
+
+  draw() {
+    const { radius, color } = CONFIG.backgrounds.dots;
+    const actualColor = tailwindColor(...color);
+
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+    this.ctx.fillStyle = actualColor;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+}
+
 export const DotsBackground = forwardRef<
   DotsBackgroundHandle,
   { className?: string }
->(({ className }, ref) => {
+>(function DotsBackground({ className }, ref) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const dots = useRef<Dot[]>([]);
   const mouse = useRef({ x: 0, y: 0 });
   const animationFrame = useRef<number | null>(null);
 
-  class Dot {
-    x: number;
-    y: number;
-    originX: number;
-    originY: number;
-    velocityX: number;
-    velocityY: number;
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext("2d")!;
 
-    constructor(x: number, y: number) {
-      this.x = x;
-      this.y = y;
-      this.originX = x;
-      this.originY = y;
-      this.velocityX = 0;
-      this.velocityY = 0;
+    const { gap } = CONFIG.backgrounds.dots;
+
+    let logicalWidth = 0;
+    let logicalHeight = 0;
+
+    function resize() {
+      const parent = canvas.parentElement!;
+      logicalWidth = parent.offsetWidth;
+      logicalHeight = parent.offsetHeight;
+
+      resizeCanvas(canvas, logicalWidth, logicalHeight, ctx);
+
+      init();
     }
 
-    update() {
-      const dx = mouse.current.x - this.x;
-      const dy = mouse.current.y - this.y;
-      const dist = pointDistance(
-        mouse.current.x,
-        mouse.current.y,
-        this.x,
-        this.y,
-      );
-      const { mouseRadius, forceFactor, returnSpeed, friction } =
-        CONFIG.backgrounds.dots;
+    function init() {
+      dots.current = [];
 
-      if (dist < mouseRadius) {
-        const angle = Math.atan2(dy, dx);
-        const force = (mouseRadius - dist) / mouseRadius;
-        const push = force * forceFactor;
+      for (let x = gap / 2; x < logicalWidth; x += gap) {
+        for (let y = gap / 2; y < logicalHeight; y += gap) {
+          dots.current.push(new Dot(x, y, mouse, ctx));
+        }
+      }
+    }
 
-        this.velocityX -= Math.cos(angle) * push;
-        this.velocityY -= Math.sin(angle) * push;
+    function animate() {
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+      for (const dot of dots.current) {
+        dot.update();
+        dot.draw();
       }
 
-      const dxOrigin = this.originX - this.x;
-      const dyOrigin = this.originY - this.y;
-
-      this.velocityX += dxOrigin * returnSpeed;
-      this.velocityY += dyOrigin * returnSpeed;
-
-      this.velocityX *= friction;
-      this.velocityY *= friction;
-
-      this.x += this.velocityX;
-      this.y += this.velocityY;
+      animationFrame.current = requestAnimationFrame(animate);
     }
 
-    draw() {
-      const canvas = canvasRef.current!;
-      const ctx = canvas.getContext("2d")!;
-
-      const { radius, color } = CONFIG.backgrounds.dots;
-      const actualColor = tailwindColor(...color);
-
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = actualColor;
-      ctx.fill();
-      ctx.closePath();
-    }
-  }
-
-  function resize() {
-    const canvas = canvasRef.current!;
-    resizeCanvas(
-      canvas,
-      canvas.parentElement!.offsetWidth,
-      canvas.parentElement!.offsetHeight,
-    );
-  }
-
-  useEffect(() => {
     resize();
-
-    init();
-
-    const {} = CONFIG.backgrounds.dots;
-
     window.addEventListener("resize", resize);
-
     animate();
 
     return () => {
@@ -115,29 +137,6 @@ export const DotsBackground = forwardRef<
       window.removeEventListener("resize", resize);
     };
   }, []);
-
-  function init() {
-    const canvas = canvasRef.current!;
-    const { gap } = CONFIG.backgrounds.dots;
-    for (let x = gap / 2; x < canvas.width; x += gap) {
-      for (let y = gap / 2; y < canvas.height; y += gap) {
-        dots.current.push(new Dot(x, y));
-      }
-    }
-  }
-
-  function animate() {
-    const canvas = canvasRef.current!;
-    const ctx = canvas.getContext("2d")!;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const dot of dots.current) {
-      dot.update();
-      dot.draw();
-    }
-
-    animationFrame.current = requestAnimationFrame(animate);
-  }
 
   useImperativeHandle(ref, () => ({
     onMouseMove: function (event) {

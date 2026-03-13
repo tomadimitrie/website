@@ -1,38 +1,42 @@
 "use client";
+
 import { useEffect, useRef } from "react";
 import { cn, randomFrom, tailwindColor } from "@/lib/utils";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
 
-export function MatrixRainBackground({ className }: { className?: string }) {
+export function MatrixRain({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  function resize() {
-    const canvas = canvasRef.current!;
-
-    resizeCanvas(
-      canvas,
-      canvas.parentElement!.offsetWidth,
-      canvas.parentElement!.offsetHeight,
-    );
-  }
+  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const animationFrame = useRef<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
 
-    resize();
+    let logicalWidth = 0;
+    let logicalHeight = 0;
+    let drops: number[] = [];
+
+    function resize() {
+      const parent = canvas.parentElement!;
+      logicalWidth = parent.offsetWidth;
+      logicalHeight = parent.offsetHeight;
+
+      resizeCanvas(canvas, logicalWidth, logicalHeight, ctx);
+
+      const columns = Math.ceil(canvas.width / fontSize);
+      drops = Array.from({ length: columns })
+        .fill(null)
+        .map(() => Math.floor(Math.random() * -100));
+    }
 
     const { fontSize, chars, color } = CONFIG.backgrounds.matrixRain;
-    const columns = canvas.width / fontSize;
-    const drops = Array.from({ length: columns })
-      .fill(null)
-      .map(() => Math.floor(Math.random() * -100));
 
     function draw() {
       ctx.globalCompositeOperation = "destination-out";
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, logicalWidth, logicalHeight);
 
       ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = tailwindColor(...color);
@@ -44,7 +48,7 @@ export function MatrixRainBackground({ className }: { className?: string }) {
           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
         }
 
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) {
+        if (drops[i] * fontSize > logicalHeight && Math.random() > 0.95) {
           drops[i] = Math.floor(Math.random() * -50);
         }
 
@@ -54,14 +58,24 @@ export function MatrixRainBackground({ className }: { className?: string }) {
 
     function animate() {
       draw();
-      setTimeout(() => requestAnimationFrame(animate), 33);
+      timeout.current = setTimeout(() => {
+        animationFrame.current = requestAnimationFrame(animate);
+      }, 33);
     }
-    animate();
+
+    resize();
 
     window.addEventListener("resize", resize);
+    animate();
 
     return () => {
       window.removeEventListener("resize", resize);
+      if (animationFrame.current !== null) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+      if (timeout.current !== null) {
+        clearTimeout(timeout.current);
+      }
     };
   }, []);
 

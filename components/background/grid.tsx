@@ -1,5 +1,6 @@
 "use client";
 import {
+  clamp,
   cn,
   makeOklch,
   parseOklch,
@@ -30,7 +31,7 @@ interface Point {
 export const GridBackground = forwardRef<
   GridBackgroundHandle,
   { className?: string; color: string }
->(({ className, color }, ref) => {
+>(function GridBackground({ className, color }, ref) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const animationFrame = useRef<number | null>(null);
@@ -44,156 +45,175 @@ export const GridBackground = forwardRef<
     [color],
   );
 
-  const { gridSize, mouseRadius, diffusion, decay } = CONFIG.backgrounds.grid;
-
-  function resize() {
-    const canvas = canvasRef.current!;
-    resizeCanvas(
-      canvas,
-      canvas.parentElement!.offsetWidth,
-      canvas.parentElement!.offsetHeight,
-    );
-    initGrid();
-  }
-
-  function initGrid() {
-    const canvas = canvasRef.current!;
-
-    cols.current = Math.ceil(canvas.width / gridSize) + 1;
-    rows.current = Math.ceil(canvas.height / gridSize) + 1;
-
-    grid.current = [];
-    for (let i = 0; i < cols.current; i++) {
-      const col: Point[] = [];
-      for (let j = 0; j < rows.current; j++) {
-        col.push({ x: i * gridSize, y: j * gridSize, val: 0, nextVal: 0 });
-      }
-      grid.current.push(col);
-    }
-  }
-
-  function update() {
-    const x = Math.round(mouse.current.x / gridSize);
-    const y = Math.round(mouse.current.y / gridSize);
-
-    const pt = grid.current[x][y];
-    const dist = pointDistance(mouse.current.x, mouse.current.y, pt.x, pt.y);
-
-    if (dist < mouseRadius) {
-      grid.current[x][y].val = 1.0;
-    }
-
-    for (let i = 0; i < cols.current; i++) {
-      for (let j = 0; j < rows.current; j++) {
-        const cell = grid.current[i][j];
-        let neighborSum = 0;
-        let neighborCount = 0;
-
-        if (i > 0) {
-          neighborSum += grid.current[i - 1][j].val;
-          neighborCount += 1;
-        }
-        if (i < cols.current - 1) {
-          neighborSum += grid.current[i + 1][j].val;
-          neighborCount += 1;
-        }
-        if (j > 0) {
-          neighborSum += grid.current[i][j - 1].val;
-          neighborCount += 1;
-        }
-        if (j < rows.current - 1) {
-          neighborSum += grid.current[i][j + 1].val;
-          neighborCount += 1;
-        }
-
-        const average = neighborSum / neighborCount;
-        cell.nextVal =
-          (cell.val * (1 - diffusion) + average * diffusion) * decay;
-      }
-    }
-
-    for (let i = 0; i < cols.current; i++) {
-      for (let j = 0; j < rows.current; j++) {
-        grid.current[i][j].val = grid.current[i][j].nextVal;
-      }
-    }
-  }
-
-  function draw() {
+  useEffect(() => {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const { gridSize, mouseRadius, diffusion, decay } = CONFIG.backgrounds.grid;
 
-    function getColor(val: number) {
-      if (val < 0.01) {
-        return makeOklch(background);
-      }
+    let logicalWidth = 0;
+    let logicalHeight = 0;
 
-      function interpolate(key: keyof typeof accent) {
-        return accent[key] * val + background[key] * (1 - val);
-      }
+    function resize() {
+      const parent = canvas.parentElement!;
+      logicalWidth = parent.offsetWidth;
+      logicalHeight = parent.offsetHeight;
 
-      return makeOklch({
-        l: interpolate("l"),
-        c: interpolate("c"),
-        h: interpolate("h"),
-      });
+      resizeCanvas(canvas, logicalWidth, logicalHeight, ctx);
+      initGrid();
     }
 
-    ctx.lineWidth = 1;
+    function initGrid() {
+      const newCols = Math.ceil(logicalWidth / gridSize) + 1;
+      const newRows = Math.ceil(logicalHeight / gridSize) + 1;
+      const newGrid: Point[][] = [];
 
-    function drawLine(from: Point, to: Point) {
-      ctx.beginPath();
-      ctx.moveTo(from.x, from.y);
-      ctx.lineTo(to.x, to.y);
+      for (let i = 0; i < newCols; i++) {
+        const col: Point[] = [];
+        for (let j = 0; j < newRows; j++) {
+          col.push({ x: i * gridSize, y: j * gridSize, val: 0, nextVal: 0 });
+        }
+        newGrid.push(col);
+      }
 
-      const gradient = ctx.createLinearGradient(from.x, from.y, to.x, to.y);
-      gradient.addColorStop(0, getColor(from.val));
-      gradient.addColorStop(1, getColor(to.val));
-
-      ctx.strokeStyle = gradient;
-      ctx.stroke();
+      cols.current = newCols;
+      rows.current = newRows;
+      grid.current = newGrid;
     }
 
-    for (let i = 0; i < cols.current; i++) {
-      for (let j = 0; j < rows.current - 1; j++) {
-        const from = grid.current[i][j];
-        const to = grid.current[i][j + 1];
+    function update() {
+      if (grid.current.length === 0) {
+        return;
+      }
 
-        drawLine(from, to);
+      const x = clamp(
+        Math.round(mouse.current.x / gridSize),
+        0,
+        cols.current - 1,
+      );
+      const y = clamp(
+        Math.round(mouse.current.y / gridSize),
+        0,
+        rows.current - 1,
+      );
+
+      const pt = grid.current[x][y];
+      const dist = pointDistance(mouse.current.x, mouse.current.y, pt.x, pt.y);
+
+      if (dist < mouseRadius) {
+        grid.current[x][y].val = 1.0;
+      }
+
+      for (let i = 0; i < cols.current; i++) {
+        for (let j = 0; j < rows.current; j++) {
+          const cell = grid.current[i][j];
+          let neighborSum = 0;
+          let neighborCount = 0;
+
+          if (i > 0) {
+            neighborSum += grid.current[i - 1][j].val;
+            neighborCount += 1;
+          }
+          if (i < cols.current - 1) {
+            neighborSum += grid.current[i + 1][j].val;
+            neighborCount += 1;
+          }
+          if (j > 0) {
+            neighborSum += grid.current[i][j - 1].val;
+            neighborCount += 1;
+          }
+          if (j < rows.current - 1) {
+            neighborSum += grid.current[i][j + 1].val;
+            neighborCount += 1;
+          }
+
+          const average = neighborSum / neighborCount;
+          cell.nextVal =
+            (cell.val * (1 - diffusion) + average * diffusion) * decay;
+        }
+      }
+
+      for (let i = 0; i < cols.current; i++) {
+        for (let j = 0; j < rows.current; j++) {
+          grid.current[i][j].val = grid.current[i][j].nextVal;
+        }
       }
     }
 
-    for (let j = 0; j < rows.current; j++) {
-      for (let i = 0; i < cols.current - 1; i++) {
-        const from = grid.current[i][j];
-        const to = grid.current[i + 1][j];
+    function draw() {
+      if (grid.current.length === 0) {
+        return;
+      }
 
-        drawLine(from, to);
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+
+      function getColor(val: number) {
+        if (val < 0.01) {
+          return makeOklch(background);
+        }
+
+        function interpolate(key: keyof typeof accent) {
+          return accent[key] * val + background[key] * (1 - val);
+        }
+
+        return makeOklch({
+          l: interpolate("l"),
+          c: interpolate("c"),
+          h: interpolate("h"),
+        });
+      }
+
+      ctx.lineWidth = 1;
+
+      function drawLine(from: Point, to: Point) {
+        ctx.beginPath();
+        ctx.moveTo(from.x, from.y);
+        ctx.lineTo(to.x, to.y);
+
+        const gradient = ctx.createLinearGradient(from.x, from.y, to.x, to.y);
+        gradient.addColorStop(0, getColor(from.val));
+        gradient.addColorStop(1, getColor(to.val));
+
+        ctx.strokeStyle = gradient;
+        ctx.stroke();
+      }
+
+      for (let i = 0; i < cols.current; i++) {
+        for (let j = 0; j < rows.current - 1; j++) {
+          const from = grid.current[i][j];
+          const to = grid.current[i][j + 1];
+
+          drawLine(from, to);
+        }
+      }
+
+      for (let j = 0; j < rows.current; j++) {
+        for (let i = 0; i < cols.current - 1; i++) {
+          const from = grid.current[i][j];
+          const to = grid.current[i + 1][j];
+
+          drawLine(from, to);
+        }
       }
     }
-  }
 
-  function animate() {
-    update();
-    draw();
-    animationFrame.current = requestAnimationFrame(animate);
-  }
+    function animate() {
+      update();
+      draw();
+      animationFrame.current = requestAnimationFrame(animate);
+    }
 
-  useEffect(() => {
     resize();
-
+    window.addEventListener("resize", resize);
     animate();
 
-    window.addEventListener("resize", resize);
     return () => {
       if (animationFrame.current != null) {
         cancelAnimationFrame(animationFrame.current);
       }
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [accent, background]);
 
   useImperativeHandle(ref, () => ({
     onMouseMove: function (event) {
