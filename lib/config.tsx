@@ -131,12 +131,12 @@ export const CONFIG = {
           company: "Bitdefender",
           features: [
             "Contributing on the development of the anti-exploit module, " +
-              "focusing on the integration between the kernel-mode driver and user-mode filter and " +
-              "creating new detections to intercept advanced attack vectors",
+            "focusing on the integration between the kernel-mode driver and user-mode filter and " +
+            "creating new detections to intercept advanced attack vectors",
             "Analyzing and authoring 0-day PoCs to validate detection efficacy and improve the EDR " +
-              "against emerging exploits",
+            "against emerging exploits",
             "Refined antivirus detection capabilities using live threat telemetry, playing a key role " +
-              "in achieving the maximum score at AV-Comparatives ATP 2025",
+            "in achieving the maximum score at AV-Comparatives ATP 2025",
           ],
           tags: [
             "C/C++",
@@ -154,9 +154,9 @@ export const CONFIG = {
           company: "Babes-Bolyai University of Cluj-Napoca",
           features: [
             "Instructed undergraduate students on x86 Assembly fundamentals and CPU internals, guiding " +
-              "students through low-level memory management, register manipulation and instruction set architecture",
+            "students through low-level memory management, register manipulation and instruction set architecture",
             "Designed and graded technical assignments focused on manual memory management, efficient register " +
-              "usage and implementing algorithms at instruction level",
+            "usage and implementing algorithms at instruction level",
           ],
           tags: ["x86 Assembly", "CPU Internals", "Teaching"],
         },
@@ -168,9 +168,9 @@ export const CONFIG = {
             "Institute of Advanced Research in Artificial Intelligence (IARAI)",
           features: [
             "Served in dual capacity as a Security Researcher and Full-Stack Developer, engineering production-grade " +
-              "software and internal tooling",
+            "software and internal tooling",
             "Conducted deep-dive white-box assessments, ensuring security considerations were integrated in the " +
-              "development lifecycle",
+            "development lifecycle",
           ],
           tags: ["White-box penetration testing", "PHP", "React"],
         },
@@ -182,7 +182,7 @@ export const CONFIG = {
           features: [
             "Co-founded and led a startup, balancing mobile/web engineering with rigorous penetration testing",
             "Engineered production-level application and website, and implemented robust defensive strategies " +
-              "based on findings from self-conducted vulnerability research",
+            "based on findings from self-conducted vulnerability research",
           ],
           tags: [
             "White-box penetration testing",
@@ -358,10 +358,10 @@ export const CONFIG = {
     projects: {
       items: [
         {
-          title: "Palisade",
+          title: "ES-EDR-Inject",
           shortDescription: "Process Injection-based EDR",
           description:
-            "Palisade is a real-time security agent built on top of Apple Endpoint Security Framework (ES) that performs " +
+            "ES-EDR-Inject is a real-time security agent built on top of Apple Endpoint Security Framework (ES) that performs " +
             "deep process introspection through dynamic dylib injection and API hooking. Beyond process-level monitoring, " +
             "the tool implements a policy engine that evaluates and denies unwanted system events based on user rules, and " +
             "shows live events in a structured activity table.",
@@ -374,18 +374,18 @@ export const CONFIG = {
           ],
           tags: ["Apple Endpoint Security", "Dylib Injection", "API Hooking"],
           source: {
-            link: "https://github.com/tomadimitrie/palisade",
+            link: "https://github.com/tomadimitrie/es-edr-inject",
             Icon: Github,
-            text: "Code (coming soon)",
+            text: "Code",
           },
           Icon: Shield,
           color: "indigo",
         },
         {
-          title: "Kestrel",
+          title: "ES-EDR-Behavior",
           shortDescription: "Behavioral Heuristic-based EDR",
           description:
-            "Kestrel is an Apple Endpoint Security Framework client, capable of proactively identifying " +
+            "ES-EDR-Behavior is an Apple Endpoint Security Framework client, capable of proactively identifying " +
             "and blocking malicious activity. It features a sophisticated behavioral detection engine based on modular " +
             "heuristics, filtering and chaining complex system events in real time.",
           features: [
@@ -396,9 +396,9 @@ export const CONFIG = {
           ],
           tags: ["Apple Endpoint Security", "Behavioral Detection Engine"],
           source: {
-            link: "https://github.com/tomadimitrie/kestrel",
+            link: "https://github.com/tomadimitrie/es-edr-behavior",
             Icon: Github,
-            text: "Code (coming soon)",
+            text: "Code",
           },
           Icon: Shield,
           color: "blue",
@@ -451,7 +451,8 @@ export const CONFIG = {
           shortDescription: "Operating System",
           description:
             "x86 64-bit operating system featuring a terminal console " +
-            "and some external hardware support.",
+            "and some external hardware support. Originally written in C, it is " +
+            "now undergoing a rewrite in Zig, and not all features have been ported yet.",
           features: [
             "ATA PIO mode support",
             "Heap allocator",
@@ -461,9 +462,9 @@ export const CONFIG = {
           ],
           tags: ["Operating System", "x86_64", "ATA", "SMP"],
           source: {
-            link: "https://github.com/tomadimitrie/mini-os",
+            link: "https://github.com/tomadimitrie/minios",
             Icon: Github,
-            text: "Code (coming soon)",
+            text: "Code",
           },
           Icon: Cpu,
           color: "green",
@@ -481,7 +482,7 @@ export const CONFIG = {
           ],
           tags: ["Hypervisor", "Intel VT-X", "Introspection"],
           source: {
-            link: "https://github.com/tomadimitrie/mini-os",
+            link: "https://github.com/tomadimitrie/minihv",
             Icon: Github,
             text: "Code (coming soon)",
           },
@@ -501,7 +502,7 @@ export const CONFIG = {
           ],
           tags: ["Next.js", "TypeScript", "Canvas Animations"],
           source: {
-            link: "https://github.com/tomadimitrie/portfolio",
+            link: "https://github.com/tomadimitrie/website",
             Icon: Github,
             text: "Code",
           },
