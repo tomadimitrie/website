@@ -141,38 +141,44 @@ export function BackgroundComponent() {
     }
 
     function updateSpotlight() {
-      if (isRoaming) {
-        roamAngle += randomBetween(-0.03, 0.03);
+      const dx = targetMouse.current.x - mouse.current.x;
+      const dy = targetMouse.current.y - mouse.current.y;
 
-        let nextX = targetMouse.current.x + Math.cos(roamAngle) * roamSpeed;
-        let nextY = targetMouse.current.y + Math.sin(roamAngle) * roamSpeed;
+      if (isRoaming || Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        if (isRoaming) {
+          roamAngle += randomBetween(-0.03, 0.03);
 
-        const padding = radius;
-        let bounced = false;
+          let nextX = targetMouse.current.x + Math.cos(roamAngle) * roamSpeed;
+          let nextY = targetMouse.current.y + Math.sin(roamAngle) * roamSpeed;
 
-        if (nextX <= padding || nextX >= logicalWidth - padding) {
-          roamAngle = Math.PI - roamAngle;
-          bounced = true;
+          const padding = radius;
+          let bounced = false;
+
+          if (nextX <= padding || nextX >= logicalWidth - padding) {
+            roamAngle = Math.PI - roamAngle;
+            bounced = true;
+          }
+
+          if (nextY <= padding || nextY >= logicalHeight - padding) {
+            roamAngle = -roamAngle;
+            bounced = true;
+          }
+
+          if (bounced) {
+            nextX = targetMouse.current.x + Math.cos(roamAngle) * roamSpeed;
+            nextY = targetMouse.current.y + Math.sin(roamAngle) * roamSpeed;
+          }
+
+          targetMouse.current.x = clamp(nextX, 0, logicalWidth);
+          targetMouse.current.y = clamp(nextY, 0, logicalHeight);
         }
 
-        if (nextY <= padding || nextY >= logicalHeight - padding) {
-          roamAngle = -roamAngle;
-          bounced = true;
-        }
+        mouse.current.x += dx * easing;
+        mouse.current.y += dy * easing;
 
-        if (bounced) {
-          nextX = targetMouse.current.x + Math.cos(roamAngle) * roamSpeed;
-          nextY = targetMouse.current.y + Math.sin(roamAngle) * roamSpeed;
-        }
-
-        targetMouse.current.x = clamp(nextX, 0, logicalWidth);
-        targetMouse.current.y = clamp(nextY, 0, logicalHeight);
+        drawBackground();
       }
 
-      mouse.current.x += (targetMouse.current.x - mouse.current.x) * easing;
-      mouse.current.y += (targetMouse.current.y - mouse.current.y) * easing;
-
-      drawBackground();
       animationFrame.current = requestAnimationFrame(updateSpotlight);
     }
 
@@ -244,7 +250,7 @@ export function BackgroundComponent() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 -z-99 w-full h-full"
+      className="fixed top-0 left-0 -z-99 w-full h-full pointer-events-none"
     />
   );
 }
