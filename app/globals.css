@@ -138,13 +138,13 @@
   }
 }
 
-@layer components {
-  @property --angle {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-  }
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 
+@layer components {
   .snake-border {
     --snake-border-width: 3px;
 

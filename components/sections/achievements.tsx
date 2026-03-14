@@ -2,12 +2,12 @@
 
 import { SectionWrapper } from "@/components/sections/section";
 import { CONFIG } from "@/lib/config";
-import { CubesBackgroundHandle } from "@/components/background/cubes";
-import React, { useRef } from "react";
+import React from "react";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { DotsBackground } from "@/components/background/dots";
+import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 
 export function AchievementsSection() {
   return (
@@ -24,11 +24,8 @@ function AchievementItem({
 }: {
   item: (typeof CONFIG.sections.achievements.items)[number];
 }) {
-  const backgroundRef = useRef<CubesBackgroundHandle | null>(null);
-
-  const onMouseMove = (event: React.MouseEvent) => {
-    backgroundRef.current!.onMouseMove(event);
-  };
+  const { containerRef, mouseRef, isHovered } =
+    useInteractiveBackground<HTMLDivElement>();
 
   function link() {
     const inner = (
@@ -59,13 +56,15 @@ function AchievementItem({
 
   return (
     <div
-      className="relative group overflow-hidden backdrop-blur-md rounded-md"
-      onMouseMove={onMouseMove}
+      className="relative overflow-hidden backdrop-blur-md rounded-md"
+      ref={containerRef}
     >
-      <DotsBackground
-        className="absolute w-full h-full top-0 left-0 -z-10 opacity-0 group-hover:opacity-100"
-        ref={backgroundRef}
-      />
+      {isHovered && (
+        <DotsBackground
+          className="absolute w-full h-full top-0 left-0 -z-10"
+          mouseRef={mouseRef}
+        />
+      )}
 
       <div className="flex flex-col items-start gap-3 p-7">
         {link()}

@@ -3,13 +3,11 @@
 import { SectionWrapper } from "@/components/sections/section";
 import { CONFIG } from "@/lib/config";
 import { ExternalLink } from "lucide-react";
-import {
-  CubesBackground,
-  CubesBackgroundHandle,
-} from "@/components/background/cubes";
-import React, { useMemo, useRef } from "react";
+import { CubesBackground } from "@/components/background/cubes";
+import React, { useMemo } from "react";
 import { tailwindColor } from "@/lib/utils";
 import Link from "next/link";
+import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 
 export function CertificationsSection() {
   return (
@@ -29,11 +27,8 @@ function CertificationItem({
 }: {
   item: (typeof CONFIG.sections.certifications.items)[number];
 }) {
-  const backgroundRef = useRef<CubesBackgroundHandle | null>(null);
-
-  const onMouseMove = (event: React.MouseEvent) => {
-    backgroundRef.current!.onMouseMove(event);
-  };
+  const { isHovered, subscribeToMouse, containerRef } =
+    useInteractiveBackground<HTMLDivElement>();
 
   const authorityColor = useMemo(
     () => tailwindColor(...(item.authority.color as [string, number])),
@@ -47,13 +42,15 @@ function CertificationItem({
 
   return (
     <div
-      className="relative group overflow-hidden backdrop-blur-md rounded-md"
-      onMouseMove={onMouseMove}
+      className="relative overflow-hidden backdrop-blur-md rounded-md"
+      ref={containerRef}
     >
-      <CubesBackground
-        className="absolute w-full h-full top-0 left-0 -z-10 opacity-0 group-hover:opacity-100"
-        ref={backgroundRef}
-      />
+      {isHovered && (
+        <CubesBackground
+          className="absolute w-full h-full top-0 left-0 -z-10"
+          subscribeToMouse={subscribeToMouse}
+        />
+      )}
 
       <div className="flex flex-col gap-3 p-7">
         <div className="flex flex-col md:flex-row md:items-center gap-3 justify-between font-mono">

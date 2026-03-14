@@ -5,9 +5,9 @@ import { CONFIG } from "@/lib/config";
 import { TimelineLine } from "@/components/ui/timeline-line";
 import { cn } from "@/lib/utils";
 import { match } from "ts-pattern";
-import React, { useRef } from "react";
-import { CubesBackgroundHandle } from "@/components/background/cubes";
+import React from "react";
 import { LinesBackground } from "@/components/background/lines";
+import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 
 export function EducationSection() {
   return (
@@ -19,7 +19,7 @@ export function EducationSection() {
           .otherwise(() => "normal" as const);
 
         return (
-          <div key={item.university} className="group flex gap-5 items-stretch">
+          <div key={item.university} className="flex gap-5 items-stretch">
             <TimelineLine type={type} />
             <EducationItem item={item} isLast={type === "last"} />
           </div>
@@ -36,24 +36,24 @@ function EducationItem({
   item: (typeof CONFIG.sections.education.items)[number];
   isLast: boolean;
 }) {
-  const backgroundRef = useRef<CubesBackgroundHandle | null>(null);
-
-  const onMouseMove = (event: React.MouseEvent) => {
-    backgroundRef.current!.onMouseMove(event);
-  };
+  const { containerRef, mouseRef, isHovered, subscribeToMouse } =
+    useInteractiveBackground<HTMLDivElement>();
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         "flex flex-col gap-4 p-7 w-full backdrop-blur-md",
         !isLast && "mb-5",
       )}
-      onMouseMove={onMouseMove}
     >
-      <LinesBackground
-        className="absolute w-full h-full top-0 left-0 -z-10 hidden group-hover:block"
-        ref={backgroundRef}
-      />
+      {isHovered && (
+        <LinesBackground
+          className="absolute w-full h-full top-0 left-0 -z-10"
+          mouseRef={mouseRef}
+          subscribeToMouse={subscribeToMouse}
+        />
+      )}
       <div className="text-muted-foreground text-md">
         {item.from} - {item.to}
       </div>

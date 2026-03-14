@@ -7,19 +7,9 @@ import {
   pointDistance,
   tailwindColor,
 } from "@/lib/utils";
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-} from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
-
-export type GridBackgroundHandle = {
-  onMouseMove: (event: React.MouseEvent) => void;
-};
 
 interface Point {
   x: number;
@@ -28,12 +18,16 @@ interface Point {
   nextVal: number;
 }
 
-export const GridBackground = forwardRef<
-  GridBackgroundHandle,
-  { className?: string; color: string }
->(function GridBackground({ className, color }, ref) {
+export function GridBackground({
+  className,
+  color,
+  mouseRef,
+}: {
+  className?: string;
+  color: string;
+  mouseRef: React.RefObject<{ x: number; y: number }>;
+}) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const mouse = useRef({ x: 0, y: 0 });
   const animationFrame = useRef<number | null>(null);
   const grid = useRef<Point[][]>([]);
   const cols = useRef(0);
@@ -86,18 +80,23 @@ export const GridBackground = forwardRef<
       }
 
       const x = clamp(
-        Math.round(mouse.current.x / gridSize),
+        Math.round(mouseRef.current.x / gridSize),
         0,
         cols.current - 1,
       );
       const y = clamp(
-        Math.round(mouse.current.y / gridSize),
+        Math.round(mouseRef.current.y / gridSize),
         0,
         rows.current - 1,
       );
 
       const pt = grid.current[x][y];
-      const dist = pointDistance(mouse.current.x, mouse.current.y, pt.x, pt.y);
+      const dist = pointDistance(
+        mouseRef.current.x,
+        mouseRef.current.y,
+        pt.x,
+        pt.y,
+      );
 
       if (dist < mouseRadius) {
         grid.current[x][y].val = 1.0;
@@ -219,17 +218,7 @@ export const GridBackground = forwardRef<
       }
       observer.disconnect();
     };
-  }, [accent, background]);
-
-  useImperativeHandle(ref, () => ({
-    onMouseMove: function (event) {
-      const rect = canvasRef.current!.parentElement!.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
-      mouse.current = { x, y };
-    },
-  }));
+  }, [accent, background, mouseRef]);
 
   return <canvas className={cn(className)} ref={canvasRef} />;
-});
+}

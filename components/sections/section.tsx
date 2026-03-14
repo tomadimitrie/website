@@ -18,7 +18,7 @@ export function SectionWrapper({
             id={title.toLowerCase()}
             className="font-mono font-bold text-xl text-muted-foreground uppercase mb-5"
           >
-            <span className="text-primary-foreground text-2xl">// </span>
+            <span className="text-primary-foreground text-2xl">{"// "}</span>
             {title}
           </div>
         </>

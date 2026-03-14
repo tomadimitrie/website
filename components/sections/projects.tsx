@@ -6,10 +6,9 @@ import { clamp, cn, tailwindColor } from "@/lib/utils";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { CubesBackgroundHandle } from "@/components/background/cubes";
 import { GridBackground } from "@/components/background/grid";
 import { useHover } from "@/hooks/useHover";
-import { useLazyHoverEffect } from "@/hooks/useLazyHoverEffect";
+import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 
 export function ProjectsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -230,12 +229,8 @@ function ProjectItem({
   );
 
   const linkHover = useHover(accent);
-  const { isHovered, effectRef, containerHandlers } =
-    useLazyHoverEffect<CubesBackgroundHandle>();
-
-  const onMouseMove = (event: React.MouseEvent) => {
-    effectRef.current!.onMouseMove(event);
-  };
+  const { containerRef, isHovered, mouseRef } =
+    useInteractiveBackground<HTMLDivElement>();
 
   return (
     <div
@@ -246,14 +241,14 @@ function ProjectItem({
       onClick={onClick}
     >
       <div
-        className="h-50 flex flex-col relative bg-background border-b border-border group"
-        {...containerHandlers}
+        className="h-50 flex flex-col relative bg-background border-b border-border"
+        ref={containerRef}
       >
         {isHovered && (
           <GridBackground
-            className="absolute z-5 w-full h-full top-0 left-0 hidden group-hover:block"
-            ref={effectRef}
+            className="absolute z-5 w-full h-full top-0 left-0"
             color={item.color}
+            mouseRef={mouseRef}
           />
         )}
         <div

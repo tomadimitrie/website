@@ -1,26 +1,31 @@
 import { cn, tailwindColor } from "@/lib/utils";
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import React, { useEffect, useRef } from "react";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
+import { MouseRef, SubscribeToMouse } from "@/hooks/useInteractiveBackground";
 
-export type LinesBackgroundHandle = {
-  onMouseMove: (event: React.MouseEvent) => void;
-};
-
-export const LinesBackground = forwardRef<
-  LinesBackgroundHandle,
-  { className?: string }
->(function LinesBackground({ className }, ref) {
+export function LinesBackground({
+  className,
+  mouseRef,
+  subscribeToMouse,
+}: {
+  className?: string;
+  mouseRef: MouseRef;
+  subscribeToMouse: SubscribeToMouse;
+}) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const points = useRef<{ x: number; y: number }[]>([]);
-  const mouse = useRef({ x: 0, y: 0 });
   const needsRedraw = useRef(true);
   const animationFrame = useRef<number | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToMouse(() => {
+      needsRedraw.current = true;
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [subscribeToMouse]);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -70,7 +75,7 @@ export const LinesBackground = forwardRef<
       ctx.lineWidth = width;
       for (const point of points.current) {
         ctx.moveTo(point.x, point.y);
-        ctx.lineTo(mouse.current.x, mouse.current.y);
+        ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
       }
       ctx.stroke();
     }
@@ -101,18 +106,7 @@ export const LinesBackground = forwardRef<
 
       observer.disconnect();
     };
-  }, []);
-
-  useImperativeHandle(ref, () => ({
-    onMouseMove: function (event) {
-      const rect = canvasRef.current!.parentElement!.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
-      mouse.current = { x, y };
-      needsRedraw.current = true;
-    },
-  }));
+  }, [mouseRef]);
 
   return <canvas className={cn(className)} ref={canvasRef} />;
-});
+}

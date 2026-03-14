@@ -1,10 +1,16 @@
+"use client";
+
 import { SectionWrapper } from "@/components/sections/section";
 import { CONFIG } from "@/lib/config";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MatrixRain } from "@/components/background/matrix-rain";
+import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 
 export function CvesSection() {
+  const { isHovered, containerRef } =
+    useInteractiveBackground<HTMLDivElement>();
+
   function cvssInfo(cvss: number): [string, string] {
     if (cvss < 4.0) {
       return ["low", "text-green-500 border-green-500 bg-yellow-950"] as const;
@@ -23,9 +29,12 @@ export function CvesSection() {
       {CONFIG.sections.cves.items.map((item) => (
         <div
           key={item.title}
-          className="relative group overflow-hidden backdrop-blur-md rounded-md"
+          className="relative overflow-hidden backdrop-blur-md rounded-md"
+          ref={containerRef}
         >
-          <MatrixRain className="absolute -z-90 w-full h-full top-0 left-0 hidden group-hover:block" />
+          {isHovered && (
+            <MatrixRain className="absolute -z-90 w-full h-full top-0 left-0" />
+          )}
           <div className="flex flex-col gap-3 p-7">
             <div className="flex justify-between font-mono">
               <div className="text-primary-foreground font-bold text-xl hover:underline">

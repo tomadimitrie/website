@@ -1,23 +1,17 @@
 "use client";
 
 import { cn, tailwindColor } from "@/lib/utils";
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CONFIG } from "@/lib/config";
+import { SubscribeToMouse } from "@/hooks/useInteractiveBackground";
 
-export type CubesBackgroundHandle = {
-  onMouseMove: (event: React.MouseEvent) => void;
-};
-
-export const CubesBackground = forwardRef<
-  CubesBackgroundHandle,
-  { className?: string }
->(function CubesBackground({ className }, ref) {
+export function CubesBackground({
+  className,
+  subscribeToMouse,
+}: {
+  className?: string;
+  subscribeToMouse: SubscribeToMouse;
+}) {
   const innerRef = useRef<HTMLDivElement | null>(null);
   const [layout, setLayout] = useState({ rows: 0, cols: 0 });
   const squaresRef = useRef<HTMLDivElement[]>([]);
@@ -58,34 +52,33 @@ export const CubesBackground = forwardRef<
     squaresRef.current = squares;
 
     centersRef.current = squares.map((square) => {
-      const rect = square.getBoundingClientRect();
       return {
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
+        x: square.offsetLeft + square.offsetWidth / 2,
+        y: square.offsetTop + square.offsetHeight / 2,
       };
     });
   }, [layout]);
 
-  useImperativeHandle(ref, () => ({
-    onMouseMove: function (event) {
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
-
+  useEffect(() => {
+    const unsubscribe = subscribeToMouse((x, y) => {
       for (let i = 0; i < squaresRef.current.length; i += 1) {
-        const diffX = mouseX - centersRef.current[i].x;
-        const diffY = mouseY - centersRef.current[i].y;
+        const diffX = x - centersRef.current[i].x;
+        const diffY = y - centersRef.current[i].y;
 
         const radians = Math.atan2(diffY, diffX);
         const angle = (radians * 180) / Math.PI;
 
         squaresRef.current[i].style.transform = `rotate(${angle}deg)`;
       }
-    },
-  }));
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [subscribeToMouse]);
 
   return (
     <div
-      className={cn("grid gap-4", className)}
+      className={cn("relative grid gap-4", className)}
       style={{
         gridTemplateColumns: `repeat(${layout.cols}, minmax(0, 1fr))`,
         gridTemplateRows: `repeat(${layout.rows}, auto)`,
@@ -101,9 +94,9 @@ export const CubesBackground = forwardRef<
               backgroundColor: tailwindColor(...CONFIG.backgrounds.cubes.color),
               gap: `${CONFIG.backgrounds.cubes.gap}px`,
             }}
-            className="will-change-transform rounded-md aspect-square"
+            className="will-change-transform rounded-md aspect-square transition-transform duration-75 ease-linear"
           />
         ))}
     </div>
   );
-});
+}

@@ -1,17 +1,7 @@
 import { cn, pointDistance, tailwindColor } from "@/lib/utils";
-import React, {
-  forwardRef,
-  RefObject,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import React, { RefObject, useEffect, useRef } from "react";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
-
-export type DotsBackgroundHandle = {
-  onMouseMove: (event: React.MouseEvent) => void;
-};
 
 class Dot {
   originX: number;
@@ -77,13 +67,15 @@ class Dot {
   }
 }
 
-export const DotsBackground = forwardRef<
-  DotsBackgroundHandle,
-  { className?: string }
->(function DotsBackground({ className }, ref) {
+export function DotsBackground({
+  className,
+  mouseRef,
+}: {
+  className?: string;
+  mouseRef: React.RefObject<{ x: number; y: number }>;
+}) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const dots = useRef<Dot[]>([]);
-  const mouse = useRef({ x: 0, y: 0 });
   const animationFrame = useRef<number | null>(null);
 
   useEffect(() => {
@@ -109,7 +101,7 @@ export const DotsBackground = forwardRef<
 
       for (let x = gap / 2; x < logicalWidth; x += gap) {
         for (let y = gap / 2; y < logicalHeight; y += gap) {
-          dots.current.push(new Dot(x, y, mouse, ctx));
+          dots.current.push(new Dot(x, y, mouseRef, ctx));
         }
       }
     }
@@ -142,17 +134,7 @@ export const DotsBackground = forwardRef<
 
       observer.disconnect();
     };
-  }, []);
-
-  useImperativeHandle(ref, () => ({
-    onMouseMove: function (event) {
-      const rect = canvasRef.current!.parentElement!.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
-      mouse.current = { x, y };
-    },
-  }));
+  }, [mouseRef]);
 
   return <canvas className={cn(className)} ref={canvasRef} />;
-});
+}
