@@ -5,14 +5,47 @@ import { CONFIG } from "@/lib/config";
 import { clamp, cn, tailwindColor } from "@/lib/utils";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { CubesBackgroundHandle } from "@/components/background/cubes";
 import { GridBackground } from "@/components/background/grid";
 import { useHover } from "@/hooks/useHover";
+import { useLazyHoverEffect } from "@/hooks/useLazyHoverEffect";
 
 export function ProjectsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
+
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const container = containerRef.current!;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const index = Number((entry.target as HTMLElement).dataset.index);
+            setActiveIndex(index);
+          }
+        }
+      },
+      {
+        root: container,
+        threshold: 0.6,
+      },
+    );
+
+    const children = Array.from(container.children);
+    children.forEach(function (child, index) {
+      (child as HTMLElement).dataset.index = index.toString();
+      observer.observe(child);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   function scrollToIndex(index: number) {
     index = clamp(index, 0, CONFIG.sections.projects.items.length - 1);
@@ -26,29 +59,15 @@ export function ProjectsSection() {
   }
 
   function onScroll() {
-    const container = containerRef.current!;
-    const rect = container.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-
-    let closestIndex = 0;
-    let closestDist = Number.POSITIVE_INFINITY;
-    [...container.children].forEach((item, index) => {
-      const rect = item.getBoundingClientRect();
-      const itemCenterX = rect.left + rect.width / 2;
-      const dist = Math.abs(centerX - itemCenterX);
-      if (dist < closestDist) {
-        closestDist = dist;
-        closestIndex = index;
-      }
-    });
-    setActiveIndex(closestIndex);
-
-    const isAtStart = container.scrollLeft <= 5;
-    const isAtEnd =
-      container.scrollLeft + container.clientWidth >= container.scrollWidth - 5;
-
-    container.dataset.atStart = String(isAtStart);
-    container.dataset.atEnd = String(isAtEnd);
+    const { scrollLeft, scrollWidth, clientWidth } = containerRef.current!;
+    const atStart = scrollLeft <= 5;
+    const atEnd = scrollLeft + clientWidth >= scrollWidth - 5;
+    if (isAtStart !== atStart) {
+      setIsAtStart(atStart);
+    }
+    if (isAtEnd !== atEnd) {
+      setIsAtEnd(atEnd);
+    }
   }
 
   return (
@@ -81,27 +100,33 @@ export function ProjectsSection() {
           />
         ))}
       </div>
-      <div
-        className={cn(
-          "w-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar",
-          "[--mask-left:black] [--mask-right:transparent]",
-          "data-[at-start=false]:[--mask-left:transparent] data-[at-end=true]:[--mask-right:black]",
-          "mask-[linear-gradient(to_right,var(--mask-left)_0%,black_10%,black_90%,var(--mask-right)_100%)]",
-          "[transition:--mask-left_500ms_ease,--mask-right_500ms_ease]",
-        )}
-        ref={containerRef}
-        data-at-start="true"
-        data-at-end="false"
-        onScroll={onScroll}
-      >
-        {CONFIG.sections.projects.items.map((item, index) => (
-          <ProjectItem
-            key={item.title}
-            item={item}
-            isActive={index === activeIndex}
-            onClick={() => scrollToIndex(index)}
-          />
-        ))}
+      <div className="relative w-full">
+        <div
+          className={cn(
+            "absolute left-0 top-0 w-16 z-10 pointer-events-none bg-linear-to-r from-background to-transparent transition-opacity duration-500",
+            isAtStart ? "opacity-0" : "opacity-100",
+          )}
+        />
+        <div
+          className="w-full flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar"
+          ref={containerRef}
+          onScroll={onScroll}
+        >
+          {CONFIG.sections.projects.items.map((item, index) => (
+            <ProjectItem
+              key={item.title}
+              item={item}
+              isActive={index === activeIndex}
+              onClick={() => scrollToIndex(index)}
+            />
+          ))}
+        </div>
+        <div
+          className={cn(
+            "absolute right-0 top-0 w-16 z-10 pointer-events-none bg-linear-to-r from-background to-transparent transition-opacity duration-500",
+            isAtEnd ? "opacity-0" : "opacity-100",
+          )}
+        />
       </div>
       <div className="flex items-center justify-center gap-2 mt-6">
         {(() => {
@@ -182,13 +207,6 @@ function ProjectItem({
   isActive: boolean;
   onClick: () => void;
 }) {
-  const backgroundRef = useRef<CubesBackgroundHandle | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const onMouseMove = (event: React.MouseEvent) => {
-    backgroundRef.current!.onMouseMove(event);
-  };
-
   const gradient = useMemo(
     () => ({
       backgroundImage: `linear-gradient(to bottom right, ${tailwindColor(item.color, 500, 20)}, ${tailwindColor(item.color, 900, 10)})`,
@@ -212,6 +230,12 @@ function ProjectItem({
   );
 
   const linkHover = useHover(accent);
+  const { isHovered, effectRef, containerHandlers } =
+    useLazyHoverEffect<CubesBackgroundHandle>();
+
+  const onMouseMove = (event: React.MouseEvent) => {
+    effectRef.current!.onMouseMove(event);
+  };
 
   return (
     <div
@@ -223,15 +247,15 @@ function ProjectItem({
     >
       <div
         className="h-50 flex flex-col relative bg-background border-b border-border group"
-        onMouseMove={onMouseMove}
-        onMouseOver={() => setIsHovered(true)}
-        onMouseOut={() => setIsHovered(false)}
+        {...containerHandlers}
       >
-        <GridBackground
-          className="absolute z-5 w-full h-full top-0 left-0 hidden group-hover:block"
-          ref={backgroundRef}
-          color={item.color}
-        />
+        {isHovered && (
+          <GridBackground
+            className="absolute z-5 w-full h-full top-0 left-0 hidden group-hover:block"
+            ref={effectRef}
+            color={item.color}
+          />
+        )}
         <div
           style={{ ...gradient, ...accent }}
           className={cn(

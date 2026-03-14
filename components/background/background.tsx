@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { clamp, randomBetween, randomFrom, tailwindColor } from "@/lib/utils";
+import { clamp, randomBetween, tailwindColor } from "@/lib/utils";
 import { CONFIG } from "@/lib/config";
 import { resizeCanvas } from "@/lib/canvas-utils";
 
