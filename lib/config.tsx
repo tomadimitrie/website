@@ -24,6 +24,10 @@ export const CONFIG = {
       Component: AboutSection,
     },
     {
+      title: "Blog",
+      url: "/blog",
+    },
+    {
       title: "CVEs",
       Component: CvesSection,
     },
@@ -610,5 +614,9 @@ export const CONFIG = {
         },
       ],
     },
+  },
+  blog: {
+    subtitle:
+      "Write-ups on OS internals, vulnerability research, reverse engineering and other stuff I find interesting",
   },
 };

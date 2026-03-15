@@ -29,7 +29,7 @@ export function CvesSection() {
       {CONFIG.sections.cves.items.map((item) => (
         <div
           key={item.title}
-          className="relative overflow-hidden backdrop-blur-md rounded-md"
+          className="relative overflow-hidden backdrop-blur-md rounded-md border border-muted"
           ref={containerRef}
         >
           {isHovered && (

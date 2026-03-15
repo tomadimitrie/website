@@ -33,7 +33,7 @@ function ExperienceItem({
   return (
     <div
       className={cn(
-        "flex flex-col gap-4 p-7 w-full backdrop-blur-md snake-border",
+        "flex flex-col gap-4 p-7 w-full backdrop-blur-md snake-border border border-muted",
         !isLast && "mb-5",
       )}
     >

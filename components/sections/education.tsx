@@ -43,7 +43,7 @@ function EducationItem({
     <div
       ref={containerRef}
       className={cn(
-        "flex flex-col gap-4 p-7 w-full backdrop-blur-md",
+        "flex flex-col gap-4 p-7 w-full backdrop-blur-md border border-muted",
         !isLast && "mb-5",
       )}
     >

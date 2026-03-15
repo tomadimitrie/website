@@ -1,6 +1,18 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
+export function SectionTitle({ title }: { title: string }) {
+  return (
+    <div
+      id={title.toLowerCase()}
+      className="font-mono font-bold text-lg text-primary-foreground uppercase mb-5"
+    >
+      <span className="text-muted-foreground text-xl">{"// "}</span>
+      {title}
+    </div>
+  );
+}
+
 export function SectionWrapper({
   children,
   title,
@@ -12,17 +24,7 @@ export function SectionWrapper({
 }) {
   return (
     <div className={cn("p-5 w-full", className)}>
-      {title && (
-        <>
-          <div
-            id={title.toLowerCase()}
-            className="font-mono font-bold text-xl text-muted-foreground uppercase mb-5"
-          >
-            <span className="text-primary-foreground text-2xl">{"// "}</span>
-            {title}
-          </div>
-        </>
-      )}
+      {title && <SectionTitle title={title} />}
       {children}
     </div>
   );

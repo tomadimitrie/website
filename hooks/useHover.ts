@@ -5,9 +5,16 @@ export function useHover(
   styleOnNotHover: CSSProperties = {},
 ) {
   const [style, setStyle] = useState(styleOnNotHover);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const onMouseEnter = () => setStyle({ ...styleOnNotHover, ...styleOnHover });
-  const onMouseLeave = () => setStyle(styleOnNotHover);
+  const onMouseEnter = () => {
+    setStyle({ ...styleOnNotHover, ...styleOnHover });
+    setIsHovered(true);
+  };
+  const onMouseLeave = () => {
+    setStyle(styleOnNotHover);
+    setIsHovered(false);
+  };
 
-  return { style, onMouseEnter, onMouseLeave };
+  return { props: { style, onMouseEnter, onMouseLeave }, isHovered };
 }

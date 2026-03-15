@@ -6,7 +6,7 @@ import Link from "next/link";
 export function AboutSection() {
   return (
     <SectionWrapper>
-      <div className="min-h-screen flex flex-col justify-center gap-6">
+      <div className="min-h-[calc(100vh-var(--spacing)*30)] flex flex-col justify-center gap-6">
         <div className="flex flex-col gap-6 rounded-4xl">
           <ShellText />
           <div className="text-4xl md:text-6xl lg:text-7xl font-bold">
@@ -27,6 +27,12 @@ export function AboutSection() {
                 />
               </Link>
             ))}
+            <Link
+              className="text-primary-foreground text-2xl font-mono font-bold border-primary-foreground border-2 w-min px-10 py-1 rounded-md hover:underline hover:bg-primary-foreground/30 ml-auto"
+              href="/blog"
+            >
+              Blog
+            </Link>
           </div>
         </div>
       </div>

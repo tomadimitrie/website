@@ -42,7 +42,7 @@ function CertificationItem({
 
   return (
     <div
-      className="relative overflow-hidden backdrop-blur-md rounded-md"
+      className="relative overflow-hidden backdrop-blur-md rounded-md border border-muted"
       ref={containerRef}
     >
       {isHovered && (

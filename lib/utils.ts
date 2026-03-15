@@ -29,7 +29,9 @@ export function tailwindColor(
   value: number,
   opacity?: number,
 ): string {
-  const base = (colors as unknown as Record<string, Record<string, string>>)[name][value];
+  const base = (colors as unknown as Record<string, Record<string, string>>)[
+    name
+  ][value];
   if (opacity === undefined) {
     return base;
   }

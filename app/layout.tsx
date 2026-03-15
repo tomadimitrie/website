@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { NavComponent } from "@/components/nav";
 import { BackgroundComponent } from "@/components/background/background";
-import { CONFIG } from "@/lib/config";
 import { Anta } from "next/font/google";
+import { NavComponent } from "@/components/nav";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -25,15 +25,10 @@ export default function RootLayout({
         className={`${font.className} dark antialiased min-h-screen max-w-screen flex`}
       >
         <BackgroundComponent />
-        <main className="flex-1 flex items-center justify-center max-w-full">
+        <main className="flex-1 flex flex-col items-center max-w-full mb-10">
           <NavComponent />
-          <div className="w-full max-w-5xl">
-            {CONFIG.navItems.map(({ title, Component }) => (
-              <Component key={title} />
-            ))}
-          </div>
+          <div className="w-full max-w-5xl mt-10 px-5">{children}</div>
         </main>
-        {children}
       </body>
     </html>
   );

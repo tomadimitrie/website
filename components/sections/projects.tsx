@@ -190,7 +190,7 @@ function ProjectShortcut({
       className="cursor-pointer font-mono font-bold border rounded-md px-2 py-0.5 backdrop-blur-md grow text-center"
       role="button"
       onClick={onClick}
-      {...hover}
+      {...hover.props}
     >
       {item.title} ({item.shortDescription})
     </div>
@@ -235,7 +235,7 @@ function ProjectItem({
   return (
     <div
       className={cn(
-        "w-full md:w-[70%] shrink-0 flex flex-col rounded-xl overflow-hidden border border-border transition-all duration-500 snap-center",
+        "w-full md:w-[70%] shrink-0 flex flex-col rounded-xl overflow-hidden border border-muted transition-all duration-500 snap-center",
         isActive ? "scale-100" : "scale-90",
       )}
       onClick={onClick}
@@ -303,7 +303,7 @@ function ProjectItem({
               className="flex items-center ml-auto gap-2"
               target="_blank"
               href={item.source.link}
-              {...linkHover}
+              {...linkHover.props}
             >
               <item.source.Icon size={17} /> {item.source.text}
             </Link>

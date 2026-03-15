@@ -145,6 +145,7 @@
 }
 
 @layer components {
+
   .snake-border {
     --snake-border-width: 3px;
 
