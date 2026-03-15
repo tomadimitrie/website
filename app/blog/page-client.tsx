@@ -142,7 +142,7 @@ export function PostCard({ post }: { post: Post }) {
       <div className="flex-1">
         <Link
           href={post.link}
-          className="line-clamp-1 transition-all duration-300"
+          className="line-clamp-1 transition-all duration-300 after:content-[''] after:absolute after:top-0 after:left-0 after:bottom-0 after:right-0"
           style={
             hover.isHovered
               ? {
