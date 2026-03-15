@@ -161,13 +161,17 @@ export function PostCard({ post }: { post: Post }) {
             <TagItem key={tag} tag={tag} color={post.metadata.color} />
           ))}
         </div>
+        <div className="lg:hidden inline-flex gap-3 items-center text-muted-foreground mt-3">
+          <CalendarIcon size={20} />
+          {post.metadata.date.toDateString()}
+        </div>
       </div>
       <div className="hidden lg:flex gap-5 flex-wrap max-w-1/4">
         {post.metadata.tags.map((tag) => (
           <TagItem key={tag} tag={tag} color={post.metadata.color} />
         ))}
       </div>
-      <div className="inline-flex gap-3 items-center text-muted-foreground text-right w-30">
+      <div className="hidden lg:inline-flex gap-3 items-center text-muted-foreground text-right w-30">
         {post.metadata.date.toDateString()}
         <CalendarIcon size={20} />
       </div>

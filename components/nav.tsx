@@ -45,7 +45,7 @@ export function NavComponent() {
               if (showMenu) {
                 return "opacity-100 max-h-100";
               } else {
-                return "opacity-0 max-h-4";
+                return "opacity-0 pointer-events-none max-h-4";
               }
             })(),
           )}
