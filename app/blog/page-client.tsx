@@ -6,7 +6,8 @@ import { useHover } from "@/hooks/useHover";
 import { ArrowRightIcon, CalendarIcon } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
 import Link from "next/link";
-import { Post } from "@/app/blog/mdx";
+import { Post, PostMetadata } from "@/app/blog/mdx";
+import { match } from "ts-pattern";
 
 export function FeaturedPostCard({
   post,
@@ -18,7 +19,6 @@ export function FeaturedPostCard({
   style?: React.CSSProperties;
 }) {
   const accent = tailwindColor(post.metadata.color, 500);
-  const background = tailwindColor(post.metadata.color, 700, 30);
 
   const hover = useHover({
     borderColor: accent,
@@ -54,19 +54,11 @@ export function FeaturedPostCard({
           color: accent,
         }}
       >
-        <div
-          className="p-4 rounded-sm"
-          style={{
-            backgroundColor: background,
-          }}
-        >
-          <DynamicIcon
-            name={post.metadata.icon}
-            style={{
-              color: accent,
-            }}
-          />
-        </div>
+        <PostIcon
+          name={post.metadata.icon}
+          color={post.metadata.color}
+          type={hover.isHovered ? "hovered" : "not-hovered"}
+        />
         <ArrowRightIcon className="opacity-0 group-hover:opacity-100 transition-all duration-300" />
       </div>
       <div className="flex gap-5">
@@ -100,7 +92,6 @@ export function FeaturedPostCard({
 
 export function PostCard({ post }: { post: Post }) {
   const accent = tailwindColor(post.metadata.color, 500);
-  const background = tailwindColor(post.metadata.color, 700, 30);
 
   const hover = useHover({
     borderColor: accent,
@@ -126,19 +117,12 @@ export function PostCard({ post }: { post: Post }) {
           background: `linear-gradient(to right, ${tailwindColor(post.metadata.color, 950)}, black)`,
         }}
       />
-      <div
-        className="p-4 rounded-sm"
-        style={{
-          backgroundColor: background,
-        }}
-      >
-        <DynamicIcon
-          name={post.metadata.icon}
-          style={{
-            color: accent,
-          }}
-        />
-      </div>
+      <PostIcon
+        name={post.metadata.icon}
+        color={post.metadata.color}
+        type={hover.isHovered ? "hovered" : "not-hovered"}
+      />
+
       <div className="flex-1">
         <Link
           href={post.link}
@@ -212,5 +196,46 @@ export function TagItem({ tag, color }: { tag: string; color: string }) {
     >
       {tag}
     </Link>
+  );
+}
+
+export function PostIcon({
+  name,
+  color,
+  type,
+}: {
+  name: PostMetadata["icon"];
+  color: string;
+  type: "hovered" | "not-hovered" | "static";
+}) {
+  const accent = tailwindColor(color, 500);
+  const background = tailwindColor(color, 700, 30);
+  const staticBackground = tailwindColor(color, 700);
+  const staticAccent = tailwindColor(color, 200);
+  const hovered = tailwindColor(color, 300);
+
+  return (
+    <div
+      className="p-4 rounded-sm transition-all duration-300"
+      style={{
+        backgroundColor: match(type)
+          .with("hovered", () => accent)
+          .with("not-hovered", () => background)
+          .with("static", () => staticBackground)
+          .exhaustive(),
+      }}
+    >
+      <DynamicIcon
+        className="transition-all duration-300"
+        name={name}
+        style={{
+          color: match(type)
+            .with("hovered", () => hovered)
+            .with("not-hovered", () => accent)
+            .with("static", () => staticAccent)
+            .exhaustive(),
+        }}
+      />
+    </div>
   );
 }

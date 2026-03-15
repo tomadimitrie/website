@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { PostMetadata } from "@/app/blog/mdx";
-import { TagItem } from "@/app/blog/page-client";
+import { PostIcon, TagItem } from "@/app/blog/page-client";
 import { ArrowLeftIcon, CalendarIcon } from "lucide-react";
 import React from "react";
 import Link from "next/link";
@@ -14,7 +14,9 @@ export default async function BlogPage({
   let Component;
   let metadata: PostMetadata;
   try {
-    ({ default: Component, metadata } = await import(`@/blog/${slug}.mdx`));
+    ({ default: Component, metadata } = await import(
+      `@/blog/${slug}/content.mdx`
+    ));
 
     return (
       <div className="flex flex-col gap-5">
@@ -29,7 +31,10 @@ export default async function BlogPage({
             <TagItem key={tag} tag={tag} color={metadata.color} />
           ))}
         </div>
-        <div className="text-4xl">{metadata.title}</div>
+        <div className="flex items-center gap-5">
+          <PostIcon name={metadata.icon} color={metadata.color} type="static" />
+          <div className="text-4xl">{metadata.title}</div>
+        </div>
         <div className="text-2xl text-muted-foreground">
           {metadata.description}
         </div>
@@ -38,7 +43,7 @@ export default async function BlogPage({
           {metadata.date.toDateString()}
         </div>
         <div className="w-full h-0.5 bg-muted" />
-        <div className="mt-5">
+        <div className="flex flex-col gap-3 items-start text-xl text-muted-foreground [&>img]:self-center">
           <Component />
         </div>
       </div>

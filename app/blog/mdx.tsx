@@ -1,4 +1,4 @@
-import fs from "node:fs/promises";
+import { Glob } from "bun";
 import { dynamicIconImports } from "lucide-react/dynamic";
 
 export interface PostMetadata {
@@ -29,19 +29,20 @@ export const dummyPost: Post = {
 };
 
 export async function getAllPosts(): Promise<Post[]> {
-  const postFiles = (
-    await fs.readdir("blog/", {
-      withFileTypes: true,
-    })
-  )
-    .filter((item) => !item.isDirectory() && item.name.endsWith(".mdx"))
-    .map((file) => file.name);
+  const glob = new Glob("**/content.mdx");
+  const postFiles = await Array.fromAsync(
+    glob.scan({
+      cwd: "blog/",
+      onlyFiles: true,
+    }),
+  );
+  console.log(postFiles);
 
   return (
     await Promise.all(
       postFiles.map(async (name) => {
         return {
-          link: `/blog/${name.replace(/\.[^/.]+$/, "")}`,
+          link: `/blog/${name.split("/").at(0)!}`,
           metadata: (await import(`@/blog/${name}`)).metadata as PostMetadata,
         };
       }),
