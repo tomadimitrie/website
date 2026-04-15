@@ -123,6 +123,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  ul ul {
+    @apply pl-10;
+  }
+  h1, h2, h3 {
+    @apply scroll-mt-25;
+  }
 }
 
 @theme {
@@ -145,7 +151,6 @@
 }
 
 @layer components {
-
   .snake-border {
     --snake-border-width: 3px;
 

@@ -1,9 +1,13 @@
-import { notFound } from "next/navigation";
 import { PostMetadata } from "@/app/blog/mdx";
 import { PostIcon, TagItem } from "@/app/blog/page-client";
+import fs from "fs/promises";
 import { ArrowLeftIcon, CalendarIcon } from "lucide-react";
-import React from "react";
+import { cookies } from "next/headers";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import React from "react";
+import { renderDecryptedPost, tryDecryptPost } from "./actions";
+import { PasswordForm, TableOfContents } from "./page-client";
 
 export default async function BlogPage({
   params,
@@ -11,13 +15,8 @@ export default async function BlogPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  let Component;
-  let metadata: PostMetadata;
-  try {
-    ({ default: Component, metadata } = await import(
-      `@/blog/${slug}/content.mdx`
-    ));
 
+  function Base({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex flex-col gap-5">
         <Link
@@ -26,6 +25,17 @@ export default async function BlogPage({
         >
           <ArrowLeftIcon /> Back to Blog
         </Link>
+        {children}
+      </div>
+    );
+  }
+
+  function renderPost(
+    Component: () => React.ReactNode,
+    metadata: PostMetadata,
+  ) {
+    return (
+      <Base>
         <div className="flex gap-3 w-min">
           {metadata.tags.map((tag) => (
             <TagItem key={tag} tag={tag} color={metadata.color} />
@@ -43,12 +53,52 @@ export default async function BlogPage({
           {metadata.date.toDateString()}
         </div>
         <div className="w-full h-0.5 bg-muted" />
-        <div className="flex flex-col gap-3 items-start text-xl text-muted-foreground [&>img]:self-center">
+        <TableOfContents />
+        <div className="w-full h-0.5 bg-muted" />
+        <div className="flex flex-col gap-3 items-start text-xl text-muted-foreground [&>img]:self-center text-justify">
           <Component />
         </div>
-      </div>
+      </Base>
     );
-  } catch {
-    return notFound();
+  }
+
+  function renderPasswordPrompt() {
+    return (
+      <Base>
+        <PasswordForm slug={slug} />
+      </Base>
+    );
+  }
+
+  if (slug.endsWith("--private")) {
+    const path = `blog/${slug}/content.enc`;
+    try {
+      await fs.access(path, fs.constants.F_OK);
+    } catch {
+      return notFound();
+    }
+
+    const cookieJar = await cookies();
+    const password = cookieJar.get(`auth-${slug}`);
+    if (!password) {
+      return renderPasswordPrompt();
+    }
+
+    const decrypted = await tryDecryptPost(slug, password.value);
+    if (decrypted === null) {
+      return renderPasswordPrompt();
+    }
+
+    const result = await renderDecryptedPost(decrypted);
+
+    return renderPost(result.Component, result.metadata);
+  } else {
+    const path = `@/blog/${slug}/content.mdx`;
+    try {
+      const { default: Component, metadata } = await import(path);
+      return renderPost(Component, metadata);
+    } catch {
+      return notFound();
+    }
   }
 }

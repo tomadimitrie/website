@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import "./globals.css";
 import { BackgroundComponent } from "@/components/background/background";
-import { Anta } from "next/font/google";
 import { NavComponent } from "@/components/nav";
+import type { Metadata } from "next";
+import { Anta } from "next/font/google";
 import React from "react";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 const font = Anta({
   display: "swap",
   weight: "400",
+  preload: false,
 });
 
 export default function RootLayout({
@@ -20,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body
         className={`${font.className} dark antialiased min-h-screen max-w-screen flex`}
       >

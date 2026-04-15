@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { clamp, randomBetween, tailwindColor } from "@/lib/utils";
-import { CONFIG } from "@/lib/config";
 import { resizeCanvas } from "@/lib/canvas-utils";
+import { CONFIG } from "@/lib/config";
+import { clamp, randomBetween, tailwindColor } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 export function BackgroundComponent() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -11,6 +12,8 @@ export function BackgroundComponent() {
   const targetMouse = useRef({ x: 0, y: 0 });
   const animationFrame = useRef<number | null>(null);
   const freezeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pathname = usePathname();
+  const allowFreeMovement = !/\/blog\/[^/]+/.test(pathname);
 
   useEffect(() => {
     const isMobile = window.matchMedia("(pointer: coarse)").matches;
@@ -127,10 +130,14 @@ export function BackgroundComponent() {
 
       spotlightCtx.drawImage(
         backgroundCanvas,
-        -sx,
-        -sy,
-        logicalWidth,
-        logicalHeight,
+        sx,
+        sy,
+        spotSize,
+        spotSize,
+        0,
+        0,
+        spotSize,
+        spotSize,
       );
 
       spotlightCtx.globalCompositeOperation = "destination-in";
@@ -145,7 +152,7 @@ export function BackgroundComponent() {
       const dy = targetMouse.current.y - mouse.current.y;
 
       if (isRoaming || Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-        if (isRoaming) {
+        if (isRoaming && allowFreeMovement) {
           roamAngle += randomBetween(-0.03, 0.03);
 
           let nextX = targetMouse.current.x + Math.cos(roamAngle) * roamSpeed;
@@ -183,9 +190,8 @@ export function BackgroundComponent() {
     }
 
     function onMove(event: MouseEvent) {
-      const rect = mainCanvas.getBoundingClientRect();
-      targetMouse.current.x = event.clientX - rect.left;
-      targetMouse.current.y = event.clientY - rect.top;
+      targetMouse.current.x = event.clientX;
+      targetMouse.current.y = event.clientY;
       resetIdleTimer();
     }
 
@@ -221,7 +227,7 @@ export function BackgroundComponent() {
         resize(width, height);
       }
     });
-    observer.observe(document.body);
+    observer.observe(mainCanvas);
 
     const startX = randomBetween(logicalWidth / 4, (logicalWidth * 3) / 4);
     const startY = randomBetween(logicalHeight / 4, (logicalHeight * 3) / 4);
