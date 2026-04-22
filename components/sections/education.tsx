@@ -1,13 +1,12 @@
 "use client";
 
+import { LinesBackground } from "@/components/background/lines";
 import { SectionWrapper } from "@/components/sections/section";
-import { CONFIG } from "@/lib/config";
 import { TimelineLine } from "@/components/ui/timeline-line";
+import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
+import { CONFIG } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import { match } from "ts-pattern";
-import React from "react";
-import { LinesBackground } from "@/components/background/lines";
-import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 
 export function EducationSection() {
   return (
@@ -61,6 +60,7 @@ function EducationItem({
         <span className="font-bold">{item.type}</span>
         <span className="text-muted-foreground"> in </span>
         <span className="text-primary-foreground font-bold">{item.domain}</span>
+        <span className="text-muted-foreground"> ({item.university})</span>
       </div>
       <ul className="list-disc list-inside flex flex-col gap-2 text-muted-foreground">
         {item.features.map((feature) => (

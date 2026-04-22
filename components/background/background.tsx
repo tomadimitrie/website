@@ -94,7 +94,7 @@ export function BackgroundComponent() {
 
       const t = (logicalWidth - minWidth) / (maxWidth - minWidth);
       const clampedT = clamp(t, 0, 1);
-      const fontSize = maxFont - clampedT * (maxFont - minFont);
+      const fontSize = minFont + clampedT * (maxFont - minFont);
       const letterSpacing = 4;
       const lineSpacing = 4;
 
@@ -115,29 +115,25 @@ export function BackgroundComponent() {
         for (let x = 0; x < cols; x++) {
           backgroundCtx.fillText(
             Math.random() > 0.5 ? "1" : "0",
-            x * charWidth,
-            y * charHeight,
+            Math.floor(x * charWidth),
+            Math.floor(y * charHeight),
           );
         }
       }
     }
 
     function drawSpotlight() {
-      const sx = mouse.current.x - radius;
-      const sy = mouse.current.y - radius;
+      const sx = Math.floor(mouse.current.x - radius);
+      const sy = Math.floor(mouse.current.y - radius);
 
       spotlightCtx.clearRect(0, 0, spotSize, spotSize);
 
       spotlightCtx.drawImage(
         backgroundCanvas,
-        sx,
-        sy,
-        spotSize,
-        spotSize,
-        0,
-        0,
-        spotSize,
-        spotSize,
+        -sx,
+        -sy,
+        logicalWidth,
+        logicalHeight,
       );
 
       spotlightCtx.globalCompositeOperation = "destination-in";
@@ -227,7 +223,7 @@ export function BackgroundComponent() {
         resize(width, height);
       }
     });
-    observer.observe(mainCanvas);
+    observer.observe(mainCanvas.parentElement!);
 
     const startX = randomBetween(logicalWidth / 4, (logicalWidth * 3) / 4);
     const startY = randomBetween(logicalHeight / 4, (logicalHeight * 3) / 4);

@@ -1,3 +1,10 @@
+import { AboutSection } from "@/components/sections/about";
+import { AchievementsSection } from "@/components/sections/achievements";
+import { CertificationsSection } from "@/components/sections/certifications";
+import { CvesSection } from "@/components/sections/cves";
+import { EducationSection } from "@/components/sections/education";
+import { ExperienceSection } from "@/components/sections/experience";
+import { ProjectsSection } from "@/components/sections/projects";
 import {
   Box,
   Calendar,
@@ -9,13 +16,6 @@ import {
   Mail,
   Shield,
 } from "lucide-react";
-import { AboutSection } from "@/components/sections/about";
-import { CvesSection } from "@/components/sections/cves";
-import { CertificationsSection } from "@/components/sections/certifications";
-import { ExperienceSection } from "@/components/sections/experience";
-import { EducationSection } from "@/components/sections/education";
-import { ProjectsSection } from "@/components/sections/projects";
-import { AchievementsSection } from "@/components/sections/achievements";
 
 export const CONFIG = {
   navItems: [
@@ -180,8 +180,8 @@ export const CONFIG = {
         },
         {
           from: "2020",
-          to: "2022",
-          position: "Penetration Tester, Software Developer",
+          to: "2023",
+          position: "Co-founder, Penetration Tester, Software Developer",
           company: "Antimony (Startup)",
           features: [
             "Co-founded and led a startup, balancing mobile/web engineering with rigorous penetration testing",
@@ -204,8 +204,8 @@ export const CONFIG = {
           university: "Tehnical University of Cluj-Napoca",
           type: "Master’s Degree",
           domain: "Cybersecurity",
-          from: "Aug. 2023",
-          to: "Oct. 2025",
+          from: "2023",
+          to: "2025",
           features: [
             "Windows Driver Development",
             "OS Development",
@@ -221,8 +221,8 @@ export const CONFIG = {
           university: "Babes-Bolyai University of Cluj-Napoca",
           type: "Bachelor’s Degree",
           domain: "Computer Science",
-          from: "Oct. 2020",
-          to: "July 2023",
+          from: "2020",
+          to: "2023",
           features: ["Operating Systems", "Cybersecurity", "x86 Assembly"],
           tags: ["C", "Assembly"],
         },
