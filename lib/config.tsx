@@ -437,7 +437,7 @@ export const CONFIG = {
           title: "Sorcery",
           shortDescription: "Hack The Box Machine",
           description:
-            "Ghost is an active Insane Linux machine. It is currently rated 4.6/5 stars and has over 1000 system flag solves.",
+            "Sorcery is an active Insane Linux machine. It is currently rated 4.6/5 stars and has over 1000 system flag solves.",
           features: [
             "As per Hack The Box Rules, information about the attack path cannot be disclosed until its retirement.",
           ],
