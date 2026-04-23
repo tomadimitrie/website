@@ -123,6 +123,7 @@ export function BackgroundComponent() {
     }
 
     function drawSpotlight() {
+      const dpr = window.devicePixelRatio || 1;
       const sx = Math.floor(mouse.current.x - radius);
       const sy = Math.floor(mouse.current.y - radius);
 
@@ -130,10 +131,14 @@ export function BackgroundComponent() {
 
       spotlightCtx.drawImage(
         backgroundCanvas,
-        -sx,
-        -sy,
-        logicalWidth,
-        logicalHeight,
+        sx * dpr,
+        sy * dpr,
+        spotSize * dpr,
+        spotSize * dpr,
+        0,
+        0,
+        spotSize,
+        spotSize,
       );
 
       spotlightCtx.globalCompositeOperation = "destination-in";
@@ -217,13 +222,12 @@ export function BackgroundComponent() {
       }, amountToFreeze);
     }
 
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { inlineSize: width, blockSize: height } = entry.borderBoxSize[0];
-        resize(width, height);
-      }
-    });
-    observer.observe(mainCanvas.parentElement!);
+    function handleResize() {
+      resize(window.innerWidth, window.innerHeight);
+    }
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
 
     const startX = randomBetween(logicalWidth / 4, (logicalWidth * 3) / 4);
     const startY = randomBetween(logicalHeight / 4, (logicalHeight * 3) / 4);
@@ -245,7 +249,7 @@ export function BackgroundComponent() {
       if (!isMobile) {
         window.removeEventListener("mousemove", onMove);
       }
-      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
