@@ -1,14 +1,15 @@
 "use client";
 
-import { SectionWrapper } from "@/components/sections/section";
-import { CONFIG } from "@/lib/config";
-import { clamp, cn, tailwindColor } from "@/lib/utils";
-import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
 import { GridBackground } from "@/components/background/grid";
+import { SectionWrapper } from "@/components/sections/section";
 import { useHover } from "@/hooks/useHover";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
+import { CONFIG } from "@/lib/config";
+import { clamp, cn, tailwindColor } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Tags } from "../ui/tags";
 
 export function ProjectsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -224,6 +225,7 @@ function ProjectItem({
     () => ({
       borderColor: tailwindColor(item.color, 700),
       color: tailwindColor(item.color, 700),
+      backgroundColor: tailwindColor(item.color, 900, 20),
     }),
     [item.color],
   );
@@ -283,17 +285,13 @@ function ProjectItem({
             </li>
           ))}
         </ul>
-        <div className="flex flex-wrap items-center gap-2 mt-auto">
+        <Tags.Container className="mt-auto">
           {item.tags.map((tag) => (
-            <div
-              key={tag}
-              className="text-sm text-muted-foreground font-mono font-bold border-2 border-border px-2 py-1 rounded-sm"
-              style={{ ...tagStyle }}
-            >
+            <Tags.Item key={tag} style={{ ...tagStyle }}>
               {tag}
-            </div>
+            </Tags.Item>
           ))}
-        </div>
+        </Tags.Container>
         <div className="w-full flex items-center justify-center">
           <div className="bg-border w-[95%] h-0.5" />
         </div>

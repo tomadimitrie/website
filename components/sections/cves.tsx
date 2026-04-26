@@ -1,11 +1,11 @@
 "use client";
 
+import { MatrixRain } from "@/components/background/matrix-rain";
 import { SectionWrapper } from "@/components/sections/section";
+import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
 import { ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { MatrixRain } from "@/components/background/matrix-rain";
-import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
+import { Tags } from "../ui/tags";
 
 export function CvesSection() {
   const { isHovered, containerRef } =
@@ -53,14 +53,9 @@ export function CvesSection() {
                     <div className="text-muted-foreground">
                       CVSS {item.cvss}
                     </div>
-                    <div
-                      className={cn(
-                        className,
-                        "border-2 px-3 py-0.5 font-bold rounded-md",
-                      )}
-                    >
+                    <Tags.Item className={className}>
                       {rating.toUpperCase()}
-                    </div>
+                    </Tags.Item>
                   </div>
                 );
               })()}

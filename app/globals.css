@@ -129,6 +129,12 @@
   h1, h2, h3 {
     @apply scroll-mt-25;
   }
+  li > a {
+   @apply text-primary-foreground; 
+  }
+  a:hover {
+    @apply underline; 
+  }
 }
 
 @theme {

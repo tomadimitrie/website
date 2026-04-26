@@ -1,13 +1,14 @@
 "use client";
 
-import { SectionWrapper } from "@/components/sections/section";
-import { CONFIG } from "@/lib/config";
-import { ExternalLink } from "lucide-react";
 import { CubesBackground } from "@/components/background/cubes";
-import React, { useMemo } from "react";
-import { tailwindColor } from "@/lib/utils";
-import Link from "next/link";
+import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
+import { CONFIG } from "@/lib/config";
+import { tailwindColor } from "@/lib/utils";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { useMemo } from "react";
+import { Tags } from "../ui/tags";
 
 export function CertificationsSection() {
   return (
@@ -63,18 +64,17 @@ function CertificationItem({
             </Link>
           </div>
           <div className="flex items-center gap-3">
-            <Link
-              className="border-2 px-3 py-0.5 font-bold rounded-md hover:underline"
+            <Tags.Item
               style={{
                 borderColor: authorityColor,
                 color: authorityColor,
                 backgroundColor: authorityBackgroundColor,
               }}
-              target="_blank"
-              href={item.authority.website}
             >
-              {item.authority.name}
-            </Link>
+              <Link target="_blank" href={item.authority.website}>
+                {item.authority.name}
+              </Link>
+            </Tags.Item>
             <div>{item.year}</div>
           </div>
         </div>

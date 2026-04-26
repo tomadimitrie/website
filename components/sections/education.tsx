@@ -7,6 +7,7 @@ import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import { match } from "ts-pattern";
+import { Tags } from "../ui/tags";
 
 export function EducationSection() {
   return (
@@ -63,20 +64,15 @@ function EducationItem({
         <span className="text-muted-foreground"> ({item.university})</span>
       </div>
       <ul className="list-disc list-inside flex flex-col gap-2 text-muted-foreground">
-        {item.features.map((feature) => (
-          <li key={feature}>{feature}</li>
+        {item.features.map((feature, index) => (
+          <li key={index}>{feature}</li>
         ))}
       </ul>
-      <div className="flex gap-3">
+      <>
         {item.tags.map((tag) => (
-          <div
-            key={tag}
-            className="border-2 border-primary-foreground text-primary-foreground bg-primary font-bold font-mono px-2 py-1 rounded-md"
-          >
-            {tag}
-          </div>
+          <Tags.Item key={tag}>{tag}</Tags.Item>
         ))}
-      </div>
+      </>
     </div>
   );
 }

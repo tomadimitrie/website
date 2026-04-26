@@ -16,6 +16,7 @@ import {
   Mail,
   Shield,
 } from "lucide-react";
+import Link from "next/link";
 
 export const CONFIG = {
   navItems: [
@@ -134,13 +135,10 @@ export const CONFIG = {
           position: "Kernel Developer (Windows), Security Researcher",
           company: "Bitdefender",
           features: [
-            "Contributing on the development of the anti-exploit module, " +
-              "focusing on the integration between the kernel-mode driver and user-mode filter and " +
-              "creating new detections to intercept advanced attack vectors",
-            "Analyzing and authoring 0-day PoCs to validate detection efficacy and improve the EDR " +
-              "against emerging exploits",
-            "Refined antivirus detection capabilities using live threat telemetry, playing a key role " +
-              "in achieving the maximum score at AV-Comparatives ATP 2025",
+            "Contributing on the development of the anti-exploit module, focusing on the integration between the kernel-mode driver and " +
+              "user-mode filter and creating new detections to intercept advanced attack vectors",
+            "Analyzing and authoring 0-day PoCs to validate detection efficacy and improve the EDR against emerging exploits",
+            "Refined antivirus detection capabilities using live threat telemetry, playing a key role in achieving the maximum score at AV-Comparatives ATP 2025",
           ],
           tags: [
             "C/C++",
@@ -175,13 +173,34 @@ export const CONFIG = {
               "software and internal tooling",
             "Conducted deep-dive white-box assessments, ensuring security considerations were integrated in the " +
               "development lifecycle",
+            <>
+              Contributed to the organization of multiple machine learning
+              contests (
+              <Link href="https://github.com/iarai/NeurIPS2020-traffic4cast">
+                Traffic4Cast
+              </Link>
+              ,{" "}
+              <Link href="https://github.com/iarai/weather4cast-2022">
+                Weather4Cast
+              </Link>
+              ,{" "}
+              <Link href="https://github.com/iarai/science4cast">
+                Science4Cast
+              </Link>
+              ,{" "}
+              <Link href="https://github.com/iarai/Landslide4Sense-2022">
+                Landslide4Sense
+              </Link>
+              ), with latest contests gathering over 7000 submissions from
+              participants
+            </>,
           ],
           tags: ["White-box penetration testing", "PHP", "React"],
         },
         {
           from: "2020",
           to: "2023",
-          position: "Co-founder, Penetration Tester, Software Developer",
+          position: "Co-founder",
           company: "Antimony (Startup)",
           features: [
             "Co-founded and led a startup, balancing mobile/web engineering with rigorous penetration testing",
@@ -202,11 +221,19 @@ export const CONFIG = {
       items: [
         {
           university: "Tehnical University of Cluj-Napoca",
-          type: "Master’s Degree",
+          type: "Master's Degree",
           domain: "Cybersecurity",
           from: "2023",
           to: "2025",
           features: [
+            <>
+              Thesis title:{" "}
+              <b>
+                Behavioral macOS EDR Using Apple Endpoint Security Framework
+              </b>
+            </>,
+          ],
+          tags: [
             "Windows Driver Development",
             "OS Development",
             "Hypervisor Development",
@@ -215,16 +242,24 @@ export const CONFIG = {
             "Penetration Testing",
             "Network Security",
           ],
-          tags: ["C", "Assembly"],
         },
         {
           university: "Babes-Bolyai University of Cluj-Napoca",
-          type: "Bachelor’s Degree",
+          type: "Bachelor's Degree",
           domain: "Computer Science",
           from: "2020",
           to: "2023",
-          features: ["Operating Systems", "Cybersecurity", "x86 Assembly"],
-          tags: ["C", "Assembly"],
+          features: [
+            <>
+              Thesis title:{" "}
+              <b>
+                Fortifying macOS: Empowering Binary Exploit Resistance through
+                Function Hooking and Process Injection with Apple's Endpoint
+                Security Framework
+              </b>
+            </>,
+          ],
+          tags: ["Operating Systems", "Cybersecurity", "x86 Assembly"],
         },
       ],
     },
@@ -568,10 +603,9 @@ export const CONFIG = {
           subtitle: (
             <>
               As a core member of
-              <span className="font-mono">{"> r0/dev/null"}</span>, currently
-              the #2 ranked CTF team in Romania, I contributed to major
-              victories, including 1st place in World Wide CTF 2025, 3rd place
-              in N0PSctf 2025 and 3rd place in D-CTF 2025.
+              <span className="font-mono">{"> r0/dev/null"}</span>, I
+              contributed to major victories, including 1st place in World Wide
+              CTF 2025, 3rd place in N0PSctf 2025 and 3rd place in D-CTF 2025.
             </>
           ),
           link: "https://ctftime.org/team/305658",
@@ -603,7 +637,7 @@ export const CONFIG = {
             "Former captain of the CTF team of Technical University of Cluj-Napoca",
           subtitle:
             "Managed the university's competitive cybersecurity program, " +
-            "highlighting by securing 4th place in Hack The Box University CTF 2023.",
+            "highlighted by securing 4th place in Hack The Box University CTF 2023.",
         },
         {
           title: "TFC CTF 2021 and 2022",
