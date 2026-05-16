@@ -68,11 +68,11 @@ function EducationItem({
           <li key={index}>{feature}</li>
         ))}
       </ul>
-      <>
+      <Tags.Container>
         {item.tags.map((tag) => (
           <Tags.Item key={tag}>{tag}</Tags.Item>
         ))}
-      </>
+      </Tags.Container>
     </div>
   );
 }
