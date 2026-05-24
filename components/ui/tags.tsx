@@ -25,7 +25,7 @@ function Item({
   return (
     <div
       className={cn(
-        "whitespace-nowrap border-2 border-primary-foreground text-primary-foreground bg-primary font-bold font-mono px-2 py-1 rounded-md",
+        "border-2 border-primary-foreground text-primary-foreground bg-primary font-bold font-mono px-2 py-1 rounded-md",
         className,
       )}
       style={style}
