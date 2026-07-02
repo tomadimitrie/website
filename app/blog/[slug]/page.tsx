@@ -1,7 +1,6 @@
 import { PostMetadata } from "@/app/blog/mdx";
 import { PostIcon, TagItem } from "@/app/blog/page-client";
 import fs from "fs/promises";
-import fsOrig from "fs";
 import { ArrowLeftIcon, CalendarIcon } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -9,6 +8,11 @@ import { notFound, redirect } from "next/navigation";
 import React from "react";
 import { renderDecryptedPost, tryDecryptPost } from "./actions";
 import { PasswordForm, TableOfContents } from "./page-client";
+
+const redirects: Record<string, string> = {
+  HjtcK4ztHD: "CVE-2026-54424",
+  "HjtcK4ztHD--private": "CVE-2026-54424",
+};
 
 export default async function BlogPage({
   params,
@@ -71,6 +75,10 @@ export default async function BlogPage({
     );
   }
 
+  if (redirects[slug]) {
+    return redirect(`/blog/${redirects[slug]}`);
+  }
+
   if (slug.endsWith("--private")) {
     const path = `blog/${slug}/content.enc`;
     try {
@@ -94,33 +102,7 @@ export default async function BlogPage({
 
     return renderPost(result.Component, result.metadata);
   } else {
-    let path = `@/blog/${slug}/content.mdx`;
-    try {
-      await fs.access(path.substring(2));
-    } catch {
-      const postFiles = await Array.fromAsync(fs.glob("blog/**/content.mdx"));
-      for (const postFile of postFiles) {
-        const chunks = [];
-        for await (const chunk of fsOrig.createReadStream(postFile, {
-          start: 0,
-          end: 500,
-        })) {
-          chunks.push(chunk);
-        }
-        const content = Buffer.concat(chunks).toString();
-        const idLine = content
-          .split("\n")
-          .find((line) => line.trim().startsWith("id: "));
-        if (!idLine) {
-          continue;
-        }
-        const regex = /\s+id:\s+"([^"]+)"/;
-        const [, id] = idLine.match(regex)!;
-        if (id === slug) {
-          return redirect(`/blog/${postFile.split("/")[1]}`);
-        }
-      }
-    }
+    const path = `@/blog/${slug}/content.mdx`;
     try {
       const { default: Component, metadata } = await import(path);
       return renderPost(Component, metadata);

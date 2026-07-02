@@ -182,7 +182,7 @@ export function TagItem({ tag, color }: { tag: string; color: string }) {
   return (
     <Link
       key={tag}
-      className="grow text-center font-mono font-bold px-3 py-0.5 border rounded-sm z-2"
+      className="grow text-center font-mono font-bold px-3 py-0.5 border rounded-sm z-2 flex items-center justify-center"
       {...hover.props}
       style={{
         ...{
