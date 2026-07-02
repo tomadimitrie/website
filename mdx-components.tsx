@@ -72,7 +72,7 @@ const components = {
     </figure>
   ),
   pre: ({ children, className, ...rest }) => (
-    <pre className={cn(className, "p-5 w-full rounded-2xl")} {...rest}>
+    <pre className={cn(className, "p-5 w-full rounded-2xl overflow-x-auto")} {...rest}>
       {children}
     </pre>
   ),
@@ -80,7 +80,7 @@ const components = {
     <code
       className={cn(
         className,
-        "text-foreground whitespace-pre-wrap max-w-full",
+        "text-foreground",
       )}
       style={{
         wordBreak: "break-word",

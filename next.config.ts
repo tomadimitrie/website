@@ -11,6 +11,20 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      {
+        source: "/blog/HjtcK4ztHD",
+        destination: "/blog/CVE-2026-54424",
+        permanent: true,
+      },
+      {
+        source: "/blog/HjtcK4ztHD--private",
+        destination: "/blog/CVE-2026-54424",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX({
