@@ -61,7 +61,11 @@ export function CvesSection() {
               })()}
             </div>
             <div className="text-xl">{item.title}</div>
-            <div className="text-muted-foreground">{item.description}</div>
+            <ul className="list-disc list-inside flex flex-col gap-2 text-muted-foreground">
+              {item.features.map((feature, index) => (
+                <li key={index}>{feature}</li>
+              ))}
+            </ul>
           </div>
         </div>
       ))}

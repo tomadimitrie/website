@@ -266,11 +266,21 @@ export const CONFIG = {
     cves: {
       items: [
         {
+          url: "https://nvd.nist.gov/vuln/detail/CVE-2026-54424",
+          cve: "CVE-2026-54424",
+          title: "Remote Code Execution / Arbitrary File Read / NTLM Hash Capture as SYSTEM",
+          features: [
+            <>Parsec for Windows before version 150-104a is vulnerable to multiple Elevation of Privilege vulnerabilities, enabling attackers to perform actions as NT AUTHORITY\SYSTEM. <Link href="https://www.tomadimitrie.dev/blog/CVE-2026-54424">Writeup</Link></>,
+          ],
+          cvss: 8.4
+        },
+        {
           url: "https://nvd.nist.gov/vuln/detail/CVE-2022-48481",
           cve: "CVE-2022-48481",
-          title: "Dylib injection in macOS JetBrains Toolbox application",
-          description:
-            "JetBrains Toolbox before version 1.28 is vulnerable to dylib injection, allowing attackers to abuse TCC permissions (Transparency, Consent and Control) granted to the application.",
+          title: "Dylib injection in macOS JetBrains Toolbox",
+          features: [
+            <>JetBrains Toolbox before version 1.28 is vulnerable to dylib injection, allowing attackers to abuse TCC permissions (Transparency, Consent and Control) granted to the application. <Link href="https://www.tomadimitrie.dev/blog/CVE-2022-48481">Writeup</Link></>,
+          ],
           cvss: 7.8,
         },
       ],
