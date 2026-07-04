@@ -5,6 +5,7 @@ import { CvesSection } from "@/components/sections/cves";
 import { EducationSection } from "@/components/sections/education";
 import { ExperienceSection } from "@/components/sections/experience";
 import { ProjectsSection } from "@/components/sections/projects";
+import { PublicationsSection } from "@/components/sections/publications";
 import {
   Box,
   Calendar,
@@ -31,6 +32,10 @@ export const CONFIG = {
     {
       title: "CVEs",
       Component: CvesSection,
+    },
+    {
+      title: "Publications",
+      Component: PublicationsSection,
     },
     {
       title: "Certifications",
@@ -104,6 +109,13 @@ export const CONFIG = {
       fontSize: 16,
       chars: "01".split(""),
       color: ["green", 500, 40] as const,
+    },
+    trail: {
+      minFont: 10,
+      maxFont: 16,
+      chars: "01".split(""),
+      color: ["green", 500, 40] as const,
+      distance: 20,
     },
     lines: {
       spacing: 75,
@@ -268,20 +280,59 @@ export const CONFIG = {
         {
           url: "https://nvd.nist.gov/vuln/detail/CVE-2026-54424",
           cve: "CVE-2026-54424",
-          title: "Remote Code Execution / Arbitrary File Read / NTLM Hash Capture as SYSTEM",
+          title:
+            "Remote Code Execution / Arbitrary File Read / NTLM Hash Capture as SYSTEM",
           features: [
-            <>Parsec for Windows before version 150-104a is vulnerable to multiple Elevation of Privilege vulnerabilities, enabling attackers to perform actions as NT AUTHORITY\SYSTEM. <Link href="https://www.tomadimitrie.dev/blog/CVE-2026-54424">Writeup</Link></>,
+            <>
+              Parsec for Windows before version 150-104a is vulnerable to
+              multiple Elevation of Privilege vulnerabilities, enabling
+              attackers to perform actions as NT AUTHORITY\SYSTEM.{" "}
+              <Link href="https://www.tomadimitrie.dev/blog/CVE-2026-54424">
+                Writeup
+              </Link>
+            </>,
           ],
-          cvss: 8.4
+          cvss: 8.4,
         },
         {
           url: "https://nvd.nist.gov/vuln/detail/CVE-2022-48481",
           cve: "CVE-2022-48481",
           title: "Dylib injection in macOS JetBrains Toolbox",
           features: [
-            <>JetBrains Toolbox before version 1.28 is vulnerable to dylib injection, allowing attackers to abuse TCC permissions (Transparency, Consent and Control) granted to the application. <Link href="https://www.tomadimitrie.dev/blog/CVE-2022-48481">Writeup</Link></>,
+            <>
+              JetBrains Toolbox before version 1.28 is vulnerable to dylib
+              injection, allowing attackers to abuse TCC permissions
+              (Transparency, Consent and Control) granted to the application.{" "}
+              <Link href="https://www.tomadimitrie.dev/blog/CVE-2022-48481">
+                Writeup
+              </Link>
+            </>,
           ],
           cvss: 7.8,
+        },
+      ],
+    },
+    publications: {
+      items: [
+        {
+          title: "Behavioral Detection Using Apple Endpoint Security Framework",
+          authors: [
+            "Dimitrie-Toma Furdui",
+            "Radu-Marian Portase",
+            "Andrei-Marius Muntea",
+            "Adrian-Viorel Coleșa",
+          ],
+          url: "https://ieeexplore.ieee.org/document/11577948",
+          publishedIn:
+            "2026 IEEE International Conference on Automation, Quality and Testing, Robotics (AQTR)",
+          abstract:
+            "Traditional endpoint security on macOS has relied on third-party kernel extensions, which Apple is increasingly restricting. " +
+            "Apple's Endpoint Security (ES) framework offers a supported alternative by providing user-space access to securityrelevant events, " +
+            "such as process execution and file activity, and by allowing or denying certain operations. This paper assesses whether ES telemetry is sufficient " +
+            "for building an Endpoint Detection and Response (EDR) system. We introduce a prototype user-space EDR that correlates ES events into process and " +
+            "process-tree activity, applies a points-based heuristic engine, and supports translating a subset of macOS Sigma rules into ES-compatible detections. " +
+            "Detection coverage is evaluated using Atomic Red Team. With Sigma-derived rules and custom heuristics, the prototype detects 95.13 % of the evaluated macOS " +
+            "Atomic Red Team tests, demonstrating that ES can enable practical behavioral detection without third-party kernel extensions.",
         },
       ],
     },

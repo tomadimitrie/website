@@ -117,23 +117,33 @@
   * {
     @apply box-border;
   }
+
   html {
     @apply scroll-smooth;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   ul ul {
     @apply pl-10;
   }
+
   h1, h2, h3 {
     @apply scroll-mt-25;
   }
+
   li > a {
    @apply text-primary-foreground; 
   }
+
   a:hover {
     @apply underline; 
+  }
+
+  details > summary { 
+    cursor: pointer;
   }
 }
 
