@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
         loaders: ["raw-loader"],
         as: "*.js",
       },
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
     },
   },
   async redirects() {
