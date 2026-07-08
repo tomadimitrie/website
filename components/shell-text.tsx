@@ -1,7 +1,7 @@
 "use client";
 
-import { CONFIG } from "@/lib/config";
 import { useEffect, useState } from "react";
+import { CONFIG } from "@/lib/config";
 
 export function ShellText() {
   const [text, setText] = useState("");

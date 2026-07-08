@@ -1,9 +1,9 @@
 "use client";
 
-import { cn, tailwindColor } from "@/lib/utils";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { SubscribeToMouse } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
-import { SubscribeToMouse } from "@/hooks/useInteractiveBackground";
+import { cn, tailwindColor } from "@/lib/utils";
 
 export function CubesBackground({
   className,
@@ -35,6 +35,7 @@ export function CubesBackground({
       }
     });
 
+    // biome-ignore lint/style/noNonNullAssertion: never null
     observer.observe(innerRef.current!);
 
     return () => {
@@ -47,6 +48,7 @@ export function CubesBackground({
       return;
     }
 
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const wrapper = innerRef.current!;
     const squares = Array.from(wrapper.children) as HTMLDivElement[];
     squaresRef.current = squares;
@@ -89,6 +91,7 @@ export function CubesBackground({
         .fill(null)
         .map((_, index) => (
           <div
+            // biome-ignore lint/suspicious/noArrayIndexKey: the array has null values, it is used just for filling the grid
             key={index}
             style={{
               backgroundColor: tailwindColor(...CONFIG.backgrounds.cubes.color),

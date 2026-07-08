@@ -1,12 +1,12 @@
 import type { MDXComponents } from "mdx/types";
-import React from "react";
+import type React from "react";
 import { cn } from "./lib/utils";
 
 function getNodeText(node: React.ReactNode): string {
   if (["string", "number"].includes(typeof node)) {
     return String(node);
   }
-  if (node instanceof Array) {
+  if (Array.isArray(node)) {
     return node.map(getNodeText).join("");
   }
   if (typeof node === "object" && node && "children" in node) {
@@ -31,7 +31,7 @@ function AnchorWrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
-const components = {
+export const mdxComponents = {
   h1: ({ children }) => (
     <h1
       className="text-3xl text-primary-foreground mt-5"
@@ -72,16 +72,16 @@ const components = {
     </figure>
   ),
   pre: ({ children, className, ...rest }) => (
-    <pre className={cn(className, "p-5 w-full rounded-2xl overflow-x-auto")} {...rest}>
+    <pre
+      className={cn(className, "p-5 w-full rounded-2xl overflow-x-auto")}
+      {...rest}
+    >
       {children}
     </pre>
   ),
   code: ({ children, className }) => (
     <code
-      className={cn(
-        className,
-        "text-foreground",
-      )}
+      className={cn(className, "text-foreground")}
       style={{
         wordBreak: "break-word",
       }}
@@ -91,6 +91,6 @@ const components = {
   ),
 } satisfies MDXComponents;
 
-export function useMDXComponents(): MDXComponents {
-  return components;
+export function useMDXComponents() {
+  return mdxComponents;
 }

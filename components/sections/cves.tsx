@@ -1,10 +1,10 @@
 "use client";
 
+import { ExternalLink } from "lucide-react";
 import { MatrixRain } from "@/components/background/matrix-rain";
 import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
-import { ExternalLink } from "lucide-react";
 import { Tags } from "../ui/tags";
 
 export function CvesSection() {
@@ -72,6 +72,7 @@ function CveItem({
         <div className="text-xl">{item.title}</div>
         <ul className="list-disc list-inside flex flex-col gap-2 text-muted-foreground">
           {item.features.map((feature, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: always same order, cannot use item itself since we don't know if there are duplicates
             <li key={index}>{feature}</li>
           ))}
         </ul>

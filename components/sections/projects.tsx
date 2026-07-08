@@ -1,14 +1,14 @@
 "use client";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GridBackground } from "@/components/background/grid";
 import { SectionWrapper } from "@/components/sections/section";
 import { useHover } from "@/hooks/useHover";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
 import { clamp, cn, tailwindColor } from "@/lib/utils";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
 import { Tags } from "../ui/tags";
 
 export function ProjectsSection() {
@@ -19,6 +19,7 @@ export function ProjectsSection() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const container = containerRef.current!;
 
     const observer = new IntersectionObserver(
@@ -37,7 +38,7 @@ export function ProjectsSection() {
     );
 
     const children = Array.from(container.children);
-    children.forEach(function (child, index) {
+    children.forEach((child, index) => {
       (child as HTMLElement).dataset.index = index.toString();
       observer.observe(child);
     });
@@ -50,6 +51,7 @@ export function ProjectsSection() {
   function scrollToIndex(index: number) {
     index = clamp(index, 0, CONFIG.sections.projects.items.length - 1);
     setActiveIndex(index);
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const items = containerRef.current!.children;
     (items[index] as HTMLDivElement).scrollIntoView({
       behavior: "smooth",
@@ -59,6 +61,7 @@ export function ProjectsSection() {
   }
 
   function onScroll() {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const { scrollLeft, scrollWidth, clientWidth } = containerRef.current!;
     const atStart = scrollLeft <= 5;
     const atEnd = scrollLeft + clientWidth >= scrollWidth - 5;
@@ -79,7 +82,7 @@ export function ProjectsSection() {
           inherits: false;
           initial-value: black;
         }
-        
+
         @property --mask-right {
           syntax: "<color>";
           inherits: false;
@@ -94,7 +97,7 @@ export function ProjectsSection() {
       <div className="flex gap-5 flex-wrap">
         {CONFIG.sections.projects.items.map((item, index) => (
           <ProjectShortcut
-            key={index}
+            key={item.title}
             item={item}
             onClick={() => scrollToIndex(index)}
           />
@@ -142,7 +145,10 @@ export function ProjectsSection() {
                 onClick={() => scrollToIndex(activeIndex - 1)}
               />
               {CONFIG.sections.projects.items.map((_, index) => (
+                // biome-ignore lint/a11y/useKeyWithClickEvents: no reason, maybe applicable to left/right arrows
+                // biome-ignore lint/a11y/noStaticElementInteractions: interaction is just a shortcut, the element is not a button
                 <div
+                  // biome-ignore lint/suspicious/noArrayIndexKey: the index IS the key since the rendered item is a dot
                   key={index}
                   className={cn(
                     "h-3 rounded-full transition-all duration-300 cursor-pointer",
@@ -187,9 +193,10 @@ function ProjectShortcut({
   );
 
   return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: no reason
+    // biome-ignore lint/a11y/noStaticElementInteractions: interaction is just a shortcut, the element is not a button
     <div
       className="cursor-pointer font-mono font-bold border rounded-md px-2 py-0.5 backdrop-blur-md grow text-center"
-      role="button"
       onClick={onClick}
       {...hover.props}
     >
@@ -235,6 +242,8 @@ function ProjectItem({
     useInteractiveBackground<HTMLDivElement>();
 
   return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: no reason
+    // biome-ignore lint/a11y/noStaticElementInteractions: interaction is just a shortcut, the element is not a button
     <div
       className={cn(
         "w-full md:w-[70%] shrink-0 flex flex-col rounded-xl overflow-hidden border border-muted transition-all duration-500 snap-center",

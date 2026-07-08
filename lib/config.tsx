@@ -1,11 +1,3 @@
-import { AboutSection } from "@/components/sections/about";
-import { AchievementsSection } from "@/components/sections/achievements";
-import { CertificationsSection } from "@/components/sections/certifications";
-import { CvesSection } from "@/components/sections/cves";
-import { EducationSection } from "@/components/sections/education";
-import { ExperienceSection } from "@/components/sections/experience";
-import { ProjectsSection } from "@/components/sections/projects";
-import { PublicationsSection } from "@/components/sections/publications";
 import {
   Box,
   Calendar,
@@ -18,6 +10,14 @@ import {
   Shield,
 } from "lucide-react";
 import Link from "next/link";
+import { AboutSection } from "@/components/sections/about";
+import { AchievementsSection } from "@/components/sections/achievements";
+import { CertificationsSection } from "@/components/sections/certifications";
+import { CvesSection } from "@/components/sections/cves";
+import { EducationSection } from "@/components/sections/education";
+import { ExperienceSection } from "@/components/sections/experience";
+import { ProjectsSection } from "@/components/sections/projects";
+import { PublicationsSection } from "@/components/sections/publications";
 
 export const CONFIG = {
   navItems: [

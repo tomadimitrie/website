@@ -1,10 +1,10 @@
-import crypto from "crypto";
-import fs from "fs/promises";
-// @ts-ignore
+import crypto from "node:crypto";
+import fs from "node:fs/promises";
+// @ts-expect-error
 import passwords from "./posts-passwords.json" with { type: "json" };
 
 async function processImages(slug: string, content: string): Promise<string> {
-  let lines = content.split("\n");
+  const lines = content.split("\n");
 
   await fs.mkdir(`blog/${slug}/assets`, { recursive: true });
 
@@ -15,7 +15,8 @@ async function processImages(slug: string, content: string): Promise<string> {
     if (!line.startsWith("![")) {
       continue;
     }
-    const regex = /!\[([^\]]+)\]\(([^\)]+)\)/;
+    const regex = /!\[([^\]]+)\]\(([^)]+)\)/;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const [, alt, encoded] = line.match(regex)!;
     let newAlt = alt;
     let altIndex = 2;
@@ -28,11 +29,10 @@ async function processImages(slug: string, content: string): Promise<string> {
       encoded.replace("data:image/png;base64,", ""),
       "base64",
     );
-    const filename =
-      newAlt
-        .replaceAll(" ", "_")
-        .replace(/[^a-zA-Z0-9_]/g, "")
-        .toLowerCase() + ".png";
+    const filename = `${newAlt
+      .replaceAll(" ", "_")
+      .replace(/[^a-zA-Z0-9_]/g, "")
+      .toLowerCase()}.png`;
     const importedName = newAlt
       .replace(/[^a-zA-Z0-9 ]/g, "")
       .split(" ")
@@ -47,6 +47,7 @@ async function processImages(slug: string, content: string): Promise<string> {
   }
 
   const importsIndex =
+    // biome-ignore lint/style/noNonNullAssertion: never null
     lines
       .map((line, index) => [line, index] as const)
       .find(([line, _]) => line.trim() === "}")![1] + 1;

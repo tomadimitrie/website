@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { cn, randomBetween, randomFrom, tailwindColor } from "@/lib/utils";
+import type { SubscribeToMouse } from "@/hooks/useInteractiveBackground";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
-import { SubscribeToMouse } from "@/hooks/useInteractiveBackground";
+import { cn, randomBetween, randomFrom, tailwindColor } from "@/lib/utils";
 
 class Droplet {
   public char: string;
@@ -63,7 +63,9 @@ export function Trail({
   const { distance } = CONFIG.backgrounds.trail;
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const canvas = canvasRef.current!;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const ctx = canvas.getContext("2d")!;
 
     const unsubscribe = subscribeToMouse((x, y) => {
@@ -90,10 +92,12 @@ export function Trail({
     return () => {
       unsubscribe();
     };
-  }, [subscribeToMouse]);
+  }, [subscribeToMouse, distance]);
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const canvas = canvasRef.current!;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const ctx = canvas.getContext("2d")!;
 
     let logicalWidth = 0;
@@ -131,6 +135,7 @@ export function Trail({
       }
     });
 
+    // biome-ignore lint/style/noNonNullAssertion: never null
     observer.observe(canvas.parentElement!);
 
     animate();

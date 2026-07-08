@@ -1,6 +1,6 @@
-import crypto from "crypto";
-import fs from "fs/promises";
-// @ts-ignore
+import crypto from "node:crypto";
+import fs from "node:fs/promises";
+// @ts-expect-error
 import passwords from "./posts-passwords.json" with { type: "json" };
 
 async function processImages(slug: string, content: string): Promise<string> {
@@ -11,6 +11,7 @@ async function processImages(slug: string, content: string): Promise<string> {
   const images: Record<string, string> = {};
   for (const line of lines.filter((line) => line.startsWith("import"))) {
     const regex = /import\s+(\S+)\s+from\s+['"](\S+)['"]/;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const [, name, path] = line.match(regex)!;
     const content = await fs.readFile(`blog/${slug}/${path}`, {
       encoding: "base64",
@@ -22,6 +23,7 @@ async function processImages(slug: string, content: string): Promise<string> {
       continue;
     }
     const regex = /<Image\s+src=\{(\S+)\}\s+alt="([^"]+)"/;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const [, name, alt] = line.match(regex)!;
     lines[index] = `![${alt}](data:image/png;base64,${images[name]})`;
   }

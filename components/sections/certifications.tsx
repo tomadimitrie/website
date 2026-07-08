@@ -1,13 +1,13 @@
 "use client";
 
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { useMemo } from "react";
 import { CubesBackground } from "@/components/background/cubes";
 import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
 import { tailwindColor } from "@/lib/utils";
-import { ExternalLink } from "lucide-react";
-import Link from "next/link";
-import { useMemo } from "react";
 import { Tags } from "../ui/tags";
 
 export function CertificationsSection() {

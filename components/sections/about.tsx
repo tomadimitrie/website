@@ -1,7 +1,7 @@
+import Link from "next/link";
+import { SectionWrapper } from "@/components/sections/section";
 import { CONFIG } from "@/lib/config";
 import { ShellText } from "../shell-text";
-import { SectionWrapper } from "@/components/sections/section";
-import Link from "next/link";
 
 export function AboutSection() {
   return (

@@ -1,11 +1,11 @@
-import { PostMetadata } from "@/app/blog/mdx";
-import { PostIcon, TagItem } from "@/app/blog/page-client";
-import fs from "fs/promises";
+import fs from "node:fs/promises";
 import { ArrowLeftIcon, CalendarIcon } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import React from "react";
+import type React from "react";
+import type { PostMetadata } from "@/app/blog/mdx";
+import { PostIcon, TagItem } from "@/app/blog/page-client";
 import { renderDecryptedPost, tryDecryptPost } from "./actions";
 import { PasswordForm, TableOfContents } from "./page-client";
 

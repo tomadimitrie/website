@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
-import { cn, tailwindColor } from "@/lib/utils";
-import { useHover } from "@/hooks/useHover";
 import { ArrowRightIcon, CalendarIcon } from "lucide-react";
 import { DynamicIcon } from "lucide-react/dynamic";
 import Link from "next/link";
-import { Post, PostMetadata } from "@/app/blog/mdx";
+import type React from "react";
 import { match } from "ts-pattern";
+import type { Post, PostMetadata } from "@/app/blog/mdx";
+import { useHover } from "@/hooks/useHover";
+import { cn, tailwindColor } from "@/lib/utils";
 
 export function FeaturedPostCard({
   post,

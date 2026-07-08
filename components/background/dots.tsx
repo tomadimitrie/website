@@ -1,7 +1,8 @@
-import { cn, pointDistance, tailwindColor } from "@/lib/utils";
-import React, { RefObject, useEffect, useRef } from "react";
+import type React from "react";
+import { type RefObject, useEffect, useRef } from "react";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
+import { cn, pointDistance, tailwindColor } from "@/lib/utils";
 
 class Dot {
   originX: number;
@@ -79,7 +80,9 @@ export function DotsBackground({
   const animationFrame = useRef<number | null>(null);
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const canvas = canvasRef.current!;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const ctx = canvas.getContext("2d")!;
 
     const { gap } = CONFIG.backgrounds.dots;
@@ -123,6 +126,7 @@ export function DotsBackground({
       }
     });
 
+    // biome-ignore lint/style/noNonNullAssertion: never null
     observer.observe(canvas.parentElement!);
 
     animate();

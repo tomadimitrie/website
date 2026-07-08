@@ -39,6 +39,7 @@ export function tailwindColor(
 }
 
 export function parseOklch(color: string): { l: number; c: number; h: number } {
+  // biome-ignore lint/style/noNonNullAssertion: never null
   const matches = color.match(/-?\d*\.?\d+/g)!;
   return {
     l: parseFloat(matches[0]),

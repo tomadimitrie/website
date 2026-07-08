@@ -1,13 +1,12 @@
 "use client";
 
-import { SectionWrapper } from "@/components/sections/section";
-import { CONFIG } from "@/lib/config";
-import React from "react";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { DotsBackground } from "@/components/background/dots";
+import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
+import { CONFIG } from "@/lib/config";
+import { cn } from "@/lib/utils";
 
 export function AchievementsSection() {
   return (

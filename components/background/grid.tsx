@@ -1,4 +1,8 @@
 "use client";
+import type React from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { resizeCanvas } from "@/lib/canvas-utils";
+import { CONFIG } from "@/lib/config";
 import {
   clamp,
   cn,
@@ -7,9 +11,6 @@ import {
   pointDistance,
   tailwindColor,
 } from "@/lib/utils";
-import React, { useEffect, useMemo, useRef } from "react";
-import { resizeCanvas } from "@/lib/canvas-utils";
-import { CONFIG } from "@/lib/config";
 
 interface Point {
   x: number;
@@ -40,7 +41,9 @@ export function GridBackground({
   );
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const canvas = canvasRef.current!;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const ctx = canvas.getContext("2d")!;
 
     const { gridSize, mouseRadius, diffusion, decay } = CONFIG.backgrounds.grid;
@@ -208,6 +211,7 @@ export function GridBackground({
       }
     });
 
+    // biome-ignore lint/style/noNonNullAssertion: never null
     observer.observe(canvas.parentElement!);
 
     animate();

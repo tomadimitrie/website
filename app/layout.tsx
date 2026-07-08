@@ -1,8 +1,8 @@
-import { BackgroundComponent } from "@/components/background/background";
-import { NavComponent } from "@/components/nav";
 import type { Metadata } from "next";
 import { Anta } from "next/font/google";
-import React from "react";
+import type React from "react";
+import { BackgroundComponent } from "@/components/background/background";
+import { NavComponent } from "@/components/nav";
 import "./globals.css";
 
 export const metadata: Metadata = {

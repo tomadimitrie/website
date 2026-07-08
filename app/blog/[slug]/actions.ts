@@ -1,18 +1,18 @@
 "use server";
 
-import { useMDXComponents } from "@/mdx-components";
-import crypto from "crypto";
-import fs from "fs/promises";
-import { evaluate } from "next-mdx-remote-client/rsc";
+import crypto from "node:crypto";
+import fs from "node:fs/promises";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import React from "react";
+import { evaluate } from "next-mdx-remote-client/rsc";
+import type React from "react";
 import RehypePrettyCode from "rehype-pretty-code";
-import { PostMetadata } from "../mdx";
+import { mdxComponents } from "@/mdx-components";
+import type { PostMetadata } from "../mdx";
 
 export async function decryptPost(
   slug: string,
-  _prevState: any,
+  _prevState: object,
   formData: FormData,
 ) {
   "use server";
@@ -74,7 +74,7 @@ export async function renderDecryptedPost(decrypted: Buffer): Promise<{
     mod: { metadata },
   } = await evaluate({
     source: decrypted,
-    components: useMDXComponents(),
+    components: mdxComponents,
     options: {
       mdxOptions: {
         baseUrl: import.meta.url,

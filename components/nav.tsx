@@ -1,11 +1,11 @@
 "use client";
 
+import { SquareMenu } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/shadcn/button";
 import { CONFIG } from "@/lib/config";
-import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { SquareMenu } from "lucide-react";
 
 export function NavComponent() {
   const [wasScrolled, setWasScrolled] = useState(false);

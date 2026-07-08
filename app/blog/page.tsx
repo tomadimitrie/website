@@ -1,9 +1,8 @@
 import { TerminalIcon } from "lucide-react";
-import { CONFIG } from "@/lib/config";
-import { SectionTitle } from "@/components/sections/section";
-import React from "react";
+import { dummyPost, getAllPosts, type Post } from "@/app/blog/mdx";
 import { FeaturedPostCard, PostCard } from "@/app/blog/page-client";
-import { dummyPost, getAllPosts, Post } from "@/app/blog/mdx";
+import { SectionTitle } from "@/components/sections/section";
+import { CONFIG } from "@/lib/config";
 
 export default async function BlogPage() {
   const posts = await getAllPosts();
@@ -13,6 +12,7 @@ export default async function BlogPage() {
   }
   const featuredPosts = posts
     .filter((post) => post.metadata.featured !== undefined)
+    // biome-ignore lint/style/noNonNullAssertion: never null
     .toSorted((a, b) => a.metadata.featured! - b.metadata.featured!);
 
   return (

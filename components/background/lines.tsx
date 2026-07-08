@@ -1,8 +1,11 @@
-import { cn, tailwindColor } from "@/lib/utils";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import type {
+  MouseRef,
+  SubscribeToMouse,
+} from "@/hooks/useInteractiveBackground";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
-import { MouseRef, SubscribeToMouse } from "@/hooks/useInteractiveBackground";
+import { cn, tailwindColor } from "@/lib/utils";
 
 export function LinesBackground({
   className,
@@ -28,7 +31,9 @@ export function LinesBackground({
   }, [subscribeToMouse]);
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const canvas = canvasRef.current!;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const ctx = canvas.getContext("2d")!;
 
     let logicalWidth = 0;
@@ -95,6 +100,7 @@ export function LinesBackground({
       }
     });
 
+    // biome-ignore lint/style/noNonNullAssertion: never null
     observer.observe(canvas.parentElement!);
 
     animate();

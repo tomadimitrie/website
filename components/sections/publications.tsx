@@ -1,9 +1,9 @@
 "use client";
 
+import { ExternalLink } from "lucide-react";
 import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
-import { ExternalLink } from "lucide-react";
 import { Trail } from "../background/trail";
 
 export function PublicationsSection() {

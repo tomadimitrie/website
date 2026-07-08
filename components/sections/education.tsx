@@ -1,12 +1,12 @@
 "use client";
 
+import { match } from "ts-pattern";
 import { LinesBackground } from "@/components/background/lines";
 import { SectionWrapper } from "@/components/sections/section";
 import { TimelineLine } from "@/components/ui/timeline-line";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
 import { cn } from "@/lib/utils";
-import { match } from "ts-pattern";
 import { Tags } from "../ui/tags";
 
 export function EducationSection() {
@@ -65,6 +65,7 @@ function EducationItem({
       </div>
       <ul className="list-disc list-inside flex flex-col gap-2 text-muted-foreground">
         {item.features.map((feature, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: always same order, cannot use item itself since we don't know if there are duplicates
           <li key={index}>{feature}</li>
         ))}
       </ul>

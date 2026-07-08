@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type MouseSubscriber = (x: number, y: number) => void;
 
@@ -23,6 +24,7 @@ export function useInteractiveBackground<T extends HTMLElement>() {
   }, []);
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const container = containerRef.current!;
 
     let rect = container.getBoundingClientRect();
@@ -44,9 +46,9 @@ export function useInteractiveBackground<T extends HTMLElement>() {
       mouseRef.current.x = event.clientX - rect.left;
       mouseRef.current.y = event.clientY - rect.top;
 
-      listeners.current.forEach((listener) =>
-        listener(mouseRef.current.x, mouseRef.current.y),
-      );
+      listeners.current.forEach((listener) => {
+        listener(mouseRef.current.x, mouseRef.current.y);
+      });
     }
 
     container.addEventListener("pointerenter", onPointerEnter);

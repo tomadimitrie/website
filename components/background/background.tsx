@@ -1,10 +1,10 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
 import { clamp, randomBetween, tailwindColor } from "@/lib/utils";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
 
 export function BackgroundComponent() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -19,15 +19,20 @@ export function BackgroundComponent() {
     const isMobile = window.matchMedia("(pointer: coarse)").matches;
 
     const backgroundCanvas = new OffscreenCanvas(0, 0);
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const backgroundCtx = backgroundCanvas.getContext("2d")!;
 
     const spotlightCanvas = new OffscreenCanvas(0, 0);
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const spotlightCtx = spotlightCanvas.getContext("2d")!;
 
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const mainCanvas = canvasRef.current!;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const mainCtx = mainCanvas.getContext("2d")!;
 
     const gradientCanvas = new OffscreenCanvas(0, 0);
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const gradientCtx = gradientCanvas.getContext("2d")!;
 
     const {
@@ -251,7 +256,7 @@ export function BackgroundComponent() {
       }
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [allowFreeMovement]);
 
   return (
     <canvas

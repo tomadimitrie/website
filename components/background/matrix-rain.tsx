@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { cn, randomFrom, tailwindColor } from "@/lib/utils";
 import { resizeCanvas } from "@/lib/canvas-utils";
 import { CONFIG } from "@/lib/config";
+import { cn, randomFrom, tailwindColor } from "@/lib/utils";
 
 export function MatrixRain({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -11,7 +11,9 @@ export function MatrixRain({ className }: { className?: string }) {
   const animationFrame = useRef<number | null>(null);
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const canvas = canvasRef.current!;
+    // biome-ignore lint/style/noNonNullAssertion: never null
     const ctx = canvas.getContext("2d")!;
 
     let logicalWidth = 0;
@@ -69,6 +71,7 @@ export function MatrixRain({ className }: { className?: string }) {
       }
     });
 
+    // biome-ignore lint/style/noNonNullAssertion: never null
     observer.observe(canvas.parentElement!);
 
     animate();

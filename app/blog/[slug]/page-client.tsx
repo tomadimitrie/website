@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/shadcn/button";
-import { cn } from "@/lib/utils";
 import { LoaderIcon, LockIcon, LogInIcon } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
+import { Button } from "@/components/shadcn/button";
+import { cn } from "@/lib/utils";
 import { decryptPost } from "./actions";
 
 export function PasswordForm({ slug }: { slug: string }) {
@@ -54,6 +54,7 @@ export function TableOfContents() {
         <a
           className="text-xl text-muted-foreground hover:text-primary-foreground hover:underline"
           href={`#${item.heading.id}`}
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: safe, comes from validated files
           dangerouslySetInnerHTML={{
             __html: item.heading.innerHTML,
           }}
@@ -62,6 +63,7 @@ export function TableOfContents() {
         {item.children.length > 0 && (
           <ul>
             {item.children.map((child, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: always same order, cannot use item itself since we don't know if there are duplicates
               <Item key={index} item={child} depth={depth + 1} />
             ))}
           </ul>
@@ -77,7 +79,7 @@ export function TableOfContents() {
     const stack: Node[] = [root];
 
     for (const heading of headings) {
-      const level = parseInt(heading.tagName.substring(1));
+      const level = parseInt(heading.tagName.substring(1), 10);
       const node = {
         heading,
         children: [],
@@ -97,6 +99,7 @@ export function TableOfContents() {
   return (
     <ul>
       {nodes.map((node, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: always same order, cannot use item itself since we don't know if there are duplicates
         <Item key={index} item={node} depth={1} />
       ))}
     </ul>

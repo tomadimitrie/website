@@ -1,5 +1,5 @@
-import fs from "fs/promises";
-import { dynamicIconImports } from "lucide-react/dynamic";
+import fs from "node:fs/promises";
+import type { dynamicIconImports } from "lucide-react/dynamic";
 
 export interface PostMetadata {
   title: string;
@@ -37,6 +37,7 @@ export async function getAllPosts(): Promise<Post[]> {
     await Promise.all(
       postFiles.map(async (name) => {
         return {
+          // biome-ignore lint/style/noNonNullAssertion: never null
           link: `/blog/${name.split("/").at(0)!}`,
           metadata: (await import(`@/blog/${name}`)).metadata as PostMetadata,
         };
