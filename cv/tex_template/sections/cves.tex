@@ -1,0 +1,11 @@
+\cvsectionnoncapitalized{CVEs}
+
+((* for cve in cves *))
+  \cvachievement{}{(( cve.cve )), CVSS (( cve.cvss )) (( "(" + cve.severity + ")" )). \itemlink{(( cve.url ))}}{(( cve.features ))}
+  ((* for feature in item.features *))
+    (( feature ))
+  ((* endfor *))
+  ((* if not loop.last *))
+    \dividerbig
+  ((* endif *))
+((* endfor *))

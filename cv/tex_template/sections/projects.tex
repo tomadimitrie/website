@@ -1,0 +1,10 @@
+\cvsection{Projects}
+
+((* for item in projects *))
+  \cvevent{(( item.title ))((* if item.url *)). \itemlink{(( item.url ))} ((* endif *))}{(( item.shortDescription ))}{}{}
+  \vspace{-0.5em}
+  \small{(( item.description ))}
+  ((* if not loop.last *))
+    \divider
+  ((* endif *))
+((* endfor *))

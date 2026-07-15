@@ -1,0 +1,8 @@
+\cvsection{Achievements \& Events}
+
+((* for item in achievements *))
+  \cvachievement{}{(( item.title ))}{(( item.subtitle ))}
+  ((* if not loop.last *))
+    \dividerbig
+  ((* endif *))
+((* endfor *))

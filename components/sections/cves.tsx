@@ -17,6 +17,19 @@ export function CvesSection() {
   );
 }
 
+export function cvssInfo(cvss: number): [string, string] {
+  if (cvss < 4.0) {
+    return ["Low", "text-green-500 border-green-500 bg-yellow-950"] as const;
+  } else if (cvss < 7.0) {
+    return [
+      "Medium",
+      "text-yellow-500 border-yellow-500 bg-yellow-950",
+    ] as const;
+  } else {
+    return ["High", "text-red-500 border-red-500 bg-red-950"];
+  }
+}
+
 function CveItem({
   item,
 }: {
@@ -24,19 +37,6 @@ function CveItem({
 }) {
   const { isHovered, containerRef } =
     useInteractiveBackground<HTMLDivElement>();
-
-  function cvssInfo(cvss: number): [string, string] {
-    if (cvss < 4.0) {
-      return ["low", "text-green-500 border-green-500 bg-yellow-950"] as const;
-    } else if (cvss < 7.0) {
-      return [
-        "medium",
-        "text-yellow-500 border-yellow-500 bg-yellow-950",
-      ] as const;
-    } else {
-      return ["high", "text-red-500 border-red-500 bg-red-950"];
-    }
-  }
 
   return (
     <div

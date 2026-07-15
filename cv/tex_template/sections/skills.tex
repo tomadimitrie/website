@@ -1,0 +1,8 @@
+\cvsection{Skills}
+
+((* for group in skills *))
+  ((* for skill in group *))\cvtag{(( skill ))}((* endfor *))
+  ((* if not loop.last *))
+    \divider
+  ((* endif *))
+((* endfor *))

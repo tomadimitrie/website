@@ -61,7 +61,7 @@ export const CONFIG = {
   name: "Dimitrie-Toma Furdui",
   subtitle: "Low-Level Software Engineer",
   about:
-    "Specialized in low-level engineering with a focus on driver development, OS internals, and embedded systems. " +
+    "Specialized in low-level engineering with a focus on driver development and OS internals. " +
     "Expert in binary exploitation and reverse engineering, supported by a strong technical foundation in full-stack web and mobile application development.",
   shellText: {
     variants: [
@@ -72,20 +72,29 @@ export const CONFIG = {
     typeSpeed: 40,
     switchSpeed: 2000,
   },
-  socials: [
-    {
+  socials: {
+    linkedin: {
       Icon: Linkedin,
       url: "https://linkedin.com/in/tomadimitrie",
+      handle: "tomadimitrie",
     },
-    {
+    github: {
       Icon: Github,
       url: "https://github.com/tomadimitrie",
+      handle: "tomadimitrie",
     },
-    {
+    mail: {
       Icon: Mail,
       url: "mailto:contact@tomadimitrie.dev",
+      handle: "contact@tomadimitrie.dev",
     },
-  ],
+    website: {
+      Icon: Mail,
+      url: "https://tomadimitrie.dev",
+      handle: "tomadimitrie.dev",
+      hidden: true,
+    },
+  },
   backgrounds: {
     main: {
       minWidth: 400,
@@ -146,11 +155,12 @@ export const CONFIG = {
           to: "Present",
           position: "Kernel Developer (Windows), Security Researcher",
           company: "Bitdefender",
+          location: "Cluj-Napoca, Romania",
           features: [
-            "Contributing on the development of the anti-exploit module, focusing on the integration between the kernel-mode driver and " +
-              "user-mode filter and creating new detections to intercept advanced attack vectors",
-            "Analyzing and authoring 0-day PoCs to validate detection efficacy and improve the EDR against emerging exploits",
-            "Refined antivirus detection capabilities using live threat telemetry, playing a key role in achieving the maximum score at AV-Comparatives ATP 2025",
+            "Contributing to the development of the anti-exploit module, focusing on the integration between the kernel-mode driver and " +
+              "user-mode filter and creating new detections to intercept advanced attack vectors.",
+            "Analyzing and authoring 0-day PoCs to validate detection efficacy and improve the EDR against emerging exploits.",
+            "Refining antivirus detection capabilities using live threat telemetry, playing a key role in achieving the maximum score at AV-Comparatives ATP 2025.",
           ],
           tags: [
             "C/C++",
@@ -164,15 +174,16 @@ export const CONFIG = {
         {
           from: "2025",
           to: "2026",
-          position: "Teaching assistant",
-          company: "Babes-Bolyai University of Cluj-Napoca",
+          position: "Teaching Assistant",
+          company: "Babeș-Bolyai University of Cluj-Napoca",
+          location: "Cluj-Napoca, Romania",
           features: [
             "Instructed undergraduate students on x86 Assembly fundamentals and CPU internals, guiding " +
-              "students through low-level memory management, register manipulation and instruction set architecture",
+              "students through low-level memory management, register manipulation, and instruction set architecture.",
             "Designed and graded technical assignments focused on manual memory management, efficient register " +
-              "usage and implementing algorithms at instruction level",
+              "usage, and implementing algorithms at instruction level.",
           ],
-          tags: ["x86 Assembly", "CPU Internals", "Teaching"],
+          tags: ["x86 Assembly", "CPU Internals"],
         },
         {
           from: "2020",
@@ -180,11 +191,12 @@ export const CONFIG = {
           position: "Penetration Tester, Software Developer",
           company:
             "Institute of Advanced Research in Artificial Intelligence (IARAI)",
+          location: "Vienna, Austria",
           features: [
             "Served in dual capacity as a Security Researcher and Full-Stack Developer, engineering production-grade " +
-              "software and internal tooling",
+              "software and internal tooling.",
             "Conducted deep-dive white-box assessments, ensuring security considerations were integrated in the " +
-              "development lifecycle",
+              "development lifecycle.",
             <>
               Contributed to the organization of multiple machine learning
               contests (
@@ -204,7 +216,7 @@ export const CONFIG = {
                 Landslide4Sense
               </Link>
               ), with latest contests gathering over 7000 submissions from
-              participants
+              participants.
             </>,
           ],
           tags: ["White-box penetration testing", "PHP", "React"],
@@ -214,10 +226,11 @@ export const CONFIG = {
           to: "2023",
           position: "Co-founder",
           company: "Antimony (Startup)",
+          location: "Bucharest, Romania",
           features: [
-            "Co-founded and led a startup, balancing mobile/web engineering with rigorous penetration testing",
+            "Co-founded and led a startup, balancing mobile/web engineering with rigorous penetration testing.",
             "Engineered production-level application and website, and implemented robust defensive strategies " +
-              "based on findings from self-conducted vulnerability research",
+              "based on findings from self-conducted vulnerability research.",
           ],
           tags: [
             "White-box penetration testing",
@@ -232,7 +245,7 @@ export const CONFIG = {
     education: {
       items: [
         {
-          university: "Tehnical University of Cluj-Napoca",
+          university: "Technical University of Cluj-Napoca",
           type: "Master's Degree",
           domain: "Cybersecurity",
           from: "2023",
@@ -288,7 +301,7 @@ export const CONFIG = {
               multiple Elevation of Privilege vulnerabilities, enabling
               attackers to perform actions as NT AUTHORITY\SYSTEM.{" "}
               <Link href="https://www.tomadimitrie.dev/blog/CVE-2026-54424">
-                Writeup
+                Write-up
               </Link>
             </>,
           ],
@@ -301,10 +314,10 @@ export const CONFIG = {
           features: [
             <>
               JetBrains Toolbox before version 1.28 is vulnerable to dylib
-              injection, allowing attackers to abuse TCC permissions
-              (Transparency, Consent and Control) granted to the application.{" "}
+              injection, allowing attackers to abuse TCC permissions granted to
+              the application.{" "}
               <Link href="https://www.tomadimitrie.dev/blog/CVE-2022-48481">
-                Writeup
+                Write-up
               </Link>
             </>,
           ],
@@ -339,41 +352,23 @@ export const CONFIG = {
     certifications: {
       items: [
         {
-          title: "CPTS",
-          fullTitle: "Hack The Box Certified Penetration Testing Specialist",
+          title: "OSMR",
+          fullTitle: "OffSec macOS Researcher",
           authority: {
-            name: "Hack The Box",
-            website: "https://www.hackthebox.com/",
-            color: ["green", 600] as const,
+            name: "OffSec",
+            website: "https://offsec.com",
+            color: ["purple", 600] as const,
           },
-          year: 2026,
-          url: "https://www.credly.com/badges/bb1ffe66-4db7-4837-8a73-75dddc104434",
+          year: 2023,
+          url: "https://www.credential.net/4fcbdec9-730e-4114-9130-a1b5612b17be",
           skills: [
-            "Web Application Exploitation",
-            "Active Directory Security",
+            "Mach Injection",
+            "Dylib Injection",
+            "XPC Exploitation",
+            "Sandbox Escape",
             "Privilege Escalation",
-            "Pivoting & Tunneling",
-            "Network Penetration Testing",
-          ],
-        },
-        {
-          title: "CDSA",
-          fullTitle: "Hack The Box Certified Defensive Security Analyst",
-          authority: {
-            name: "Hack The Box",
-            website: "https://www.hackthebox.com/",
-            color: ["green", 600] as const,
-          },
-          year: 2025,
-          url: "https://www.credly.com/badges/458085a7-1466-4990-a6d9-fe08a160914c",
-          skills: [
-            "Digital Forensics",
-            "IDS/IPS Usage",
-            "Incident Handling",
-            "Malware Analysis",
-            "SOC Operations",
-            "Elastic Stack",
-            "Splunk",
+            "TCC Bypass",
+            "ARM64 Assembly",
           ],
         },
         {
@@ -395,26 +390,6 @@ export const CONFIG = {
             "WinDbg",
             "IDA Pro",
             "x86 Assembly",
-          ],
-        },
-        {
-          title: "OSMR",
-          fullTitle: "OffSec macOS Researcher",
-          authority: {
-            name: "OffSec",
-            website: "https://offsec.com",
-            color: ["purple", 600] as const,
-          },
-          year: 2023,
-          url: "https://www.credential.net/4fcbdec9-730e-4114-9130-a1b5612b17be",
-          skills: [
-            "Mach Injection",
-            "Dylib Injection",
-            "XPC Exploitation",
-            "Sandbox Escape",
-            "Privilege Escalation",
-            "TCC Bypass",
-            "ARM64 Assembly",
           ],
         },
         {
@@ -453,6 +428,44 @@ export const CONFIG = {
             "Privilege Escalation",
           ],
         },
+        {
+          title: "CPTS",
+          fullTitle: "Hack The Box Certified Penetration Testing Specialist",
+          authority: {
+            name: "Hack The Box",
+            website: "https://www.hackthebox.com/",
+            color: ["green", 600] as const,
+          },
+          year: 2026,
+          url: "https://www.credly.com/badges/bb1ffe66-4db7-4837-8a73-75dddc104434",
+          skills: [
+            "Web Application Exploitation",
+            "Active Directory Security",
+            "Privilege Escalation",
+            "Pivoting & Tunneling",
+            "Network Penetration Testing",
+          ],
+        },
+        {
+          title: "CDSA",
+          fullTitle: "Hack The Box Certified Defensive Security Analyst",
+          authority: {
+            name: "Hack The Box",
+            website: "https://www.hackthebox.com/",
+            color: ["green", 600] as const,
+          },
+          year: 2025,
+          url: "https://www.credly.com/badges/458085a7-1466-4990-a6d9-fe08a160914c",
+          skills: [
+            "Digital Forensics",
+            "IDS/IPS Usage",
+            "Incident Handling",
+            "Malware Analysis",
+            "SOC Operations",
+            "Elastic Stack",
+            "Splunk",
+          ],
+        },
       ],
     },
     projects: {
@@ -461,7 +474,7 @@ export const CONFIG = {
           title: "ES-EDR-Inject",
           shortDescription: "Process Injection-based EDR",
           description:
-            "ES-EDR-Inject is a real-time security agent built on top of Apple Endpoint Security Framework (ES) that performs " +
+            "ES-EDR-Inject is a real-time security solution built on top of Apple Endpoint Security Framework (ES) that performs " +
             "deep process introspection through dynamic dylib injection and API hooking. Beyond process-level monitoring, " +
             "the tool implements a policy engine that evaluates and denies unwanted system events based on user rules, and " +
             "shows live events in a structured activity table.",
@@ -507,7 +520,7 @@ export const CONFIG = {
           title: "Ghost",
           shortDescription: "Hack The Box Machine",
           description:
-            "Ghost is a retired Insane Windows Active Directory machine. It is currently rated 4.7/5 stars and has over 1000 system flag solves.",
+            "Ghost is a retired Insane Windows Active Directory machine I authored. It is currently rated 4.7/5 stars and has over 1000 system flag solves.",
           features: [
             "Source code review",
             "Linux and Windows joined workstations",
@@ -533,9 +546,13 @@ export const CONFIG = {
           title: "Sorcery",
           shortDescription: "Hack The Box Machine",
           description:
-            "Sorcery is an active Insane Linux machine. It is currently rated 4.6/5 stars and has over 1000 system flag solves.",
+            "Sorcery is a retired Insane Linux machine I authored. It is currently rated 4.6/5 stars and has over 1000 system flag solves.",
           features: [
-            "As per Hack The Box Rules, information about the attack path cannot be disclosed until its retirement.",
+            "Passkey stealing",
+            "Phishing with certificates",
+            "Reverse engineering protocols (e.g. Kafka)",
+            "Docker Registry",
+            "FreeIPA",
           ],
           tags: ["Hack The Box", "Insane Machine", "Linux"],
           source: {
@@ -574,7 +591,7 @@ export const CONFIG = {
           shortDescription: "Hypervisor",
           description:
             "Intel VT-X hypervisor capable of booting modern operating systems and " +
-            "support for non-instructive guest introspection.",
+            "support for non-intrusive guest introspection.",
           features: [
             "Capable of booting Windows through PXE",
             "Guest-host two way communication via VMCALL",
@@ -585,16 +602,16 @@ export const CONFIG = {
             link: "https://github.com/tomadimitrie/minihv",
             Icon: Github,
             text: "Code (coming soon)",
+            comingSoon: true,
           },
           Icon: Cpu,
           color: "emerald",
         },
         {
           title: "Portfolio",
-          shortDescription: "This Website",
+          shortDescription: "My Website",
           description:
-            "This is my personal website (that you are currently browsing). " +
-            "It was built to showcase my security research, bug bounties and software projects. " +
+            "This is my personal website. It was built to showcase my security research, bug bounties and software projects. " +
             "It is open-source so anyone can see how it's put together, check my coding style, or fork it for personal use.",
           features: [
             "Built with the latest web technologies",
@@ -664,7 +681,7 @@ export const CONFIG = {
           subtitle: (
             <>
               As a core member of
-              <span className="font-mono">{"> r0/dev/null"}</span>, I
+              <span className="font-mono">{" > r0/dev/null"}</span>, I
               contributed to major victories, including 1st place in World Wide
               CTF 2025, 3rd place in N0PSctf 2025 and 3rd place in D-CTF 2025.
             </>
@@ -707,6 +724,19 @@ export const CONFIG = {
             "authoring technical challenges and developing a custom competition platform " +
             "featuring on-demand challenge instances, scaling the event to over 1000 teams.",
         },
+      ],
+    },
+    skills: {
+      items: [
+        [
+          "Driver Development",
+          "OS Internals",
+          "Binary Exploitation",
+          "Reverse Engineering",
+          "Malware Analysis",
+        ],
+        ["C/C++", "x86/ARM Assembly", "Rust", "Zig"],
+        ["Swift", "Kotlin", "Next.js", "Flutter"],
       ],
     },
   },

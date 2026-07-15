@@ -1,0 +1,14 @@
+\cvsection{Experience}
+
+((* for item in experience *))
+  \cvevent{(( item.position ))}{(( item.company ))}{(( item.from )) - (( item.to ))}{(( item.location ))}
+  \begin{itemize}
+    ((* for feature in item.features *))
+      \item (( feature ))
+    ((* endfor *))
+    \item \textbf{Technical Skills}: (( item.tags | join(", ") ))
+  \end{itemize}
+  ((* if not loop.last *))
+    \divider
+  ((* endif *))
+((* endfor *))

@@ -1,0 +1,11 @@
+\cvsection{Education}
+
+((* for item in education *))
+  \cvevent{(( item.type )) in (( item.domain ))}{(( item.university ))}{(( item.from )) - (( item.to ))}{}
+  ((* for feature in item.features *))
+    (( feature ))
+  ((* endfor *))
+  ((* if not loop.last *))
+    \divider
+  ((* endif *))
+((* endfor *))
