@@ -1,0 +1,97 @@
+\documentclass[9pt,a4paper,withhyper]{altacv}
+
+\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
+
+\usepackage{paracol}
+\usepackage{hyperref}
+\usepackage{relsize}
+
+\iftutex
+  \setmainfont{Roboto Slab}
+  \setsansfont{Lato}
+  \renewcommand{\familydefault}{\sfdefault}
+\else
+  \usepackage[rm]{roboto}
+  \usepackage[defaultsans]{lato}
+  \renewcommand{\familydefault}{\sfdefault}
+\fi
+
+\definecolor{SlateGrey}{HTML}{2E2E2E}
+\definecolor{LightGrey}{HTML}{666666}
+\definecolor{DarkPastelRed}{HTML}{450808}
+\definecolor{PastelRed}{HTML}{8F0D0D}
+\definecolor{GoldenEarth}{HTML}{E7D192}
+\colorlet{name}{black}
+\colorlet{tagline}{PastelRed}
+\colorlet{heading}{DarkPastelRed}
+\colorlet{headingrule}{GoldenEarth}
+\colorlet{subheading}{PastelRed}
+\colorlet{accent}{PastelRed}
+\colorlet{emphasis}{SlateGrey}
+\colorlet{body}{LightGrey}
+
+\renewcommand{\namefont}{\Huge\rmfamily\bfseries}
+\renewcommand{\personalinfofont}{\footnotesize}
+\renewcommand{\cvsectionfont}{\LARGE\rmfamily\bfseries}
+\renewcommand{\cvsubsectionfont}{\large\bfseries}
+
+\renewcommand{\cvItemMarker}{{\small\textbullet}}
+\renewcommand{\cvRatingMarker}{\faCircle}
+
+\renewcommand{\divider}{\vspace{-2.5pt}\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\vspace{2.5pt}}
+\newcommand{\dividerbig}{\vspace{2.5pt}\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\vspace{5.5pt}}
+\setlist[itemize]{after=\vspace{0pt}}
+
+\newcommand{\itemlink}[1]{\href{#1}{\color{accent}Link}}
+\newcommand{\itemcustomlink}[2]{\href{#1}{\color{accent}#2}}
+
+\renewcommand{\cvachievement}[3]{%
+  \begin{minipage}{\linewidth}
+    \bfseries\textcolor{emphasis}{#2}\par
+    \smallskip
+    \normalsize\normalfont #3
+  \end{minipage}\par
+  \smallskip
+}
+
+\newcommand{\cvsectionnoncapitalized}[2][]{%
+  \nointerlineskip\bigskip%
+  \ifstrequal{#1}{}{}{\marginpar{\vspace*{\dimexpr1pt-\baselineskip}\raggedright\input{#1}}}%
+  {\color{heading}\cvsectionfont #2}\\[-1ex]%
+  {\color{headingrule}\rule{\linewidth}{2pt}\par}\medskip
+}
+
+\begin{document}
+\name{(( name ))}
+\tagline{(( subtitle ))}
+
+\personalinfo{%
+  \email{(( socials.mail ))}
+  \homepage{(( socials.website ))}
+  \linkedin{(( socials.linkedin ))}
+  \github{(( socials.github ))}
+}
+
+\makecvheader
+\AtBeginEnvironment{itemize}{\small}
+
+\columnratio{0.5}
+
+\begin{paracol}{2}
+((* include "./sections/experience.tex" *))
+((* include "./sections/skills.tex" *))
+\newpage
+((* include "./sections/achievements.tex" *))
+
+\switchcolumn
+
+((* include "./sections/summary.tex" *))
+((* include "./sections/cves.tex" *))
+((* include "./sections/publications.tex" *))
+((* include "./sections/certifications.tex" *))
+((* include "./sections/education.tex" *))
+\newpage
+((* include "./sections/projects.tex" *))
+
+\end{paracol}
+\end{document}

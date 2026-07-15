@@ -45,3 +45,4 @@ next-env.d.ts
 posts-passwords.json
 blog/*--private/assets/
 blog/*--private/content_decrypted.mdx
+cv/build

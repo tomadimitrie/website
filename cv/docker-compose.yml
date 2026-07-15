@@ -1,0 +1,7 @@
+services:
+  build:
+    image: texlive/texlive:latest
+    volumes:
+      - "./build:/work"
+    working_dir: "/work"
+    command: latexmk -pdf -interaction=nonstopmode cv_rendered.tex
