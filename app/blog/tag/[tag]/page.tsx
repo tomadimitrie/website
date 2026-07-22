@@ -6,7 +6,7 @@ export default async function TagPage({
 }: {
   params: Promise<{ tag: string }>;
 }) {
-  const { tag } = await params;
+  const tag = decodeURIComponent((await params).tag);
   const posts = await getAllPosts();
   const postsWithTag = posts.filter((post) => post.metadata.tags.includes(tag));
 
