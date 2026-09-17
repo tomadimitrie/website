@@ -157,10 +157,23 @@ export const CONFIG = {
           company: "Bitdefender",
           location: "Cluj-Napoca, Romania",
           features: [
-            "Contributing to the development of the anti-exploit module, focusing on the integration between the kernel-mode driver and " +
-              "user-mode filter and creating new detections to intercept advanced attack vectors.",
-            "Analyzing and authoring 0-day PoCs to validate detection efficacy and improve the EDR against emerging exploits.",
-            "Refining antivirus detection capabilities using live threat telemetry, playing a key role in achieving the maximum score at AV-Comparatives ATP 2025.",
+            <>
+              Developing the <b>anti-exploit module</b>, focusing on the
+              integration between the kernel-mode driver and user-mode filter.
+            </>,
+            <>
+              Refining antivirus detection capabilities using{" "}
+              <b>live threat telemetry</b>, achieving a{" "}
+              <b>perfect 15/15 score</b> at AV-Comparatives ATP 2025.
+            </>,
+            <>
+              Created or improved <b>10+ detections</b> to intercept attack
+              vectors and contributed <b>100+</b> features and fixes.
+            </>,
+            <>
+              Analyzed or authored <b>20+ 0-day PoCs</b> to validate detection
+              efficacy and improve the EDR against emerging exploits.
+            </>,
           ],
           tags: [
             "C/C++",
@@ -170,6 +183,30 @@ export const CONFIG = {
             "Reverse Engineering",
             "Binary Exploitation",
           ],
+          type: "work",
+        },
+        {
+          from: "2025",
+          to: "Present",
+          position: "Research Engineer",
+          company: "Technical University of Cluj-Napoca",
+          location: "Cluj-Napoca, Romania",
+          features: [
+            <>
+              Contributed to{" "}
+              <Link href="https://cybersecurityseminars.utcluj.ro/">
+                Cybersecurity Seminars
+              </Link>
+              , a <b>Google-funded</b> initiative to build students'
+              cybersecurity skills.
+            </>,
+            <>
+              Hosted a <b>CTF competition</b> for 100+ students and authored 10+
+              challenges as part of the program.
+            </>,
+          ],
+          tags: ["Cybersecurity Education", "CTF"],
+          type: "academic",
         },
         {
           from: "2025",
@@ -178,12 +215,19 @@ export const CONFIG = {
           company: "Babeș-Bolyai University of Cluj-Napoca",
           location: "Cluj-Napoca, Romania",
           features: [
-            "Instructed undergraduate students on x86 Assembly fundamentals and CPU internals, guiding " +
-              "students through low-level memory management, register manipulation, and instruction set architecture.",
-            "Designed and graded technical assignments focused on manual memory management, efficient register " +
-              "usage, and implementing algorithms at instruction level.",
+            <>
+              Taught <b>x86 Assembly fundamentals</b> and <b>CPU internals</b>{" "}
+              to 80+ undergraduate students, covering memory management,
+              register manipulation, and instruction set architecture.
+            </>,
+            <>
+              Designed and graded 6 <b>technical assignments</b> requiring
+              students to implement algorithms directly at the instruction
+              level.
+            </>,
           ],
           tags: ["x86 Assembly", "CPU Internals"],
+          type: "academic",
         },
         {
           from: "2020",
@@ -193,13 +237,17 @@ export const CONFIG = {
             "Institute of Advanced Research in Artificial Intelligence (IARAI)",
           location: "Vienna, Austria",
           features: [
-            "Served in dual capacity as a Security Researcher and Full-Stack Developer, engineering production-grade " +
-              "software and internal tooling.",
-            "Conducted deep-dive white-box assessments, ensuring security considerations were integrated in the " +
-              "development lifecycle.",
             <>
-              Contributed to the organization of multiple machine learning
-              contests (
+              Built and maintained the organization's competition <b>website</b>
+              , <b>test infrastructure</b>, and internal <b>DevOps tooling</b>.
+            </>,
+            <>
+              Conducted <b>white-box security assessments</b> of internally
+              developed codebases, integrating security considerations into the
+              development lifecycle.
+            </>,
+            <>
+              Contributed to the organization of 4 machine learning contests (
               <Link href="https://github.com/iarai/NeurIPS2020-traffic4cast">
                 Traffic4Cast
               </Link>
@@ -215,11 +263,11 @@ export const CONFIG = {
               <Link href="https://github.com/iarai/Landslide4Sense-2022">
                 Landslide4Sense
               </Link>
-              ), with latest contests gathering over 7000 submissions from
-              participants.
+              ), with the latest gathering <b>7000+ submissions</b>.
             </>,
           ],
-          tags: ["White-box penetration testing", "PHP", "React"],
+          tags: ["White-box security assessments", "PHP", "React"],
+          type: "work",
         },
         {
           from: "2020",
@@ -228,9 +276,16 @@ export const CONFIG = {
           company: "Antimony (Startup)",
           location: "Bucharest, Romania",
           features: [
-            "Co-founded and led a startup, balancing mobile/web engineering with rigorous penetration testing.",
-            "Engineered production-level application and website, and implemented robust defensive strategies " +
-              "based on findings from self-conducted vulnerability research.",
+            <>
+              Co-founded and led a startup building a{" "}
+              <b>collaboration platform</b> for event organizers, combined with{" "}
+              <b>event discovery</b> for attendees.
+            </>,
+            <>
+              Developed the mobile and web application, and hardened it against
+              vulnerabilities identified through self-conducted penetration
+              testing.
+            </>,
           ],
           tags: [
             "White-box penetration testing",
@@ -239,6 +294,7 @@ export const CONFIG = {
             "Flutter",
             "Next.js",
           ],
+          type: "work",
         },
       ],
     },
@@ -297,9 +353,9 @@ export const CONFIG = {
             "Remote Code Execution / Arbitrary File Read / NTLM Hash Capture as SYSTEM",
           features: [
             <>
-              Parsec for Windows before version 150-104a is vulnerable to
-              multiple Elevation of Privilege vulnerabilities, enabling
-              attackers to perform actions as NT AUTHORITY\SYSTEM.{" "}
+              Parsec for Windows before version 150-104a has multiple Elevation
+              of Privilege vulnerabilities, enabling attackers to perform
+              actions as NT AUTHORITY\SYSTEM.{" "}
               <Link href="https://www.tomadimitrie.dev/blog/CVE-2026-54424">
                 Write-up
               </Link>
@@ -340,7 +396,7 @@ export const CONFIG = {
             "2026 IEEE International Conference on Automation, Quality and Testing, Robotics (AQTR)",
           abstract:
             "Traditional endpoint security on macOS has relied on third-party kernel extensions, which Apple is increasingly restricting. " +
-            "Apple's Endpoint Security (ES) framework offers a supported alternative by providing user-space access to securityrelevant events, " +
+            "Apple's Endpoint Security (ES) framework offers a supported alternative by providing user-space access to security-relevant events, " +
             "such as process execution and file activity, and by allowing or denying certain operations. This paper assesses whether ES telemetry is sufficient " +
             "for building an Endpoint Detection and Response (EDR) system. We introduce a prototype user-space EDR that correlates ES events into process and " +
             "process-tree activity, applies a points-based heuristic engine, and supports translating a subset of macOS Sigma rules into ES-compatible detections. " +
@@ -473,11 +529,17 @@ export const CONFIG = {
         {
           title: "ES-EDR-Inject",
           shortDescription: "Process Injection-based EDR",
-          description:
-            "ES-EDR-Inject is a real-time security solution built on top of Apple Endpoint Security Framework (ES) that performs " +
-            "deep process introspection through dynamic dylib injection and API hooking. Beyond process-level monitoring, " +
-            "the tool implements a policy engine that evaluates and denies unwanted system events based on user rules, and " +
-            "shows live events in a structured activity table.",
+          description: (
+            <>
+              ES-EDR-Inject is a <b>real-time security solution</b> built on top
+              of <b>Apple Endpoint Security Framework (ES)</b> that performs{" "}
+              <b>deep process introspection</b> through dynamic dylib injection
+              and API hooking. Beyond process-level monitoring, the tool
+              implements a <b>policy engine</b> that evaluates and denies
+              unwanted system events based on user rules, and shows live events
+              in a structured activity table.
+            </>
+          ),
           features: [
             "Dylib injection using entrypoint manipulation",
             "API hooking by patching instruction memory",
@@ -497,10 +559,17 @@ export const CONFIG = {
         {
           title: "ES-EDR-Behavior",
           shortDescription: "Behavioral Heuristic-based EDR",
-          description:
-            "ES-EDR-Behavior is an Apple Endpoint Security Framework client, capable of proactively identifying " +
-            "and blocking malicious activity. It features a sophisticated behavioral detection engine based on modular " +
-            "heuristics, filtering and chaining complex system events in real time.",
+          description: (
+            <>
+              ES-EDR-Behavior is an{" "}
+              <b>Apple Endpoint Security Framework client</b>, capable of
+              proactively <b>identifying and blocking malicious activity</b>. It
+              features a sophisticated <b>behavioral detection engine</b> based
+              on modular heuristics, filtering and chaining complex system
+              events in real time. It features <b>50+ custom heuristics</b> and{" "}
+              <b>50+ Sigma-converted heuristics</b>.
+            </>
+          ),
           features: [
             "Heuristic-based behavioral detection engine",
             "Interoperability with Sigma rules",
@@ -519,8 +588,13 @@ export const CONFIG = {
         {
           title: "Ghost",
           shortDescription: "Hack The Box Machine",
-          description:
-            "Ghost is a retired Insane Windows Active Directory machine I authored. It is currently rated 4.7/5 stars and has over 1000 system flag solves.",
+          description: (
+            <>
+              Ghost is a retired Insane Windows Active Directory machine I
+              authored. It is currently rated <b>4.7/5 stars</b> and has{" "}
+              <b>1000+ system flag solves</b>.
+            </>
+          ),
           features: [
             "Source code review",
             "Linux and Windows joined workstations",
@@ -545,8 +619,13 @@ export const CONFIG = {
         {
           title: "Sorcery",
           shortDescription: "Hack The Box Machine",
-          description:
-            "Sorcery is a retired Insane Linux machine I authored. It is currently rated 4.6/5 stars and has over 1000 system flag solves.",
+          description: (
+            <>
+              Sorcery is a retired Insane Linux machine I authored. It is
+              currently rated <b>4.6/5 stars</b> and has{" "}
+              <b>1000+ system flag solves</b>.
+            </>
+          ),
           features: [
             "Passkey stealing",
             "Phishing with certificates",
@@ -566,10 +645,14 @@ export const CONFIG = {
         {
           title: "MiniOS",
           shortDescription: "Operating System",
-          description:
-            "x86 64-bit operating system featuring a terminal console " +
-            "and some external hardware support. Originally written in C, it is " +
-            "now undergoing a rewrite in Zig, and not all features have been ported yet.",
+          description: (
+            <>
+              x86-64 operating system featuring a terminal console and some
+              external hardware support. Originally written in C, it is now
+              undergoing a rewrite in Zig, and not all features have been ported
+              yet.
+            </>
+          ),
           features: [
             "ATA PIO mode support",
             "Heap allocator",
@@ -589,9 +672,12 @@ export const CONFIG = {
         {
           title: "MiniHV",
           shortDescription: "Hypervisor",
-          description:
-            "Intel VT-X hypervisor capable of booting modern operating systems and " +
-            "support for non-intrusive guest introspection.",
+          description: (
+            <>
+              Intel VT-X hypervisor capable of booting modern operating systems
+              and support for non-intrusive guest introspection.
+            </>
+          ),
           features: [
             "Capable of booting Windows through PXE",
             "Guest-host two way communication via VMCALL",
@@ -610,9 +696,14 @@ export const CONFIG = {
         {
           title: "Portfolio",
           shortDescription: "My Website",
-          description:
-            "This is my personal website. It was built to showcase my security research, bug bounties and software projects. " +
-            "It is open-source so anyone can see how it's put together, check my coding style, or fork it for personal use.",
+          description: (
+            <>
+              This is my personal website. It was built to showcase my security
+              research, bug bounties and software projects. It is open-source so
+              anyone can see how it's put together, check my coding style, or
+              fork it for personal use.
+            </>
+          ),
           features: [
             "Built with the latest web technologies",
             "Interactive, physics-driven hover states",
@@ -629,9 +720,14 @@ export const CONFIG = {
         {
           title: "UBB Schedule",
           shortDescription: "UBB University Timetable",
-          description:
-            "UBB Schedule is an iOS timetable app for the Babes-Bolyai University. Because the university " +
-            "website does not offer any API, the application parses the HTML tables and organizes them in the app.",
+          description: (
+            <>
+              UBB Schedule is an iOS timetable app for the Babes-Bolyai
+              University. Because the university website does not offer any API,
+              the application parses the HTML tables and organizes them in the
+              app.
+            </>
+          ),
           features: [
             "iOS SwiftUI native application adhering to Apple Human Interface Guidelines",
             "Live timetable HTML parsing",
@@ -651,10 +747,14 @@ export const CONFIG = {
         {
           title: "TFC CTF 2021/2022",
           shortDescription: "CTF Infrastructure",
-          description:
-            "I created the infrastructure from scratch for TFC CTF 2021 and 2022, providing a robust alternative " +
-            "to known services like CTFd. It successfully served over 1000 teams at each CTF edition. The source code is not " +
-            "public due to licensing restrictions.",
+          description: (
+            <>
+              I created the infrastructure from scratch for TFC CTF 2021 and
+              2022, providing a robust alternative to known services like CTFd.
+              It successfully served <b>1000+ teams</b> at each CTF edition. The
+              source code is not public due to licensing restrictions.
+            </>
+          ),
           features: [
             "Individual challenge containers for each player with Windows support",
             "Built with the latest technologies at that time",
@@ -671,19 +771,25 @@ export const CONFIG = {
         {
           title:
             "Part of the National Romanian cybersecurity team for ECSC 2022 and 2025",
-          subtitle:
-            "ECSC is a major annual cybersecurity CTF competition organized by ENISA, where I was selected as a member " +
-            "of the national team to compete against other countries in Europe in advanced Attack/Defense and Jeopardy-style " +
-            "hacking challenges.",
+          subtitle: (
+            <>
+              ECSC is a major annual cybersecurity CTF competition organized by
+              ENISA, where I was selected as a{" "}
+              <b>member of the national team</b> to compete against other
+              countries in Europe in advanced Attack/Defense and Jeopardy-style
+              hacking challenges.
+            </>
+          ),
         },
         {
           title: "Part of > r0/dev/null CTF team",
           subtitle: (
             <>
-              As a core member of
+              As a core member of{" "}
               <span className="font-mono">{" > r0/dev/null"}</span>, I
-              contributed to major victories, including 1st place in World Wide
-              CTF 2025, 3rd place in N0PSctf 2025 and 3rd place in D-CTF 2025.
+              contributed to major victories, including <b>1st place</b> in
+              World Wide CTF 2025, <b>3rd place</b> in N0PSctf 2025 and{" "}
+              <b>3rd place</b> in D-CTF 2025.
             </>
           ),
           link: "https://ctftime.org/team/305658",
@@ -694,7 +800,7 @@ export const CONFIG = {
             <>
               Core organizer and challenge author for Null CTF 2025 with my team{" "}
               <span className="font-mono">{"> r0/dev/null"}</span>, a major
-              cybersecurity event featuring over 1000 registered teams.
+              cybersecurity event featuring <b>1000+ registered teams</b>.
             </>
           ),
           link: "https://ctf.r0devnull.team/",
@@ -704,8 +810,9 @@ export const CONFIG = {
           subtitle: (
             <>
               Collaborated on organizing IoT Hunt, a CTF-style treasure hunt
-              focused on IoT devices, where participants solved challenges
-              involving routers, smart cameras, lightbulbs and locks.
+              focused on <b>IoT devices</b>, where <b>100+ participants</b>{" "}
+              solved challenges involving routers, smart cameras, lightbulbs and
+              locks.
             </>
           ),
           link: "https://def.camp/competitions/iot-hunt/",
@@ -713,16 +820,24 @@ export const CONFIG = {
         {
           title:
             "Former captain of the CTF team of Technical University of Cluj-Napoca",
-          subtitle:
-            "Managed the university's competitive cybersecurity program, " +
-            "highlighted by securing 4th place in Hack The Box University CTF 2023.",
+          subtitle: (
+            <b>
+              Managed the university's competitive cybersecurity program,
+              highlighted by securing <b>4th place</b> in Hack The Box
+              University CTF 2023.
+            </b>
+          ),
         },
         {
           title: "TFC CTF 2021 and 2022",
-          subtitle:
-            "Core organizer and infrastructure lead for TFC CTF 2021 and 2022, " +
-            "authoring technical challenges and developing a custom competition platform " +
-            "featuring on-demand challenge instances, scaling the event to over 1000 teams.",
+          subtitle: (
+            <>
+              Core organizer and infrastructure lead for TFC CTF 2021 and 2022,
+              authoring technical challenges and developing a custom competition
+              platform featuring on-demand challenge instances, scaling the
+              event to <b>1000+ teams</b>.
+            </>
+          ),
         },
       ],
     },

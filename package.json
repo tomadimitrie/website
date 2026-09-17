@@ -10,7 +10,10 @@
     "format": "biome format --write",
     "encrypt-posts": "tsx scripts/encrypt-posts.ts",
     "decrypt-posts": "tsx scripts/encrypt-posts.ts",
-    "cv-gen": "tsx cv/cv_gen.ts"
+    "cv-gen": "tsx cv/cv_gen.ts",
+    "cv-compile": "sudo docker run -w /data -v ./cv/build:/data texlive/texlive pdflatex cv_rendered.tex",
+    "cv-make": "pnpm run cv-gen && pnpm run cv-compile",
+    "notion-convert": "tsx scripts/notion-convert.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "3.1.1",

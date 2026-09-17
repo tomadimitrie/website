@@ -1,14 +1,26 @@
-\cvsection{Experience}
+((* macro render_experience(section, type) *))
+  \cvsection{(( section ))}
 
-((* for item in experience *))
-  \cvevent{(( item.position ))}{(( item.company ))}{(( item.from )) - (( item.to ))}{(( item.location ))}
-  \begin{itemize}
-    ((* for feature in item.features *))
-      \item (( feature ))
-    ((* endfor *))
-    \item \textbf{Technical Skills}: (( item.tags | join(", ") ))
-  \end{itemize}
-  ((* if not loop.last *))
-    \divider
-  ((* endif *))
-((* endfor *))
+  ((* set filtered = [] *))
+  ((* for item in experience *))
+    ((* if item.type == type *))
+      ((* set filtered = (filtered.push(item), filtered) *))
+    ((* endif *))
+  ((* endfor *))
+
+  ((* for item in filtered *))
+    \cvevent{(( item.position ))}{(( item.company ))}{(( item.from )) - (( item.to ))}{(( item.location ))}
+    \begin{itemize}
+      ((* for feature in item.features *))
+        \item (( feature ))
+      ((* endfor *))
+      \item \textbf{Technical Skills}: (( item.tags | join(", ") ))
+    \end{itemize}
+    ((* if not loop.last *))
+      \divider
+    ((* endif *))
+  ((* endfor *))
+((* endmacro *))
+
+(( render_experience("Work Experience", "work") ))
+(( render_experience("Academic Experience", "academic") ))

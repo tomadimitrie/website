@@ -12,7 +12,11 @@ class SkipSanitizationWrapper<T extends JsonValue> {
   constructor(public inner: T) {}
 }
 type Primitive =
-  string | number | boolean | SkipSanitizationWrapper<Primitive> | JsxWrapper;
+  | string
+  | number
+  | boolean
+  | SkipSanitizationWrapper<Primitive>
+  | JsxWrapper;
 type JsonValue = Primitive | JsonObject | JsonArray;
 type JsonObject = { [key: string]: JsonValue };
 type JsonArray = JsonValue[];
@@ -192,6 +196,7 @@ function selectFields(config: typeof CONFIG): Record<string, JsonValue> {
     location: item.location,
     features: item.features.map(jsxToStatic),
     tags: item.tags,
+    type: item.type,
   }));
 
   result.achievements = config.sections.achievements.items.map((item) => ({
@@ -202,7 +207,7 @@ function selectFields(config: typeof CONFIG): Record<string, JsonValue> {
   result.projects = config.sections.projects.items.map((item) => ({
     title: item.title,
     shortDescription: item.shortDescription,
-    description: item.description,
+    description: jsxToStatic(item.description),
     features: item.features,
     url: !item.source?.comingSoon ? (item.source?.link ?? "") : "",
   }));
@@ -211,6 +216,13 @@ function selectFields(config: typeof CONFIG): Record<string, JsonValue> {
 }
 
 async function main() {
+  let CONFIG_PRIVATE: JsonValue | null = null;
+  try {
+    // biome-ignore lint/suspicious/noTsIgnore: expected to fail in production env
+    // @ts-ignore
+    CONFIG_PRIVATE = (await import("@/lib/config-private")).CONFIG;
+  } catch {}
+
   const env = nunjucks.configure({
     autoescape: false,
     tags: {
@@ -223,9 +235,13 @@ async function main() {
     },
     throwOnUndefined: true,
   });
+  const context = {
+    ...sanitize(selectFields(CONFIG)),
+    private: CONFIG_PRIVATE ? sanitize(CONFIG_PRIVATE) : null,
+  };
   const rendered = env.render(
     path.join(__dirname, "./tex_template/cv.tex"),
-    sanitize(selectFields(CONFIG)),
+    context,
   );
   const outDir = "./cv/build";
 

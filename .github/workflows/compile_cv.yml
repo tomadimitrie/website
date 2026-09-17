@@ -27,6 +27,5 @@ jobs:
       - name: Upload CV
         uses: actions/upload-artifact@v7
         with:
-          name: CV_Dimitrie-Toma_Furdui.pdf
-          path: ./cv/build/cv_rendered.pdf
+          path: ./cv/build/CV_Dimitrie-Toma_Furdui.pdf
           archive: false

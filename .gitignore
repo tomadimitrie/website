@@ -46,3 +46,4 @@ posts-passwords.json
 blog/*--private/assets/
 blog/*--private/content_decrypted.mdx
 cv/build
+lib/config-private.tsx

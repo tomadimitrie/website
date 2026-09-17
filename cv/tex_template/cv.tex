@@ -67,6 +67,9 @@
 
 \personalinfo{%
   \email{(( socials.mail ))}
+  ((*- if private.socials.phone is defined -*))
+    \phone{(( private.socials.phone ))}
+  ((*- endif -*))
   \homepage{(( socials.website ))}
   \linkedin{(( socials.linkedin ))}
   \github{(( socials.github ))}
@@ -79,7 +82,6 @@
 
 \begin{paracol}{2}
 ((* include "./sections/experience.tex" *))
-((* include "./sections/skills.tex" *))
 \newpage
 ((* include "./sections/achievements.tex" *))
 
@@ -90,6 +92,7 @@
 ((* include "./sections/publications.tex" *))
 ((* include "./sections/certifications.tex" *))
 ((* include "./sections/education.tex" *))
+((* include "./sections/skills.tex" *))
 \newpage
 ((* include "./sections/projects.tex" *))
 
