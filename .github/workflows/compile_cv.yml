@@ -3,6 +3,10 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,6 +26,7 @@ jobs:
           root_file: cv_rendered.tex
           texlive_version: 2026
           working_directory: ./cv/build
+          latexmk_use_lualatex: true
       - name: Rename CV
         run: cp ./cv/build/cv_rendered.pdf ./cv/build/CV_Dimitrie-Toma_Furdui.pdf
       - name: Upload CV
@@ -29,3 +34,13 @@ jobs:
         with:
           path: ./cv/build/CV_Dimitrie-Toma_Furdui.pdf
           archive: false
+      - name: Update release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --cleanup-tag
+          gh release create latest ./cv/build/CV_Dimitrie-Toma_Furdui.pdf \
+            --target "${{ github.sha }}" \
+            --title "CV" \
+            --latest
+

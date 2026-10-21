@@ -70,7 +70,7 @@ function jsxToStatic(element: React.ReactNode): JsonValue {
         } = element as React.ReactElement<{ className: string }>;
         switch (className) {
           case "font-mono":
-            return `\\texttt{${sanitize(children)}}`;
+            return `\\mbox{\\texttt{${sanitize(children)}}}`;
           default:
             return `${sanitize(children)}`;
         }
@@ -100,8 +100,9 @@ function escapeText(data: string | SkipSanitizationWrapper<string>): string {
     "}": "\\}",
     "~": "\\textasciitilde{}",
     "^": "\\textasciicircum{}",
+    ">": "\\textgreater{}",
   };
-  return data.replace(/[\\&%$#_{}~^]/g, (match) => escapeMap[match] ?? match);
+  return data.replace(/[\\&%$#_{}~^>]/g, (match) => escapeMap[match] ?? match);
 }
 
 function sanitize(data: string, skipSanitization?: boolean): string;

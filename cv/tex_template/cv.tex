@@ -1,10 +1,12 @@
 \documentclass[9pt,a4paper,withhyper]{altacv}
 
-\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
+\geometry{left=1cm,right=1cm,top=1.5cm,bottom=1cm,columnsep=1.2cm}
 
 \usepackage{paracol}
 \usepackage{hyperref}
 \usepackage{relsize}
+\usepackage{ragged2e}
+\usepackage{microtype}
 
 \iftutex
   \setmainfont{Roboto Slab}
@@ -31,7 +33,7 @@
 \colorlet{body}{LightGrey}
 
 \renewcommand{\namefont}{\Huge\rmfamily\bfseries}
-\renewcommand{\personalinfofont}{\footnotesize}
+\renewcommand{\personalinfofont}{\footnotesize\bfseries\linespread{1.4}\selectfont}
 \renewcommand{\cvsectionfont}{\LARGE\rmfamily\bfseries}
 \renewcommand{\cvsubsectionfont}{\large\bfseries}
 
@@ -40,16 +42,19 @@
 
 \renewcommand{\divider}{\vspace{-2.5pt}\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\vspace{2.5pt}}
 \newcommand{\dividerbig}{\vspace{2.5pt}\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\vspace{5.5pt}}
-\setlist[itemize]{after=\vspace{0pt}}
+\setlist[itemize]{after=\vspace{0pt}, itemsep=0pt}
 
 \newcommand{\itemlink}[1]{\href{#1}{\color{accent}Link}}
 \newcommand{\itemcustomlink}[2]{\href{#1}{\color{accent}#2}}
+
+\setlength{\bigskipamount}{8pt}
+
 
 \renewcommand{\cvachievement}[3]{%
   \begin{minipage}{\linewidth}
     \bfseries\textcolor{emphasis}{#2}\par
     \smallskip
-    \normalsize\normalfont #3
+    \small\normalfont #3
   \end{minipage}\par
   \smallskip
 }
@@ -61,7 +66,41 @@
   {\color{headingrule}\rule{\linewidth}{2pt}\par}\medskip
 }
 
+\let\cveducation\cvevent
+\patchcmd{\cveducation}
+  {\par\smallskip}
+  {\hfill}
+  {}{}
+\patchcmd{\cveducation}
+  {\makebox[0.5\linewidth][l]}
+  {\mbox}
+  {}{}
+
+\makeatletter
+\patchcmd{\makecvheader}
+  {\begin{minipage}}
+  {\begin{minipage}[t]}
+  {}{}
+\makeatother
+
+\patchcmd{\cvevent}
+  {\makebox[0.5\linewidth][l]}
+  {\makebox[0.4\linewidth][l]}
+  {}{}
+
+\makeatletter
+\let\cv@thebibliography\thebibliography
+\renewcommand{\thebibliography}[1]{\renewcommand{\section}[2]{}\cv@thebibliography{#1}}
+\makeatother
+
+\frenchspacing
+
 \begin{document}
+\justifying
+\exhyphenpenalty=10000
+\emergencystretch=1.5em
+\uchyph=0
+
 \name{(( name ))}
 \tagline{(( subtitle ))}
 
@@ -75,10 +114,17 @@
   \github{(( socials.github ))}
 }
 
-\makecvheader
+\begin{minipage}[c]{0.60\linewidth}
+  \makecvheader
+\end{minipage}%
+\hfill\textcolor{body!30}{\vrule width 0.6pt}\hfill
+\begin{minipage}[c]{0.35\linewidth}
+  {\small\color{body} (( about ))\par}
+\end{minipage}
+
 \AtBeginEnvironment{itemize}{\small}
 
-\columnratio{0.5}
+\columnratio{0.54}
 
 \begin{paracol}{2}
 ((* include "./sections/experience.tex" *))
@@ -87,7 +133,6 @@
 
 \switchcolumn
 
-((* include "./sections/summary.tex" *))
 ((* include "./sections/cves.tex" *))
 ((* include "./sections/publications.tex" *))
 ((* include "./sections/certifications.tex" *))

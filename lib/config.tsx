@@ -1,14 +1,4 @@
-import {
-  Box,
-  Calendar,
-  CodeXml,
-  Cpu,
-  Flag,
-  Github,
-  Linkedin,
-  Mail,
-  Shield,
-} from "lucide-react";
+import { Box, Cpu, Github, Linkedin, Mail, Shield } from "lucide-react";
 import Link from "next/link";
 import { AboutSection } from "@/components/sections/about";
 import { AchievementsSection } from "@/components/sections/achievements";
@@ -59,10 +49,9 @@ export const CONFIG = {
     },
   ],
   name: "Dimitrie-Toma Furdui",
-  subtitle: "Low-Level Software Engineer",
+  subtitle: "Security Engineer",
   about:
-    "Specialized in low-level engineering with a focus on driver development and OS internals. " +
-    "Expert in binary exploitation and reverse engineering, supported by a strong technical foundation in full-stack web and mobile application development.",
+    "Security Engineer with over 5 years of experience building kernel-mode anti-exploit protection at Bitdefender. PhD candidate in hypervisor security, with 2 CVEs, an IEEE publication and 6 certifications.",
   shellText: {
     variants: [
       "toma@linux:~$ whoami",
@@ -151,67 +140,86 @@ export const CONFIG = {
     experience: {
       items: [
         {
-          from: "2021",
+          from: "Jun. 2021",
           to: "Present",
           position: "Kernel Developer (Windows), Security Researcher",
           company: "Bitdefender",
           location: "Cluj-Napoca, Romania",
           features: [
             <>
-              Developing the <b>anti-exploit module</b>, focusing on the
-              integration between the kernel-mode driver and user-mode filter.
+              Developing the <b>anti-exploit module</b> across the kernel driver
+              and user-mode filter, shipped in Bitdefender's consumer and
+              GravityZone products.
             </>,
             <>
-              Refining antivirus detection capabilities using{" "}
-              <b>live threat telemetry</b>, achieving a{" "}
-              <b>perfect 15/15 score</b> at AV-Comparatives ATP 2025.
+              Refining antivirus detection capabilities, contributing to
+              Bitdefender's <b>perfect 15/15 score</b> at AV-Comparatives ATP
+              2025.
             </>,
             <>
-              Created or improved <b>10+ detections</b> to intercept attack
-              vectors and contributed <b>100+</b> features and fixes.
+              Built a new <b>ROP chain detection</b> and improved 5+ existing{" "}
+              <b>privilege escalation detections</b> against new techniques.
             </>,
             <>
-              Analyzed or authored <b>20+ 0-day PoCs</b> to validate detection
-              efficacy and improve the EDR against emerging exploits.
+              Authored <b>30+ n-day exploit PoCs</b> from minimal public
+              details, including Windows DWM and Microsoft Exchange, to validate
+              EDR detections.
             </>,
           ],
           tags: [
-            "C/C++",
+            "C++",
             "x86/ARM Assembly",
-            "Windows Drivers",
+            "Kernel Drivers",
             "Malware Analysis",
-            "Reverse Engineering",
-            "Binary Exploitation",
           ],
           type: "work",
         },
         {
-          from: "2025",
+          from: "Oct. 2026",
+          to: "Present",
+          position: "Teaching Assistant (Penetration Testing)",
+          company: "Technical University of Cluj-Napoca",
+          location: "Cluj-Napoca, Romania",
+          features: [
+            <>
+              Teaching <b>Penetration Testing</b> to 50+ students, addressing
+              web exploitation, buffer overflows and privilege escalation.
+            </>,
+            <>
+              Co-authoring a <b>penetration testing book</b> for a full course
+              redesign, modernizing labs and adding <b>Active Directory</b> and{" "}
+              <b>Entra ID</b> modules.
+            </>,
+          ],
+          tags: ["Penetration Testing", "Curriculum Design"],
+          type: "academic",
+        },
+        {
+          from: "Mar. 2026",
           to: "Present",
           position: "Research Engineer",
           company: "Technical University of Cluj-Napoca",
           location: "Cluj-Napoca, Romania",
           features: [
             <>
-              Contributed to{" "}
+              Co-organized a{" "}
+              <Link href="https://cybersecurityseminars-utcluj.ctfd.io/">
+                CTF
+              </Link>{" "}
+              for 100+ students as part of the{" "}
               <Link href="https://cybersecurityseminars.utcluj.ro/">
-                Cybersecurity Seminars
-              </Link>
-              , a <b>Google-funded</b> initiative to build students'
-              cybersecurity skills.
-            </>,
-            <>
-              Hosted a <b>CTF competition</b> for 100+ students and authored 10+
-              challenges as part of the program.
+                Google.org Cybersecurity Seminars
+              </Link>{" "}
+              initiative.
             </>,
           ],
-          tags: ["Cybersecurity Education", "CTF"],
+          tags: ["CTF Challenge Design"],
           type: "academic",
         },
         {
-          from: "2025",
-          to: "2026",
-          position: "Teaching Assistant",
+          from: "Oct. 2025",
+          to: "Feb. 2026",
+          position: "Teaching Assistant (x86 Assembly)",
           company: "Babeș-Bolyai University of Cluj-Napoca",
           location: "Cluj-Napoca, Romania",
           features: [
@@ -222,32 +230,33 @@ export const CONFIG = {
             </>,
             <>
               Designed and graded 6 <b>technical assignments</b> requiring
-              students to implement algorithms directly at the instruction
-              level.
+              students to identify code issues and implement algorithms in x86
+              assembly.
             </>,
           ],
           tags: ["x86 Assembly", "CPU Internals"],
           type: "academic",
         },
         {
-          from: "2020",
-          to: "2022",
+          from: "Sep. 2020",
+          to: "Sep. 2022",
           position: "Penetration Tester, Software Developer",
           company:
             "Institute of Advanced Research in Artificial Intelligence (IARAI)",
-          location: "Vienna, Austria",
+          location: "Vienna, Austria (Freelance, Remote)",
           features: [
             <>
-              Built and maintained the organization's competition <b>website</b>
-              , <b>test infrastructure</b>, and internal <b>DevOps tooling</b>.
+              Built and maintained the organization's competition <b>website</b>{" "}
+              (10,000+ participants), <b>test infrastructure</b>, and internal{" "}
+              <b>DevOps tooling</b>.
             </>,
             <>
-              Conducted <b>white-box security assessments</b> of internally
-              developed codebases, integrating security considerations into the
-              development lifecycle.
+              Introduced security reviews into the release procedures, catching
+              10+ issues before production deployment.
             </>,
             <>
-              Contributed to the organization of 4 machine learning contests (
+              Co-organized 4 <b>NeurIPS</b> competitions with{" "}
+              <b>7000+ submissions</b> (
               <Link href="https://github.com/iarai/NeurIPS2020-traffic4cast">
                 Traffic4Cast
               </Link>
@@ -263,32 +272,34 @@ export const CONFIG = {
               <Link href="https://github.com/iarai/Landslide4Sense-2022">
                 Landslide4Sense
               </Link>
-              ), with the latest gathering <b>7000+ submissions</b>.
+              ).
             </>,
           ],
-          tags: ["White-box security assessments", "PHP", "React"],
+          tags: ["White-Box Security Assessments", "PHP", "React"],
           type: "work",
         },
         {
-          from: "2020",
-          to: "2023",
+          from: "Nov. 2020",
+          to: "Jul. 2023",
           position: "Co-founder",
           company: "Antimony (Startup)",
-          location: "Bucharest, Romania",
+          location: "Bucharest, Romania (Part-time, Remote)",
           features: [
             <>
-              Co-founded and led a startup building a{" "}
-              <b>collaboration platform</b> for event organizers, combined with{" "}
-              <b>event discovery</b> for attendees.
+              Co-founded a <b>5-person startup</b> building an event management
+              platform for organizers, with event discovery for participants.
             </>,
             <>
-              Developed the mobile and web application, and hardened it against
-              vulnerabilities identified through self-conducted penetration
-              testing.
+              Built the <b>iOS, Android and web apps</b> and shipped them to the
+              App Store and Google Play.
+            </>,
+            <>
+              Secured the platform through in-house penetration testing before
+              launch.
             </>,
           ],
           tags: [
-            "White-box penetration testing",
+            "White-Box Pentesting",
             "Swift",
             "Kotlin",
             "Flutter",
@@ -300,6 +311,24 @@ export const CONFIG = {
     },
     education: {
       items: [
+        {
+          university: "Technical University of Cluj-Napoca",
+          type: "PhD",
+          domain: "Cybersecurity",
+          from: "2025",
+          to: "Present",
+          features: [
+            <>
+              Research topic:{" "}
+              <b>Hypervisor-Based Methods for Detecting Exploits</b>
+            </>,
+          ],
+          tags: [
+            "Hypervisor Development",
+            "Binary Exploitation",
+            "Malware Analysis",
+          ],
+        },
         {
           university: "Technical University of Cluj-Napoca",
           type: "Master's Degree",
@@ -325,7 +354,7 @@ export const CONFIG = {
           ],
         },
         {
-          university: "Babes-Bolyai University of Cluj-Napoca",
+          university: "Babeș-Bolyai University of Cluj-Napoca",
           type: "Bachelor's Degree",
           domain: "Computer Science",
           from: "2020",
@@ -334,8 +363,7 @@ export const CONFIG = {
             <>
               Thesis title:{" "}
               <b>
-                Fortifying macOS: Empowering Binary Exploit Resistance through
-                Function Hooking and Process Injection with Apple's Endpoint
+                Fortifying macOS against Binary Exploits with Apple's Endpoint
                 Security Framework
               </b>
             </>,
@@ -353,9 +381,9 @@ export const CONFIG = {
             "Remote Code Execution / Arbitrary File Read / NTLM Hash Capture as SYSTEM",
           features: [
             <>
-              Parsec for Windows before version 150-104a has multiple Elevation
-              of Privilege vulnerabilities, enabling attackers to perform
-              actions as NT AUTHORITY\SYSTEM.{" "}
+              Discovered multiple privilege escalation vulnerabilities in Parsec
+              for Windows (&lt; 150-104a), leading to NT AUTHORITY\SYSTEM
+              privileges.{" "}
               <Link href="https://www.tomadimitrie.dev/blog/CVE-2026-54424">
                 Write-up
               </Link>
@@ -366,12 +394,11 @@ export const CONFIG = {
         {
           url: "https://nvd.nist.gov/vuln/detail/CVE-2022-48481",
           cve: "CVE-2022-48481",
-          title: "Dylib injection in macOS JetBrains Toolbox",
+          title: "Dylib injection",
           features: [
             <>
-              JetBrains Toolbox before version 1.28 is vulnerable to dylib
-              injection, allowing attackers to abuse TCC permissions granted to
-              the application.{" "}
+              Discovered a dylib injection vulnerability in JetBrains Toolbox
+              for macOS (&lt; 1.28), leading to TCC permissions abuse.{" "}
               <Link href="https://www.tomadimitrie.dev/blog/CVE-2022-48481">
                 Write-up
               </Link>
@@ -527,162 +554,18 @@ export const CONFIG = {
     projects: {
       items: [
         {
-          title: "ES-EDR-Inject",
-          shortDescription: "Process Injection-based EDR",
-          description: (
-            <>
-              ES-EDR-Inject is a <b>real-time security solution</b> built on top
-              of <b>Apple Endpoint Security Framework (ES)</b> that performs{" "}
-              <b>deep process introspection</b> through dynamic dylib injection
-              and API hooking. Beyond process-level monitoring, the tool
-              implements a <b>policy engine</b> that evaluates and denies
-              unwanted system events based on user rules, and shows live events
-              in a structured activity table.
-            </>
-          ),
-          features: [
-            "Dylib injection using entrypoint manipulation",
-            "API hooking by patching instruction memory",
-            "Detection engine based on API calling contexts",
-            "Rule-based policy engine capable of blocking any ES event",
-            "Granular event subscription feed",
-          ],
-          tags: ["Apple Endpoint Security", "Dylib Injection", "API Hooking"],
-          source: {
-            link: "https://github.com/tomadimitrie/es-edr-inject",
-            Icon: Github,
-            text: "Code",
-          },
-          Icon: Shield,
-          color: "indigo",
-        },
-        {
-          title: "ES-EDR-Behavior",
-          shortDescription: "Behavioral Heuristic-based EDR",
-          description: (
-            <>
-              ES-EDR-Behavior is an{" "}
-              <b>Apple Endpoint Security Framework client</b>, capable of
-              proactively <b>identifying and blocking malicious activity</b>. It
-              features a sophisticated <b>behavioral detection engine</b> based
-              on modular heuristics, filtering and chaining complex system
-              events in real time. It features <b>50+ custom heuristics</b> and{" "}
-              <b>50+ Sigma-converted heuristics</b>.
-            </>
-          ),
-          features: [
-            "Heuristic-based behavioral detection engine",
-            "Interoperability with Sigma rules",
-            "Over 95% detection rate against the Atomic Red Team test suite",
-            "Capability of chaining multiple events and heuristics simultaneously",
-          ],
-          tags: ["Apple Endpoint Security", "Behavioral Detection Engine"],
-          source: {
-            link: "https://github.com/tomadimitrie/es-edr-behavior",
-            Icon: Github,
-            text: "Code",
-          },
-          Icon: Shield,
-          color: "blue",
-        },
-        {
-          title: "Ghost",
-          shortDescription: "Hack The Box Machine",
-          description: (
-            <>
-              Ghost is a retired Insane Windows Active Directory machine I
-              authored. It is currently rated <b>4.7/5 stars</b> and has{" "}
-              <b>1000+ system flag solves</b>.
-            </>
-          ),
-          features: [
-            "Source code review",
-            "Linux and Windows joined workstations",
-            "DNS Spoofing",
-            "Active Directory Federation Services",
-            "Bidirectional domain trust",
-          ],
-          tags: [
-            "Hack The Box",
-            "Insane Machine",
-            "Windows",
-            "Active Directory",
-          ],
-          source: {
-            link: "https://app.hackthebox.com/machines/Ghost",
-            Icon: Box,
-            text: "Machine",
-          },
-          Icon: Box,
-          color: "red",
-        },
-        {
-          title: "Sorcery",
-          shortDescription: "Hack The Box Machine",
-          description: (
-            <>
-              Sorcery is a retired Insane Linux machine I authored. It is
-              currently rated <b>4.6/5 stars</b> and has{" "}
-              <b>1000+ system flag solves</b>.
-            </>
-          ),
-          features: [
-            "Passkey stealing",
-            "Phishing with certificates",
-            "Reverse engineering protocols (e.g. Kafka)",
-            "Docker Registry",
-            "FreeIPA",
-          ],
-          tags: ["Hack The Box", "Insane Machine", "Linux"],
-          source: {
-            link: "https://app.hackthebox.com/machines/Sorcery",
-            Icon: Box,
-            text: "Machine",
-          },
-          Icon: Box,
-          color: "orange",
-        },
-        {
-          title: "MiniOS",
-          shortDescription: "Operating System",
-          description: (
-            <>
-              x86-64 operating system featuring a terminal console and some
-              external hardware support. Originally written in C, it is now
-              undergoing a rewrite in Zig, and not all features have been ported
-              yet.
-            </>
-          ),
-          features: [
-            "ATA PIO mode support",
-            "Heap allocator",
-            "Intel SMP support",
-            "Synchronization primitives",
-            "Scrollable console",
-          ],
-          tags: ["Operating System", "x86_64", "ATA", "SMP"],
-          source: {
-            link: "https://github.com/tomadimitrie/minios",
-            Icon: Github,
-            text: "Code",
-          },
-          Icon: Cpu,
-          color: "green",
-        },
-        {
           title: "MiniHV",
-          shortDescription: "Hypervisor",
+          shortDescription: "Hypervisor (Intel VT-x)",
           description: (
             <>
-              Intel VT-X hypervisor capable of booting modern operating systems
-              and support for non-intrusive guest introspection.
+              Intel VT-x hypervisor built for my master's degree, capable of
+              booting Windows with non-intrusive guest introspection. Now
+              rewriting it from scratch as a <b>thin hypervisor</b> that
+              virtualizes the running OS on the fly for PhD research on exploit
+              detection.
             </>
           ),
-          features: [
-            "Capable of booting Windows through PXE",
-            "Guest-host two way communication via VMCALL",
-            "Guest introspection (e.g. process enumeration, process launch callback)",
-          ],
+          features: [],
           tags: ["Hypervisor", "Intel VT-X", "Introspection"],
           source: {
             link: "https://github.com/tomadimitrie/minihv",
@@ -694,148 +577,161 @@ export const CONFIG = {
           color: "emerald",
         },
         {
-          title: "Portfolio",
-          shortDescription: "My Website",
+          title: "ES-EDR-Behavior",
+          shortDescription: "macOS Behavioral EDR",
           description: (
             <>
-              This is my personal website. It was built to showcase my security
-              research, bug bounties and software projects. It is open-source so
-              anyone can see how it's put together, check my coding style, or
-              fork it for personal use.
+              Apple Endpoint Security client that detects and blocks malicious
+              activity on macOS through a modular behavioral engine with{" "}
+              <b>50+</b> custom and <b>50+</b> Sigma-converted heuristics.
             </>
           ),
-          features: [
-            "Built with the latest web technologies",
-            "Interactive, physics-driven hover states",
-          ],
-          tags: ["Next.js", "TypeScript", "Canvas Animations"],
+          features: [],
+          tags: ["Apple Endpoint Security", "Behavioral Detection Engine"],
           source: {
-            link: "https://github.com/tomadimitrie/website",
+            link: "https://github.com/tomadimitrie/es-edr-behavior",
             Icon: Github,
             text: "Code",
           },
-          Icon: CodeXml,
-          color: "yellow",
+          Icon: Shield,
+          color: "blue",
         },
         {
-          title: "UBB Schedule",
-          shortDescription: "UBB University Timetable",
+          title: "ES-EDR-Inject",
+          shortDescription: "macOS Process Injection-based EDR",
           description: (
             <>
-              UBB Schedule is an iOS timetable app for the Babes-Bolyai
-              University. Because the university website does not offer any API,
-              the application parses the HTML tables and organizes them in the
-              app.
+              Apple Endpoint Security client that performs deep process
+              introspection through <b>dylib injection</b> and{" "}
+              <b>API hooking</b>, with a rule-based policy engine that blocks
+              unwanted system events.
             </>
           ),
-          features: [
-            "iOS SwiftUI native application adhering to Apple Human Interface Guidelines",
-            "Live timetable HTML parsing",
-            "Ability to select year, group, semigroup",
-            "Ability to cherry-pick courses shown in the UI",
-            "Core Data for efficient caching",
-          ],
-          tags: ["iOS", "Swift", "SwiftUI", "Core Data"],
+          features: [],
+          tags: ["Apple Endpoint Security", "Dylib Injection", "API Hooking"],
           source: {
-            link: "https://github.com/tomadimitrie/ubb-app",
+            link: "https://github.com/tomadimitrie/es-edr-inject",
             Icon: Github,
             text: "Code",
           },
-          Icon: Calendar,
-          color: "purple",
+          Icon: Shield,
+          color: "indigo",
         },
         {
-          title: "TFC CTF 2021/2022",
-          shortDescription: "CTF Infrastructure",
+          title: "Ghost & Sorcery",
+          shortDescription: "Hack The Box Machine Author",
           description: (
             <>
-              I created the infrastructure from scratch for TFC CTF 2021 and
-              2022, providing a robust alternative to known services like CTFd.
-              It successfully served <b>1000+ teams</b> at each CTF edition. The
-              source code is not public due to licensing restrictions.
+              Authored two retired <b>Insane-difficulty</b> HTB machines: Ghost
+              (Windows Active Directory, rated 4.7/5) and Sorcery (Linux, rated
+              4.6/5), each with <b>1000+ system flag solves.</b>
             </>
           ),
-          features: [
-            "Individual challenge containers for each player with Windows support",
-            "Built with the latest technologies at that time",
-            "Support for custom challenge types, such as multiple answers",
+          features: [],
+          tags: [
+            "Hack The Box",
+            "Insane Machine",
+            "Windows",
+            "Active Directory",
           ],
-          tags: ["Remix.js", "Prisma", "Docker"],
-          Icon: Flag,
-          color: "fuchsia",
+          source: {
+            link: "https://app.hackthebox.com/users/775445?tab=published-content&content-type=machine",
+            Icon: Box,
+            text: "Machine",
+          },
+          Icon: Box,
+          color: "red",
+        },
+        {
+          title: "MiniOS",
+          shortDescription: "Operating System",
+          description: (
+            <>
+              x86-64 operating system written from scratch in C++ for my
+              master's degree, with a terminal console and drivers for storage
+              and keyboard.
+            </>
+          ),
+          features: [],
+          tags: ["Operating System", "x86_64", "ATA", "SMP"],
+          source: {
+            link: "https://github.com/tomadimitrie/minios",
+            Icon: Github,
+            text: "Code",
+          },
+          Icon: Cpu,
+          color: "green",
         },
       ],
     },
     achievements: {
       items: [
         {
-          title:
-            "Part of the National Romanian cybersecurity team for ECSC 2022 and 2025",
+          title: "Romania's National Cybersecurity Team, ECSC 2022 and 2025",
           subtitle: (
             <>
-              ECSC is a major annual cybersecurity CTF competition organized by
-              ENISA, where I was selected as a{" "}
-              <b>member of the national team</b> to compete against other
-              countries in Europe in advanced Attack/Defense and Jeopardy-style
-              hacking challenges.
+              Selected for the <b>Romanian national team</b> at ENISA's European
+              Cybersecurity Challenge, competing in Attack/Defense and Jeopardy
+              CTFs against 30+ other national teams.
             </>
           ),
         },
         {
-          title: "Part of > r0/dev/null CTF team",
+          title: "Core Member, > r0/dev/null CTF Team",
           subtitle: (
             <>
-              As a core member of{" "}
-              <span className="font-mono">{" > r0/dev/null"}</span>, I
-              contributed to major victories, including <b>1st place</b> in
-              World Wide CTF 2025, <b>3rd place</b> in N0PSctf 2025 and{" "}
-              <b>3rd place</b> in D-CTF 2025.
+              Focused on binary exploitation and reverse engineering challenges.
+              Team results include <b>1st place</b> at World Wide CTF 2025,{" "}
+              <b>3rd place</b> at N0PSctf 2025 and D-CTF 2025.
             </>
           ),
           link: "https://ctftime.org/team/305658",
         },
         {
-          title: "Null CTF 2025",
+          title: "Core Organizer and Challenge Author, Null CTF 2025",
           subtitle: (
             <>
-              Core organizer and challenge author for Null CTF 2025 with my team{" "}
-              <span className="font-mono">{"> r0/dev/null"}</span>, a major
-              cybersecurity event featuring <b>1000+ registered teams</b>.
+              Co-organized Null CTF 2025 with{" "}
+              <span className="font-mono">&gt; r0/dev/null</span> for{" "}
+              <b>1000+ teams</b>, authoring 7 challenges and running the
+              infrastructure.
             </>
           ),
           link: "https://ctf.r0devnull.team/",
         },
         {
-          title: "IoT Hunt 2025",
+          title: "Core Organizer, IoT Hunt 2025",
           subtitle: (
             <>
-              Collaborated on organizing IoT Hunt, a CTF-style treasure hunt
-              focused on <b>IoT devices</b>, where <b>100+ participants</b>{" "}
-              solved challenges involving routers, smart cameras, lightbulbs and
-              locks.
+              Co-organized IoT Hunt, a CTF-style treasure hunt at{" "}
+              <Link href="https://def.camp/competitions/iot-hunt/">
+                DefCamp 2025
+              </Link>
+              , where 100+ participants exploited real routers, smart cameras,
+              lightbulbs and locks.
             </>
           ),
           link: "https://def.camp/competitions/iot-hunt/",
         },
         {
           title:
-            "Former captain of the CTF team of Technical University of Cluj-Napoca",
+            "Captain, Technical University of Cluj-Napoca CTF Team (2023-2025)",
           subtitle: (
-            <b>
-              Managed the university's competitive cybersecurity program,
-              highlighted by securing <b>4th place</b> in Hack The Box
-              University CTF 2023.
-            </b>
+            <>
+              Recruited and trained students for competitions, leading the team
+              to <b>4th place</b> at Hack The Box University CTF 2023 (300+
+              registered teams).
+            </>
           ),
         },
         {
-          title: "TFC CTF 2021 and 2022",
+          title:
+            "Core Organizer and Infrastructure Lead, TFC CTF (2021 & 2022)",
           subtitle: (
             <>
-              Core organizer and infrastructure lead for TFC CTF 2021 and 2022,
-              authoring technical challenges and developing a custom competition
-              platform featuring on-demand challenge instances, scaling the
-              event to <b>1000+ teams</b>.
+              Built a custom CTF platform from scratch with{" "}
+              <b>on-demand challenge instances</b>, serving <b>1000+ teams</b>,
+              and authored 10+ challenges.
             </>
           ),
         },
@@ -844,14 +740,14 @@ export const CONFIG = {
     skills: {
       items: [
         [
-          "Driver Development",
-          "OS Internals",
-          "Binary Exploitation",
+          "Windows Kernel Drivers",
+          "macOS Endpoint Security",
+          "Exploit Development",
+          "Hypervisors (Intel VT-x)",
           "Reverse Engineering",
-          "Malware Analysis",
+          "OS Internals",
         ],
-        ["C/C++", "x86/ARM Assembly", "Rust", "Zig"],
-        ["Swift", "Kotlin", "Next.js", "Flutter"],
+        ["C/C++", "x86/ARM Assembly", "Swift"],
       ],
     },
   },
