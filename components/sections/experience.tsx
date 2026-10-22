@@ -14,7 +14,7 @@ export function ExperienceSection() {
           .with(array.length - 1, () => "last" as const)
           .otherwise(() => "normal" as const);
         return (
-          <div key={item.company} className="group flex gap-5 items-stretch">
+          <div key={item.position} className="group flex gap-5 items-stretch">
             <TimelineLine type={type} />
             <ExperienceItem item={item} isLast={type === "last"} />
           </div>

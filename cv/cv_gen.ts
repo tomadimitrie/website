@@ -1,10 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import pick from "lodash/pick";
-import Link from "next/link";
 import nunjucks from "nunjucks";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import Link from "@/components/overrides/link";
 import { cvssInfo } from "@/components/sections/cves";
 import { CONFIG } from "@/lib/config";
 

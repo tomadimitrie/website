@@ -1,5 +1,5 @@
 import { Box, Cpu, Github, Linkedin, Mail, Shield } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/overrides/link";
 import { AboutSection } from "@/components/sections/about";
 import { AchievementsSection } from "@/components/sections/achievements";
 import { CertificationsSection } from "@/components/sections/certifications";
@@ -289,8 +289,8 @@ export const CONFIG = {
           location: "Bucharest, Romania (Part-time, Remote)",
           features: [
             <>
-              Co-founded a <b>5-person startup</b> building an event management
-              platform for organizers, with event discovery for participants.
+              Co-founded a startup building an event management platform for
+              organizers, with event discovery for participants.
             </>,
             <>
               Built the <b>iOS, Android and web apps</b> and shipped them to the
@@ -692,18 +692,14 @@ export const CONFIG = {
           ),
         },
         {
-          title: (
+          title: <>Core Member, &gt; r0/dev/null CTF Team</>,
+          subtitle: (
             <>
-              Core Member,{" "}
+              Focused on binary exploitation and reverse engineering challenges,
+              as a core member of
               <Link href="https://ctftime.org/team/305658">
                 &gt; r0/dev/null
               </Link>{" "}
-              CTF Team
-            </>
-          ),
-          subtitle: (
-            <>
-              Focused on binary exploitation and reverse engineering challenges.
               Team results include <b>1st place</b> at{" "}
               <Link href="https://ctftime.org/event/2753/">
                 World Wide CTF 2025

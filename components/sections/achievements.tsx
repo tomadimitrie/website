@@ -1,8 +1,7 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
-import Link from "next/link";
 import { DotsBackground } from "@/components/background/dots";
+import Link from "@/components/overrides/link";
 import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
@@ -27,27 +26,13 @@ function AchievementItem({
     useInteractiveBackground<HTMLDivElement>();
 
   function link() {
-    const inner = (
-      <div
-        className={cn(
-          "font-mono font-bold text-xl text-primary-foreground",
-          item.link && "hover:underline",
-        )}
-      >
-        {item.title}
-        {item.link && (
-          <span className="inline-block align-[-4px] ml-2">
-            <ExternalLink />
-          </span>
-        )}
-      </div>
-    );
+    const className = "font-mono font-bold text-xl text-primary-foreground";
     if (!item.link) {
-      return inner;
+      return <div className={className}>{item.title}</div>;
     } else {
       return (
-        <Link href={item.link} target="_blank">
-          {inner}
+        <Link href={item.link} className={className}>
+          {item.title}
         </Link>
       );
     }

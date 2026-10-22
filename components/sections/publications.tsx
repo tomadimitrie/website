@@ -1,10 +1,10 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
 import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
 import { Trail } from "../background/trail";
+import Link from "../overrides/link";
 
 export function PublicationsSection() {
   return (
@@ -37,13 +37,7 @@ function PublicationItem({
       )}
       <div className="flex flex-col gap-3 p-7">
         <div className="text-primary-foreground font-bold text-xl hover:underline">
-          <a href={item.url}>
-            {item.publishedIn}
-
-            <span className="inline-block align-[-4px] ml-2">
-              <ExternalLink />
-            </span>
-          </a>
+          <Link href={item.url}>{item.publishedIn}</Link>
         </div>
         <div className="text-xl">{item.title}</div>
         <div className="text-muted-foreground">

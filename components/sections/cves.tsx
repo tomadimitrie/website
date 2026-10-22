@@ -1,11 +1,11 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
 import { MatrixRain } from "@/components/background/matrix-rain";
 import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
 import { Tags } from "../ui/tags";
+import Link from "../overrides/link";
 
 export function CvesSection() {
   return (
@@ -49,13 +49,7 @@ function CveItem({
       <div className="flex flex-col gap-3 p-7">
         <div className="flex justify-between font-mono">
           <div className="text-primary-foreground font-bold text-xl hover:underline">
-            <a href={item.url}>
-              {item.cve}
-
-              <span className="inline-block align-[-4px] ml-2">
-                <ExternalLink />
-              </span>
-            </a>
+            <Link href={item.url}>{item.cve}</Link>
           </div>
           {(() => {
             const [rating, className] = cvssInfo(item.cvss);

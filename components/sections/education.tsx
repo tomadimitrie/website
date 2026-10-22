@@ -19,7 +19,7 @@ export function EducationSection() {
           .otherwise(() => "normal" as const);
 
         return (
-          <div key={item.university} className="flex gap-5 items-stretch">
+          <div key={item.type} className="flex gap-5 items-stretch">
             <TimelineLine type={type} />
             <EducationItem item={item} isLast={type === "last"} />
           </div>

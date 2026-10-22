@@ -1,9 +1,8 @@
 "use client";
 
-import { ExternalLink } from "lucide-react";
-import Link from "next/link";
 import { useMemo } from "react";
 import { CubesBackground } from "@/components/background/cubes";
+import Link from "@/components/overrides/link";
 import { SectionWrapper } from "@/components/sections/section";
 import { useInteractiveBackground } from "@/hooks/useInteractiveBackground";
 import { CONFIG } from "@/lib/config";
@@ -58,9 +57,6 @@ function CertificationItem({
           <div className="text-primary-foreground font-bold text-xl hover:underline">
             <Link href={item.url} target="_blank">
               {item.fullTitle} ({item.title})
-              <span className="inline-block align-[-4px] ml-2">
-                <ExternalLink />
-              </span>
             </Link>
           </div>
           <div className="flex items-center gap-3">
@@ -71,7 +67,7 @@ function CertificationItem({
                 backgroundColor: authorityBackgroundColor,
               }}
             >
-              <Link target="_blank" href={item.authority.website}>
+              <Link target="_blank" href={item.authority.website} noIcon>
                 {item.authority.name}
               </Link>
             </Tags.Item>
