@@ -12,7 +12,7 @@ export function AchievementsSection() {
   return (
     <SectionWrapper title="Achievements" className="flex flex-col w-full gap-5">
       {CONFIG.sections.achievements.items.map((item) => (
-        <AchievementItem key={item.title} item={item} />
+        <AchievementItem key={item.title.toString()} item={item} />
       ))}
     </SectionWrapper>
   );

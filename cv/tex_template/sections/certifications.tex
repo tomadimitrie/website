@@ -1,5 +1,11 @@
 \cvsection{Certifications}
 
 ((* for certification in certifications *))
-  \cvachievement{}{(( certification.title )) {\footnotesize{(( "(" + certification.fullTitle + ")" ))}}. \itemlink{(( certification.url ))}}{}
+  \cvachievement
+    {}
+    {\itemcustomlink
+      {(( certification.url ))}
+      {(( certification.title )) {\footnotesize (( "(" + certification.fullTitle + ")" ))}}
+    }
+    {}
 ((* endfor *))

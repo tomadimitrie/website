@@ -60,7 +60,7 @@ function jsxToStatic(element: React.ReactNode): JsonValue {
         const {
           props: { href },
         } = element as React.ReactElement<{ href: string }>;
-        return `\\itemcustomlink{${href}}{${children}}`;
+        return `\\itemcustomlinkaccent{${sanitize(href)}}{${sanitize(children)}}`;
       }
       case "b":
         return `\\textbf{${sanitize(children)}}`;
@@ -201,7 +201,7 @@ function selectFields(config: typeof CONFIG): Record<string, JsonValue> {
   }));
 
   result.achievements = config.sections.achievements.items.map((item) => ({
-    title: item.title,
+    title: jsxToStatic(item.title),
     subtitle: jsxToStatic(item.subtitle),
   }));
 

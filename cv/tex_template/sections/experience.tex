@@ -9,7 +9,11 @@
   ((* endfor *))
 
   ((* for item in filtered *))
-    \cvevent{(( item.position ))}{(( item.company ))}{(( item.from )) - (( item.to ))}{(( item.location ))}
+    \cvevent
+      {(( item.position ))}
+      {(( item.company ))}
+      {(( item.from )) - (( item.to ))}
+      {(( item.location ))}
     \begin{itemize}
       ((* for feature in item.features *))
         \item (( feature ))

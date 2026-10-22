@@ -7,6 +7,7 @@
 \usepackage{relsize}
 \usepackage{ragged2e}
 \usepackage{microtype}
+\usepackage{fontawesome5}
 
 \iftutex
   \setmainfont{Roboto Slab}
@@ -44,8 +45,9 @@
 \newcommand{\dividerbig}{\vspace{2.5pt}\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\vspace{5.5pt}}
 \setlist[itemize]{after=\vspace{0pt}, itemsep=0pt}
 
-\newcommand{\itemlink}[1]{\href{#1}{\color{accent}Link}}
-\newcommand{\itemcustomlink}[2]{\href{#1}{\color{accent}#2}}
+\newcommand{\itemlink}[1]{\href{#1}{\color{accent}\faExternalLink*}}
+\newcommand{\itemcustomlink}[2]{\href{#1}{#2 \color{accent}\faExternalLink*}}
+\newcommand{\itemcustomlinkaccent}[2]{\href{#1}{\color{accent}#2\faExternalLink*}}
 
 \setlength{\bigskipamount}{8pt}
 

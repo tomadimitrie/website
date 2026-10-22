@@ -153,8 +153,11 @@ export const CONFIG = {
             </>,
             <>
               Refining antivirus detection capabilities, contributing to
-              Bitdefender's <b>perfect 15/15 score</b> at AV-Comparatives ATP
-              2025.
+              Bitdefender's <b>perfect 15/15 score</b> at{" "}
+              <Link href="https://av-comparatives.org/tests/advanced-threat-protection-test-2025-enterprise/">
+                AV-Comparatives ATP 2025
+              </Link>
+              .
             </>,
             <>
               Built a new <b>ROP chain detection</b> and improved 5+ existing{" "}
@@ -339,7 +342,9 @@ export const CONFIG = {
             <>
               Thesis title:{" "}
               <b>
-                Behavioral macOS EDR Using Apple Endpoint Security Framework
+                <Link href="https://github.com/tomadimitrie/ES-EDR-Behavior/blob/main/Master's%20Thesis.pdf">
+                  Behavioral macOS EDR Using Apple Endpoint Security Framework
+                </Link>
               </b>
             </>,
           ],
@@ -363,8 +368,10 @@ export const CONFIG = {
             <>
               Thesis title:{" "}
               <b>
-                Fortifying macOS against Binary Exploits with Apple's Endpoint
-                Security Framework
+                <Link href="https://github.com/tomadimitrie/ES-EDR-Inject/blob/main/Bachelor's%20Thesis.pdf">
+                  Fortifying macOS against Binary Exploits with Apple's Endpoint
+                  Security Framework
+                </Link>
               </b>
             </>,
           ],
@@ -387,6 +394,11 @@ export const CONFIG = {
               <Link href="https://www.tomadimitrie.dev/blog/CVE-2026-54424">
                 Write-up
               </Link>
+              ,{" "}
+              <Link href="https://github.com/tomadimitrie/CVE-2026-54424">
+                PoC
+              </Link>
+              .
             </>,
           ],
           cvss: 8.4,
@@ -568,9 +580,9 @@ export const CONFIG = {
           features: [],
           tags: ["Hypervisor", "Intel VT-X", "Introspection"],
           source: {
-            link: "https://github.com/tomadimitrie/minihv",
+            link: "https://github.com/tomadimitrie/phd-hypervisor",
             Icon: Github,
-            text: "Code (coming soon)",
+            text: "Code",
             comingSoon: true,
           },
           Icon: Cpu,
@@ -654,11 +666,6 @@ export const CONFIG = {
           ),
           features: [],
           tags: ["Operating System", "x86_64", "ATA", "SMP"],
-          source: {
-            link: "https://github.com/tomadimitrie/minios",
-            Icon: Github,
-            text: "Code",
-          },
           Icon: Cpu,
           color: "green",
         },
@@ -671,18 +678,41 @@ export const CONFIG = {
           subtitle: (
             <>
               Selected for the <b>Romanian national team</b> at ENISA's European
-              Cybersecurity Challenge, competing in Attack/Defense and Jeopardy
-              CTFs against 30+ other national teams.
+              Cybersecurity Challenge in{" "}
+              <Link href="https://www.facebook.com/story.php?story_fbid=1440122719824745&id=100064974182621">
+                2022
+              </Link>{" "}
+              and{" "}
+              <Link href="https://www.facebook.com/www.edu.ro/posts/-team-romania-locul-14-la-campionatul-european-de-securitate-cibernetic%C4%83-2025-la/1236388771859159/">
+                2025
+              </Link>
+              , competing in Attack/Defense and Jeopardy CTFs against 30+ other
+              national teams.
             </>
           ),
         },
         {
-          title: "Core Member, > r0/dev/null CTF Team",
+          title: (
+            <>
+              Core Member,{" "}
+              <Link href="https://ctftime.org/team/305658">
+                &gt; r0/dev/null
+              </Link>{" "}
+              CTF Team
+            </>
+          ),
           subtitle: (
             <>
               Focused on binary exploitation and reverse engineering challenges.
-              Team results include <b>1st place</b> at World Wide CTF 2025,{" "}
-              <b>3rd place</b> at N0PSctf 2025 and D-CTF 2025.
+              Team results include <b>1st place</b> at{" "}
+              <Link href="https://ctftime.org/event/2753/">
+                World Wide CTF 2025
+              </Link>
+              , <b>3rd place</b> at{" "}
+              <Link href="https://ctftime.org/event/2486">N0PSctf 2025</Link>{" "}
+              and{" "}
+              <Link href="https://youtu.be/EpmLvFx1zXk?t=2291">D-CTF 2025</Link>
+              .
             </>
           ),
           link: "https://ctftime.org/team/305658",
@@ -691,7 +721,8 @@ export const CONFIG = {
           title: "Core Organizer and Challenge Author, Null CTF 2025",
           subtitle: (
             <>
-              Co-organized Null CTF 2025 with{" "}
+              Co-organized{" "}
+              <Link href="https://ctf.r0devnull.team/">Null CTF 2025</Link> with{" "}
               <span className="font-mono">&gt; r0/dev/null</span> for{" "}
               <b>1000+ teams</b>, authoring 7 challenges and running the
               infrastructure.
@@ -703,12 +734,13 @@ export const CONFIG = {
           title: "Core Organizer, IoT Hunt 2025",
           subtitle: (
             <>
-              Co-organized IoT Hunt, a CTF-style treasure hunt at{" "}
+              Co-organized
               <Link href="https://def.camp/competitions/iot-hunt/">
-                DefCamp 2025
+                IoT Hunt
               </Link>
-              , where 100+ participants exploited real routers, smart cameras,
-              lightbulbs and locks.
+              , a CTF-style treasure hunt at DefCamp 2025, where 100+
+              participants exploited real routers, smart cameras, lightbulbs and
+              locks.
             </>
           ),
           link: "https://def.camp/competitions/iot-hunt/",
@@ -719,8 +751,11 @@ export const CONFIG = {
           subtitle: (
             <>
               Recruited and trained students for competitions, leading the team
-              to <b>4th place</b> at Hack The Box University CTF 2023 (300+
-              registered teams).
+              to <b>4th place</b> at{" "}
+              <Link href="https://www.hackthebox.com/blog/htb-university-ctf-2023-recap">
+                Hack The Box University CTF 2023
+              </Link>{" "}
+              (300+ registered teams).
             </>
           ),
         },
@@ -729,7 +764,9 @@ export const CONFIG = {
             "Core Organizer and Infrastructure Lead, TFC CTF (2021 & 2022)",
           subtitle: (
             <>
-              Built a custom CTF platform from scratch with{" "}
+              Built a custom CTF platform from scratch for TFC CTF{" "}
+              <Link href="https://ctftime.org/event/1501">2021</Link> and{" "}
+              <Link href="https://ctftime.org/event/1647">2022</Link>, with{" "}
               <b>on-demand challenge instances</b>, serving <b>1000+ teams</b>,
               and authored 10+ challenges.
             </>

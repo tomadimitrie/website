@@ -1,7 +1,11 @@
 \cvsection{Education}
 
 ((* for item in education *))
-  \cveducation{(( item.type )) in (( item.domain ))}{(( item.university ))}{(( item.from )) - (( item.to ))}{}
+  \cveducation
+    {(( item.type )) in (( item.domain ))}
+    {(( item.university ))}
+    {(( item.from )) - (( item.to ))}
+    {}
   ((* for feature in item.features *))
     {\small (( feature ))\par}
   ((* endfor *))
