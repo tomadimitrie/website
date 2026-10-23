@@ -1,4 +1,12 @@
-import { Box, Cpu, Github, Linkedin, Mail, Shield } from "lucide-react";
+import {
+  Box,
+  Calendar,
+  Cpu,
+  Github,
+  Linkedin,
+  Mail,
+  Shield,
+} from "lucide-react";
 import Link from "@/components/overrides/link";
 import { AboutSection } from "@/components/sections/about";
 import { AchievementsSection } from "@/components/sections/achievements";
@@ -51,7 +59,7 @@ export const CONFIG = {
   name: "Dimitrie-Toma Furdui",
   subtitle: "Security Engineer",
   about:
-    "Security Engineer with over 5 years of experience building kernel-mode anti-exploit protection at Bitdefender. PhD candidate in hypervisor security, with 2 CVEs, an IEEE publication and 6 certifications.",
+    "5+ years building kernel-mode anti-exploit protection at Bitdefender. PhD candidate in hypervisor security, with 2 CVEs, an IEEE publication and 6 certifications.",
   shellText: {
     variants: [
       "toma@linux:~$ whoami",
@@ -143,7 +151,7 @@ export const CONFIG = {
           from: "Jun. 2021",
           to: "Present",
           position: "Kernel Developer (Windows), Security Researcher",
-          company: "Bitdefender",
+          company: <Link href="https://www.bitdefender.com">Bitdefender</Link>,
           location: "Cluj-Napoca, Romania",
           features: [
             <>
@@ -181,7 +189,11 @@ export const CONFIG = {
           from: "Oct. 2026",
           to: "Present",
           position: "Teaching Assistant (Penetration Testing)",
-          company: "Technical University of Cluj-Napoca",
+          company: (
+            <Link href="https://ac.utcluj.ro/acasa.html">
+              Technical University of Cluj-Napoca
+            </Link>
+          ),
           location: "Cluj-Napoca, Romania",
           features: [
             <>
@@ -201,7 +213,11 @@ export const CONFIG = {
           from: "Mar. 2026",
           to: "Present",
           position: "Research Engineer",
-          company: "Technical University of Cluj-Napoca",
+          company: (
+            <Link href="https://ac.utcluj.ro/acasa.html">
+              Technical University of Cluj-Napoca
+            </Link>
+          ),
           location: "Cluj-Napoca, Romania",
           features: [
             <>
@@ -209,7 +225,7 @@ export const CONFIG = {
               <Link href="https://cybersecurityseminars-utcluj.ctfd.io/">
                 CTF
               </Link>{" "}
-              for 100+ students as part of the{" "}
+              for 100+ students within the{" "}
               <Link href="https://cybersecurityseminars.utcluj.ro/">
                 Google.org Cybersecurity Seminars
               </Link>{" "}
@@ -223,7 +239,11 @@ export const CONFIG = {
           from: "Oct. 2025",
           to: "Feb. 2026",
           position: "Teaching Assistant (x86 Assembly)",
-          company: "Babeș-Bolyai University of Cluj-Napoca",
+          company: (
+            <Link href="https://www.cs.ubbcluj.ro/">
+              Babeș-Bolyai University of Cluj-Napoca
+            </Link>
+          ),
           location: "Cluj-Napoca, Romania",
           features: [
             <>
@@ -232,7 +252,7 @@ export const CONFIG = {
               register manipulation, and instruction set architecture.
             </>,
             <>
-              Designed and graded 6 <b>technical assignments</b> requiring
+              Designed and graded <b>technical assignments</b> requiring
               students to identify code issues and implement algorithms in x86
               assembly.
             </>,
@@ -244,22 +264,24 @@ export const CONFIG = {
           from: "Sep. 2020",
           to: "Sep. 2022",
           position: "Penetration Tester, Software Developer",
-          company:
-            "Institute of Advanced Research in Artificial Intelligence (IARAI)",
+          company: (
+            <Link href="https://web.archive.org/web/20231129014336/https://www.iarai.ac.at/">
+              Institute of Advanced Research in Artificial Intelligence (IARAI)
+            </Link>
+          ),
           location: "Vienna, Austria (Freelance, Remote)",
           features: [
+            <>
+              Introduced security reviews into the release procedures, catching
+              10+ issues before production deployment.
+            </>,
             <>
               Built and maintained the organization's competition <b>website</b>{" "}
               (10,000+ participants), <b>test infrastructure</b>, and internal{" "}
               <b>DevOps tooling</b>.
             </>,
             <>
-              Introduced security reviews into the release procedures, catching
-              10+ issues before production deployment.
-            </>,
-            <>
-              Co-organized 4 <b>NeurIPS</b> competitions with{" "}
-              <b>7000+ submissions</b> (
+              Co-organized 4 <b>NeurIPS</b> competitions (
               <Link href="https://github.com/iarai/NeurIPS2020-traffic4cast">
                 Traffic4Cast
               </Link>
@@ -275,7 +297,7 @@ export const CONFIG = {
               <Link href="https://github.com/iarai/Landslide4Sense-2022">
                 Landslide4Sense
               </Link>
-              ).
+              ) with <b>7000+ submissions</b>.
             </>,
           ],
           tags: ["White-Box Security Assessments", "PHP", "React"],
@@ -284,8 +306,10 @@ export const CONFIG = {
         {
           from: "Nov. 2020",
           to: "Jul. 2023",
-          position: "Co-founder",
-          company: "Antimony (Startup)",
+          position: "Co-founder (Startup)",
+          company: (
+            <Link href="https://www.instagram.com/theantimony">Antimony</Link>
+          ),
           location: "Bucharest, Romania (Part-time, Remote)",
           features: [
             <>
@@ -315,7 +339,11 @@ export const CONFIG = {
     education: {
       items: [
         {
-          university: "Technical University of Cluj-Napoca",
+          university: (
+            <Link href="https://ac.utcluj.ro/acasa.html">
+              Technical University of Cluj-Napoca
+            </Link>
+          ),
           type: "PhD",
           domain: "Cybersecurity",
           from: "2025",
@@ -333,7 +361,11 @@ export const CONFIG = {
           ],
         },
         {
-          university: "Technical University of Cluj-Napoca",
+          university: (
+            <Link href="https://ac.utcluj.ro/acasa.html">
+              Technical University of Cluj-Napoca
+            </Link>
+          ),
           type: "Master's Degree",
           domain: "Cybersecurity",
           from: "2023",
@@ -359,7 +391,11 @@ export const CONFIG = {
           ],
         },
         {
-          university: "Babeș-Bolyai University of Cluj-Napoca",
+          university: (
+            <Link href="https://www.cs.ubbcluj.ro/">
+              Babeș-Bolyai University of Cluj-Napoca
+            </Link>
+          ),
           type: "Bachelor's Degree",
           domain: "Computer Science",
           from: "2020",
@@ -570,7 +606,7 @@ export const CONFIG = {
           shortDescription: "Hypervisor (Intel VT-x)",
           description: (
             <>
-              Intel VT-x hypervisor built for my master's degree, capable of
+              Intel VT-x hypervisor built for a master's project, capable of
               booting Windows with non-intrusive guest introspection. Now
               rewriting it from scratch as a <b>thin hypervisor</b> that
               virtualizes the running OS on the fly for PhD research on exploit
@@ -659,15 +695,35 @@ export const CONFIG = {
           shortDescription: "Operating System",
           description: (
             <>
-              x86-64 operating system written from scratch in C++ for my
-              master's degree, with a terminal console and drivers for storage
-              and keyboard.
+              x86-64 operating system written from scratch in C++ for a master's
+              project, with a terminal console and drivers for storage and
+              keyboard.
             </>
           ),
           features: [],
           tags: ["Operating System", "x86_64", "ATA", "SMP"],
           Icon: Cpu,
           color: "green",
+        },
+        {
+          title: "UBB Schedule",
+          shortDescription: "UBB University Timetable",
+          description: (
+            <>
+              iOS timetable app for Babeș-Bolyai University. Parses the
+              university's HTML timetables, since no API exists. Published on
+              the App Store.
+            </>
+          ),
+          features: [],
+          tags: ["iOS", "Swift", "SwiftUI", "Core Data"],
+          source: {
+            link: "https://github.com/tomadimitrie/ubb-app",
+            Icon: Github,
+            text: "Code",
+          },
+          Icon: Calendar,
+          color: "purple",
         },
       ],
     },
@@ -692,15 +748,10 @@ export const CONFIG = {
           ),
         },
         {
-          title: <>Core Member, &gt; r0/dev/null CTF Team</>,
+          title: <>Member, &gt; r0/dev/null CTF Team</>,
           subtitle: (
             <>
-              Focused on binary exploitation and reverse engineering challenges,
-              as a core member of
-              <Link href="https://ctftime.org/team/305658">
-                &gt; r0/dev/null
-              </Link>{" "}
-              Team results include <b>1st place</b> at{" "}
+              <b>1st place</b> at{" "}
               <Link href="https://ctftime.org/event/2753/">
                 World Wide CTF 2025
               </Link>
@@ -708,29 +759,33 @@ export const CONFIG = {
               <Link href="https://ctftime.org/event/2486">N0PSctf 2025</Link>{" "}
               and{" "}
               <Link href="https://youtu.be/EpmLvFx1zXk?t=2291">D-CTF 2025</Link>
-              .
+              . Focused on binary exploitation and reverse engineering
+              challenges.
             </>
           ),
           link: "https://ctftime.org/team/305658",
         },
         {
-          title: "Core Organizer and Challenge Author, Null CTF 2025",
+          title: "Co-organizer and Challenge Author, Null CTF 2025",
           subtitle: (
             <>
               Co-organized{" "}
               <Link href="https://ctf.r0devnull.team/">Null CTF 2025</Link> with{" "}
               <span className="font-mono">&gt; r0/dev/null</span> for{" "}
-              <b>1000+ teams</b>, authoring 7 challenges and running the
-              infrastructure.
+              <b>1000+ teams</b>, authoring{" "}
+              <Link href="https://github.com/tomadimitrie/null-ctf-2025-challenges">
+                7 challenges
+              </Link>{" "}
+              and running the infrastructure.
             </>
           ),
           link: "https://ctf.r0devnull.team/",
         },
         {
-          title: "Core Organizer, IoT Hunt 2025",
+          title: "Co-organizer, IoT Hunt 2025",
           subtitle: (
             <>
-              Co-organized
+              Co-organized{" "}
               <Link href="https://def.camp/competitions/iot-hunt/">
                 IoT Hunt
               </Link>
@@ -756,8 +811,7 @@ export const CONFIG = {
           ),
         },
         {
-          title:
-            "Core Organizer and Infrastructure Lead, TFC CTF (2021 & 2022)",
+          title: "Co-organizer and Infrastructure Lead, TFC CTF (2021 & 2022)",
           subtitle: (
             <>
               Built a custom CTF platform from scratch for TFC CTF{" "}
@@ -780,7 +834,8 @@ export const CONFIG = {
           "Reverse Engineering",
           "OS Internals",
         ],
-        ["C/C++", "x86/ARM Assembly", "Swift"],
+        ["C/C++", "x86/ARM Assembly"],
+        ["Swift", "Kotlin", "Next.js", "Flutter"],
       ],
     },
   },

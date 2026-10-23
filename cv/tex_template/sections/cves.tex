@@ -3,7 +3,7 @@
 ((* for cve in cves *))
   \cvachievement
     {}
-    {(( cve.cve )), CVSS (( cve.cvss )) (( "(" + cve.severity + ")" )). \itemlink{(( cve.url ))}}
+    {\itemcustomlinkaccent{(( cve.url ))}{(( cve.cve ))}, CVSS (( cve.cvss )) (( "(" + cve.severity + ")" ))}
     {(( cve.features ))}
   ((* if not loop.last *))
     \dividerbig

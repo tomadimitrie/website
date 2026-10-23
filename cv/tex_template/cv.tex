@@ -1,3 +1,9 @@
+\begin{filecontents*}[overwrite]{\jobname.xmpdata}
+  \Title{Dimitrie-Toma Furdui - CV}
+  \Author{Dimitrie-Toma Furdui}
+  \Keywords{Security Engineer\sep Kernel Engineer\sep Exploit Research\sep Hypervisors\sep Operating Systems}
+\end{filecontents*}
+
 \documentclass[9pt,a4paper,withhyper]{altacv}
 
 \geometry{left=1cm,right=1cm,top=1.5cm,bottom=1cm,columnsep=1.2cm}
@@ -7,7 +13,7 @@
 \usepackage{relsize}
 \usepackage{ragged2e}
 \usepackage{microtype}
-\usepackage{fontawesome5}
+\usepackage{tikz}
 
 \iftutex
   \setmainfont{Roboto Slab}
@@ -45,9 +51,16 @@
 \newcommand{\dividerbig}{\vspace{2.5pt}\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\vspace{5.5pt}}
 \setlist[itemize]{after=\vspace{0pt}, itemsep=0pt}
 
-\newcommand{\itemlink}[1]{\href{#1}{\color{accent}\faExternalLink*}}
-\newcommand{\itemcustomlink}[2]{\href{#1}{#2 \color{accent}\faExternalLink*}}
-\newcommand{\itemcustomlinkaccent}[2]{\href{#1}{\color{accent}#2\faExternalLink*}}
+\newcommand{\externallinkicondrawing}{%
+  \tikz[baseline=0, x=0.75em, y=0.75em, line width=0.09em, line cap=round, line join=round]{%
+    \draw (0.45, 0.8) -- (0, 0.8) -- (0, 0) -- (0.8, 0) -- (0.8, 0.35);
+    \draw (0.4, 0.4) -- (1, 1);
+    \draw (0.62, 1) -- (1, 1) -- (1, 0.62);
+  }%
+}
+\newcommand{\externallinkicon}{\nobreak\hspace{0.25em}\externallinkicondrawing}
+\newcommand{\itemcustomlink}[2]{\href{#1}{#2{\color{accent}\externallinkicon}}}
+\newcommand{\itemcustomlinkaccent}[2]{\href{#1}{{\color{accent}#2\externallinkicon}}}
 
 \setlength{\bigskipamount}{8pt}
 
@@ -100,7 +113,7 @@
 \begin{document}
 \justifying
 \exhyphenpenalty=10000
-\emergencystretch=1.5em
+\emergencystretch=3em
 \uchyph=0
 
 \name{(( name ))}

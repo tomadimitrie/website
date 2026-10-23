@@ -181,7 +181,7 @@ function selectFields(config: typeof CONFIG): Record<string, JsonValue> {
   result.skills = config.sections.skills.items;
 
   result.education = config.sections.education.items.map((item) => ({
-    university: item.university,
+    university: jsxToStatic(item.university),
     type: item.type,
     domain: item.domain,
     from: item.from,
@@ -193,7 +193,7 @@ function selectFields(config: typeof CONFIG): Record<string, JsonValue> {
     from: item.from,
     to: item.to,
     position: item.position,
-    company: item.company,
+    company: jsxToStatic(item.company),
     location: item.location,
     features: item.features.map(jsxToStatic),
     tags: item.tags,
