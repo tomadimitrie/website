@@ -619,7 +619,6 @@ export const CONFIG = {
             link: "https://github.com/tomadimitrie/phd-hypervisor",
             Icon: Github,
             text: "Code",
-            comingSoon: true,
           },
           Icon: Cpu,
           color: "emerald",
