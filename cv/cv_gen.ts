@@ -210,7 +210,7 @@ function selectFields(config: typeof CONFIG): Record<string, JsonValue> {
     shortDescription: item.shortDescription,
     description: jsxToStatic(item.description),
     features: item.features,
-    url: !item.source?.comingSoon ? (item.source?.link ?? "") : "",
+    url: item.source?.link ?? "",
   }));
 
   return result;
